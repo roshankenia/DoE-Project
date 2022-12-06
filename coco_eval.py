@@ -8,12 +8,23 @@ import torch
 import utils
 from pycocotools.coco import COCO
 from pycocotools.cocoeval import COCOeval
+# ensure we are running on the correct gpu
+import os
+import sys
+os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+os.environ["CUDA_VISIBLE_DEVICES"] = "6"  # (xxxx is your specific GPU ID)
+if not torch.cuda.is_available() or torch.cuda.device_count() != 1:
+    print('exiting')
+    sys.exit()
+else:
+    print('GPU is being properly used')
 
 
 class CocoEvaluator:
     def __init__(self, coco_gt, iou_types):
         if not isinstance(iou_types, (list, tuple)):
-            raise TypeError(f"This constructor expects iou_types of type list or tuple, instead  got {type(iou_types)}")
+            raise TypeError(
+                f"This constructor expects iou_types of type list or tuple, instead  got {type(iou_types)}")
         coco_gt = copy.deepcopy(coco_gt)
         self.coco_gt = coco_gt
 
@@ -33,7 +44,8 @@ class CocoEvaluator:
         for iou_type in self.iou_types:
             results = self.prepare(predictions, iou_type)
             with redirect_stdout(io.StringIO()):
-                coco_dt = COCO.loadRes(self.coco_gt, results) if results else COCO()
+                coco_dt = COCO.loadRes(
+                    self.coco_gt, results) if results else COCO()
             coco_eval = self.coco_eval[iou_type]
 
             coco_eval.cocoDt = coco_dt
@@ -44,8 +56,10 @@ class CocoEvaluator:
 
     def synchronize_between_processes(self):
         for iou_type in self.iou_types:
-            self.eval_imgs[iou_type] = np.concatenate(self.eval_imgs[iou_type], 2)
-            create_common_coco_eval(self.coco_eval[iou_type], self.img_ids, self.eval_imgs[iou_type])
+            self.eval_imgs[iou_type] = np.concatenate(
+                self.eval_imgs[iou_type], 2)
+            create_common_coco_eval(
+                self.coco_eval[iou_type], self.img_ids, self.eval_imgs[iou_type])
 
     def accumulate(self):
         for coco_eval in self.coco_eval.values():
