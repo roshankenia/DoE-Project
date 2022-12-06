@@ -8,6 +8,16 @@ import torchvision.models.detection.mask_rcnn
 import utils
 from coco_eval import CocoEvaluator
 from coco_utils import get_coco_api_from_dataset
+# ensure we are running on the correct gpu
+import os
+os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+os.environ["CUDA_VISIBLE_DEVICES"] = "6"  # (xxxx is your specific GPU ID)
+if not torch.cuda.is_available() or torch.cuda.device_count() != 1:
+    print('exiting')
+    sys.exit()
+else:
+    print('GPU is being properly used')
+
 
 def normalize(arr):
     """
