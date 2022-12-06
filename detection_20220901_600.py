@@ -20,8 +20,7 @@ else:
     print('GPU is being properly used')
 
 # from engine import train_one_epoch, evaluate
-# utils、transforms、engine are the utils.py、transforms.py、engine.py under this fold
-
+# utils transforms, engine are the utils.py, transforms.py, engine.py under this fold
 # %matplotlib inline
 
 
