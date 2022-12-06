@@ -136,8 +136,7 @@ def get_transform(train):
 # Start to train the model
 ###############################
 # change the root path depending on your own dataset path
-root = r'/data/home/stufs1/liahan/DOE/new_datasets_annotations/doe_dataset_GT_white_ink_voc_20220901_600'
-
+root = r'/new_datasets_annotations/doe_dataset_GT_white_ink_voc_20220901_600'
 # train on the GPU (specify GPU ID with 'cuda:id'), or on the CPU if a GPU is not available
 device = torch.device(
     'cuda:0') if torch.cuda.is_available() else torch.device('cpu')
