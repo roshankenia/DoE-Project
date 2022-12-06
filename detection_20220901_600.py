@@ -304,7 +304,7 @@ def showbbox(model, img, idx):
 model = torch.load(
     r'./saved_model/model_doe_20220901_600_multi_class_100epochs.pkl')
 device = torch.device(
-    'cuda:1') if torch.cuda.is_available() else torch.device('cpu')
+    'cuda:0') if torch.cuda.is_available() else torch.device('cpu')
 model.to(device)
 
 for idx in range(len(dataset_test)):
