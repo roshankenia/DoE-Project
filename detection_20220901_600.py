@@ -297,7 +297,7 @@ def showbbox(model, img, idx):
     vis_tgt_path = "./visualization_results/"
     if not os.path.isdir(vis_tgt_path):
         os.mkdir(vis_tgt_path)
-    plt.savefig(os.path.join(vis_tgt_path, "sample_" + f"{idx:.2d}" + "_vis.png"))
+    plt.savefig(os.path.join(vis_tgt_path, "sample_" + str(idx) + "_vis.png"))
 
 
 # check the result
