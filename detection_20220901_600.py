@@ -226,9 +226,9 @@ def showbbox(model, img, idx):
 
     print(prediction)
 
-    img = img.permute(1, 2, 0)  # C,H,W → H,W,C
-    img = (img * 255).byte().data.cpu()  # [0, 1] → [0, 255]
-    img = np.array(img)  # tensor → ndarray
+    img = img.permute(1, 2, 0)  # C,H,W -> H,W,C
+    img = (img * 255).byte().data.cpu()  # [0, 1] -> [0, 255]
+    img = np.array(img)  # tensor -> ndarray
 
     # for i in range(prediction[0]['boxes'].cpu().shape[0]): # select all the predicted bounding boxes
     for i in range(3):  # select the top-3 predicted bounding boxes
