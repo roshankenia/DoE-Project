@@ -7,6 +7,15 @@ from collections import defaultdict, deque
 import torch
 import torch.distributed as dist
 
+# ensure we are running on the correct gpu
+import sys
+os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
+os.environ["CUDA_VISIBLE_DEVICES"] = "6"  # (xxxx is your specific GPU ID)
+if not torch.cuda.is_available() or torch.cuda.device_count() != 1:
+    print('exiting')
+    sys.exit()
+else:
+    print('GPU is being properly used')
 
 class SmoothedValue:
     """Track a series of values and provide access to smoothed values over a
