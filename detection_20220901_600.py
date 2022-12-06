@@ -215,7 +215,7 @@ def showbbox(model, img, idx):
     model.eval()
     with torch.no_grad():
         '''
-        prediction is in the following format：
+        prediction is in the following format:
         [{'boxes': tensor([[1492.6672,  238.4670, 1765.5385,  315.0320],
         [ 887.1390,  256.8106, 1154.6687,  330.2953]], device='cuda:0'), 
         'labels': tensor([1, 1], device='cuda:0'), 
