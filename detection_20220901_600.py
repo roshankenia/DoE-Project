@@ -139,7 +139,7 @@ root = r'/new_datasets_annotations/doe_dataset_GT_white_ink_voc_20220901_600'
 # train on the GPU (specify GPU ID with 'cuda:id'), or on the CPU if a GPU is not available
 device = torch.device(
     'cuda:0') if torch.cuda.is_available() else torch.device('cpu')
-# 11 classes, 0, 1，..., 9, and background
+# 11 classes, 0, 1, ..., 9, and background
 num_classes = 11
 # use our dataset with defined transformations
 # note that the 'dataset' and 'dataset_test' are with the same images in the same order
