@@ -18,9 +18,8 @@ if not torch.cuda.is_available() or torch.cuda.device_count() != 1:
     sys.exit()
 else:
     print('GPU is being properly used')
-
-# from engine import train_one_epoch, evaluate
 # utils transforms, engine are the utils.py, transforms.py, engine.py under this fold
+
 # %matplotlib inline
 
 
@@ -136,6 +135,8 @@ def get_transform(train):
 ###############################
 # change the root path depending on your own dataset path
 root = r'new_datasets_annotations/doe_dataset_GT_white_ink_voc_20220901_600'
+root1 = r'new_datasets_annotations/doe_dataset_GT_ceramic_painted_voc_20220901_600'
+
 # train on the GPU (specify GPU ID with 'cuda:id'), or on the CPU if a GPU is not available
 device = torch.device(
     'cuda:0') if torch.cuda.is_available() else torch.device('cpu')
@@ -146,14 +147,18 @@ num_classes = 11
 # the only difference is that images in 'dataset' can be randomly flipped,
 # while images in 'dataset_test' are not flipped
 dataset = PebbleDataset(root, get_transform(train=True))
-dataset_test = PebbleDataset(root, get_transform(train=False))
+dataset_test = PebbleDataset(root1, get_transform(train=False))
+print("number of images in the training set:", len(dataset))
+print("number of images in the testing set:", len(dataset_test))
 
+"""
 # split the dataset (399 images in total) into
 # training set (300 images) and test set (99 images)
 s_ratio = 300
 indices = torch.randperm(len(dataset)).tolist()
 dataset = torch.utils.data.Subset(dataset, indices[:s_ratio])
 dataset_test = torch.utils.data.Subset(dataset_test, indices[s_ratio:])
+"""
 
 # define training and validation data loaders
 data_loader = torch.utils.data.DataLoader(
@@ -166,6 +171,8 @@ data_loader_test = torch.utils.data.DataLoader(
 
 # get the model using our helper function
 model = models.detection.fasterrcnn_resnet50_fpn(
+    pretrained=False, progress=True, num_classes=num_classes, pretrained_backbone=True)  # or get_object_detection_model(num_classes)
+model = models.detection.fasterrcnn_resnet50_fpn_v2(
     pretrained=False, progress=True, num_classes=num_classes, pretrained_backbone=True)  # or get_object_detection_model(num_classes)
 
 # move model to the right device
@@ -183,7 +190,7 @@ lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(
     optimizer, T_0=1, T_mult=2)
 
 # let's train it for a defined number of epochs
-num_epochs = 100
+num_epochs = 200
 
 for epoch in range(num_epochs):
     # train for one epoch, printing every 10 iterations
@@ -202,7 +209,69 @@ print("Training is done!")
 
 
 # save the trained model
-torch.save(model, r'./saved_model/model_doe_20220901_600_multi_class_100epochs.pkl')
+torch.save(model, r'./saved_model/model_doe_ceramic_paint_fastRCNN_v2_200epoch.pkl')
+
+
+def fig_draw(img, prediction, idx):
+    # draw predicted bounding box and class label on the input image
+    i = idx
+    xmin = round(prediction[0]['boxes'][i][0].item())
+    ymin = round(prediction[0]['boxes'][i][1].item())
+    xmax = round(prediction[0]['boxes'][i][2].item())
+    ymax = round(prediction[0]['boxes'][i][3].item())
+
+    label = prediction[0]['labels'][i].item()
+
+    if label == 10:  # start with background as 0
+        cv2.rectangle(img, (xmin, ymin), (xmax, ymax),
+                      (255, 0, 0), thickness=1)
+        cv2.putText(img, '0', (xmin, ymin), cv2.FONT_HERSHEY_SIMPLEX,
+                    0.5, (255, 0, 0), thickness=2)
+    elif label == 1:
+        cv2.rectangle(img, (xmin, ymin), (xmax, ymax),
+                      (0, 255, 0), thickness=1)
+        cv2.putText(img, '1', (xmin, ymin), cv2.FONT_HERSHEY_SIMPLEX,
+                    0.5, (0, 255, 0), thickness=2)
+    elif label == 2:
+        cv2.rectangle(img, (xmin, ymin), (xmax, ymax),
+                      (0, 0, 255), thickness=1)
+        cv2.putText(img, '2', (xmin, ymin), cv2.FONT_HERSHEY_SIMPLEX,
+                    0.5, (0, 0, 255), thickness=2)
+    elif label == 3:
+        cv2.rectangle(img, (xmin, ymin), (xmax, ymax),
+                      (0, 100, 255), thickness=1)
+        cv2.putText(img, '3', (xmin, ymin), cv2.FONT_HERSHEY_SIMPLEX,
+                    0.5, (0, 100, 255), thickness=2)
+    elif label == 4:
+        cv2.rectangle(img, (xmin, ymin), (xmax, ymax),
+                      (255, 100, 100), thickness=1)
+        cv2.putText(img, '4', (xmin, ymin), cv2.FONT_HERSHEY_SIMPLEX,
+                    0.5, (255, 100, 100), thickness=2)
+    elif label == 5:
+        cv2.rectangle(img, (xmin, ymin), (xmax, ymax),
+                      (255, 0, 255), thickness=1)
+        cv2.putText(img, '5', (xmin, ymin), cv2.FONT_HERSHEY_SIMPLEX,
+                    0.5, (255, 0, 255), thickness=2)
+    elif label == 6:
+        cv2.rectangle(img, (xmin, ymin), (xmax, ymax),
+                      (0, 255, 255), thickness=1)
+        cv2.putText(img, '6', (xmin, ymin), cv2.FONT_HERSHEY_SIMPLEX,
+                    0.5, (0, 255, 255), thickness=2)
+    elif label == 7:
+        cv2.rectangle(img, (xmin, ymin), (xmax, ymax),
+                      (255, 255, 0), thickness=1)
+        cv2.putText(img, '7', (xmin, ymin), cv2.FONT_HERSHEY_SIMPLEX,
+                    0.5, (255, 255, 0), thickness=2)
+    elif label == 8:
+        cv2.rectangle(img, (xmin, ymin), (xmax, ymax),
+                      (100, 0, 0), thickness=1)
+        cv2.putText(img, '8', (xmin, ymin), cv2.FONT_HERSHEY_SIMPLEX,
+                    0.5, (100, 0, 0), thickness=2)
+    elif label == 9:
+        cv2.rectangle(img, (xmin, ymin), (xmax, ymax),
+                      (0, 0, 100), thickness=1)
+        cv2.putText(img, '9', (xmin, ymin), cv2.FONT_HERSHEY_SIMPLEX,
+                    0.5, (0, 0, 100), thickness=2)
 
 
 def showbbox(model, img, idx):
@@ -231,70 +300,18 @@ def showbbox(model, img, idx):
     img = np.array(img)  # tensor -> ndarray
 
     # for i in range(prediction[0]['boxes'].cpu().shape[0]): # select all the predicted bounding boxes
-    for i in range(3):  # select the top-3 predicted bounding boxes
-        xmin = round(prediction[0]['boxes'][i][0].item())
-        ymin = round(prediction[0]['boxes'][i][1].item())
-        xmax = round(prediction[0]['boxes'][i][2].item())
-        ymax = round(prediction[0]['boxes'][i][3].item())
+    if len(prediction[0]['labels']) >= 3:
+        for i in range(3):  # select the top-3 predicted bounding boxes
+            fig_draw(img, prediction, i)
+    else:
+        for i in range(len(prediction[0]['labels'])):
+            fig_draw(img, prediction, i)
 
-        label = prediction[0]['labels'][i].item()
 
-        if label == 10:  # start with background as 0
-            cv2.rectangle(img, (xmin, ymin), (xmax, ymax),
-                          (255, 0, 0), thickness=1)
-            cv2.putText(img, '0', (xmin, ymin),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 0, 0), thickness=2)
-        elif label == 1:
-            cv2.rectangle(img, (xmin, ymin), (xmax, ymax),
-                          (0, 255, 0), thickness=1)
-            cv2.putText(img, '1', (xmin, ymin),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), thickness=2)
-        elif label == 2:
-            cv2.rectangle(img, (xmin, ymin), (xmax, ymax),
-                          (0, 0, 255), thickness=1)
-            cv2.putText(img, '2', (xmin, ymin),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), thickness=2)
-        elif label == 3:
-            cv2.rectangle(img, (xmin, ymin), (xmax, ymax),
-                          (0, 100, 255), thickness=1)
-            cv2.putText(img, '3', (xmin, ymin), cv2.FONT_HERSHEY_SIMPLEX,
-                        0.5, (0, 100, 255), thickness=2)
-        elif label == 4:
-            cv2.rectangle(img, (xmin, ymin), (xmax, ymax),
-                          (255, 100, 100), thickness=1)
-            cv2.putText(img, '4', (xmin, ymin), cv2.FONT_HERSHEY_SIMPLEX,
-                        0.5, (255, 100, 100), thickness=2)
-        elif label == 5:
-            cv2.rectangle(img, (xmin, ymin), (xmax, ymax),
-                          (255, 0, 255), thickness=1)
-            cv2.putText(img, '5', (xmin, ymin), cv2.FONT_HERSHEY_SIMPLEX,
-                        0.5, (255, 0, 255), thickness=2)
-        elif label == 6:
-            cv2.rectangle(img, (xmin, ymin), (xmax, ymax),
-                          (0, 255, 255), thickness=1)
-            cv2.putText(img, '6', (xmin, ymin), cv2.FONT_HERSHEY_SIMPLEX,
-                        0.5, (0, 255, 255), thickness=2)
-        elif label == 7:
-            cv2.rectangle(img, (xmin, ymin), (xmax, ymax),
-                          (255, 255, 0), thickness=1)
-            cv2.putText(img, '7', (xmin, ymin), cv2.FONT_HERSHEY_SIMPLEX,
-                        0.5, (255, 255, 0), thickness=2)
-        elif label == 8:
-            cv2.rectangle(img, (xmin, ymin), (xmax, ymax),
-                          (100, 0, 0), thickness=1)
-            cv2.putText(img, '8', (xmin, ymin),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (100, 0, 0), thickness=2)
-        elif label == 9:
-            cv2.rectangle(img, (xmin, ymin), (xmax, ymax),
-                          (0, 0, 100), thickness=1)
-            cv2.putText(img, '9', (xmin, ymin),
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 100), thickness=2)
-
-    # plot the output images with prediction result
 #    plt.figure(figsize=(50,50))
 #    plt.imshow(img)
 #    plt.axis('off')
-    vis_tgt_path = "./visualization_results/"
+    vis_tgt_path = "./visualization_results/ceramic_paint_visual_samples_fastRCNN_v2_200epochs/"
     if not os.path.isdir(vis_tgt_path):
         os.mkdir(vis_tgt_path)
     plt.savefig(os.path.join(vis_tgt_path, "sample_" + str(idx) + "_vis.png"))
@@ -302,9 +319,7 @@ def showbbox(model, img, idx):
 
 # check the result
 model = torch.load(
-    r'./saved_model/model_doe_20220901_600_multi_class_100epochs.pkl')
-device = torch.device(
-    'cuda:0') if torch.cuda.is_available() else torch.device('cpu')
+    r'./saved_model/model_doe_ceramic_paint_fastRCNN_v2_200epoch.pkl')
 model.to(device)
 
 for idx in range(len(dataset_test)):
