@@ -1,4 +1,7 @@
 name:   DoE
+channels:
+  - nvidia
+  - pytorch
 dependencies:
   - nvidia::cudatoolkit=10.1
   - python=3.7
