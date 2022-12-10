@@ -2,7 +2,7 @@ name:   DoE
 dependencies:
   - nvidia::cudatoolkit=10.1
   - python=3.7
-  - pytorch::pytorch
+  - pytorch=1.12.1
   - torchvision=0.13.1
   - matplotlib=3.5.2
   - pip:
