@@ -1,13 +1,14 @@
 name:   DoE
 channels:
+  - conda-forge
   - nvidia
   - pytorch
 dependencies:
   - nvidia::cudatoolkit=10.1
   - python=3.7
-  - pytorch=1.12.1
+  - pytorch::pytorch=1.12.1
   - torchvision=0.13.1
   - matplotlib=3.5.2
   - pip:
-      - opencv-python==4.6.0.66
+      - opencv-python=4.6.0.66
   
