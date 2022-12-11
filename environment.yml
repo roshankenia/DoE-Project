@@ -3,6 +3,7 @@ channels:
   - conda-forge
   - nvidia
   - pytorch
+  - pip
 dependencies:
   - nvidia::cudatoolkit=10.2
   - python=3.7
