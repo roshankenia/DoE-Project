@@ -61,9 +61,9 @@ class PebbleTestDataset(torch.utils.data.Dataset):
         if self.transforms is not None:
             # https://github.com/pytorch/vision/tree/master/references/detection
             # On this website, there are transform examples of RandomHorizontalFlip for target in transforms.py
-            img = self.transforms(img, None)
+            img, target = self.transforms(img, None)
 
-        return img
+        return img, target
 
     def __len__(self):
         return len(self.imgs)
@@ -204,8 +204,7 @@ def showbbox(model, img, idx):
         for i in range(len(prediction[0]['labels'])):
             fig_draw(img, prediction, i)
 
-
-    plt.figure(figsize=(50,50))
+    plt.figure(figsize=(50, 50))
     plt.imshow(img)
     plt.axis('off')
     vis_tgt_path = "./visualization_results/videoceramic/"
@@ -221,5 +220,5 @@ model = torch.load(
 model.to(device)
 
 for idx in range(len(dataset_test)):
-    img = dataset_test[idx]
+    img, _ = dataset_test[idx]
     showbbox(model, img, idx)
