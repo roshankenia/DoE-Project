@@ -61,7 +61,7 @@ class PebbleTestDataset(torch.utils.data.Dataset):
         if self.transforms is not None:
             # https://github.com/pytorch/vision/tree/master/references/detection
             # On this website, there are transform examples of RandomHorizontalFlip for target in transforms.py
-            img = self.transforms(img)
+            img = self.transforms(img, None)
 
         return img
 
