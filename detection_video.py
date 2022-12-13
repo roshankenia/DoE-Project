@@ -85,7 +85,7 @@ def get_transform(train):
 # Start to train the model
 ###############################
 # change the root path depending on your own dataset path
-root1 = r'./ceramicimages'
+root1 = r'./inkimages'
 
 # train on the GPU (specify GPU ID with 'cuda:id'), or on the CPU if a GPU is not available
 device = torch.device(
@@ -207,7 +207,7 @@ def showbbox(model, img, idx):
     plt.figure(figsize=(50, 50))
     plt.imshow(img)
     plt.axis('off')
-    vis_tgt_path = "./visualization_results/videoceramic/"
+    vis_tgt_path = "./visualization_results/videoink/"
     if not os.path.isdir(vis_tgt_path):
         os.mkdir(vis_tgt_path)
     plt.savefig(os.path.join(vis_tgt_path, "sample_" + str(idx) + "_vis.png"))
