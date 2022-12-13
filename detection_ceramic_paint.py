@@ -299,8 +299,6 @@ def showbbox(model, img, idx):
     img = (img * 255).byte().data.cpu()  # [0, 1] -> [0, 255]
     img = np.array(img)  # tensor -> ndarray
 
-    print(img)
-
     # for i in range(prediction[0]['boxes'].cpu().shape[0]): # select all the predicted bounding boxes
     if len(prediction[0]['labels']) >= 3:
         for i in range(3):  # select the top-3 predicted bounding boxes
@@ -310,9 +308,9 @@ def showbbox(model, img, idx):
             fig_draw(img, prediction, i)
 
 
-#    plt.figure(figsize=(50,50))
-#    plt.imshow(img)
-#    plt.axis('off')
+    plt.figure(figsize=(50,50))
+    plt.imshow(img)
+    plt.axis('off')
     vis_tgt_path = "./visualization_results/ceramic_paint_visual_samples_fastRCNN_v2_200epochs/"
     if not os.path.isdir(vis_tgt_path):
         os.mkdir(vis_tgt_path)
