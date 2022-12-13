@@ -299,6 +299,8 @@ def showbbox(model, img, idx):
     img = (img * 255).byte().data.cpu()  # [0, 1] -> [0, 255]
     img = np.array(img)  # tensor -> ndarray
 
+    print(img)
+
     # for i in range(prediction[0]['boxes'].cpu().shape[0]): # select all the predicted bounding boxes
     if len(prediction[0]['labels']) >= 3:
         for i in range(3):  # select the top-3 predicted bounding boxes
