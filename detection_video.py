@@ -51,7 +51,7 @@ class PebbleTestDataset(torch.utils.data.Dataset):
 
     def __getitem__(self, idx):
         # load images and their corresponding bbox annotations
-        img_path = os.path.join(self.root, "JPEGImages", self.imgs[idx])
+        img_path = os.path.join(self.root, self.imgs[idx])
         img = Image.open(img_path).convert("RGB")
         # normalization
         #img = np.array(img)
