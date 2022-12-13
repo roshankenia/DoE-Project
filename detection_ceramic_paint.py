@@ -190,7 +190,7 @@ lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(
     optimizer, T_0=1, T_mult=2)
 
 # let's train it for a defined number of epochs
-num_epochs = 1
+num_epochs = 5
 
 for epoch in range(num_epochs):
     # train for one epoch, printing every 10 iterations
@@ -315,6 +315,7 @@ def showbbox(model, img, idx):
     if not os.path.isdir(vis_tgt_path):
         os.mkdir(vis_tgt_path)
     plt.savefig(os.path.join(vis_tgt_path, "sample_" + str(idx) + "_vis.png"))
+    plt.close()
 
 
 # check the result
