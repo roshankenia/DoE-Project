@@ -104,4 +104,4 @@ def object_detection_api(img_path, threshold=0.5, rect_th=3, text_size=3, text_t
     plt.close()
 
 
-object_detection_api('./bestceramic/image183_90.jpg', threshold=0.9)
+object_detection_api('./bestceramic/image183_90.jpg', threshold=0.99)
