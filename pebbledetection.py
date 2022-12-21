@@ -88,7 +88,7 @@ def object_detection_api(img_path, threshold=0.5, rect_th=3, text_size=3, text_t
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     for i in range(len(boxes)):
         cv2.rectangle(img, boxes[i][0], boxes[i][1],
-                      color=(0, 255, 0), thickness=rect_th)
+                      (0, 255, 0), thickness=rect_th)
         cv2.putText(img, pred_cls[i], boxes[i][0], cv2.FONT_HERSHEY_SIMPLEX,
                     text_size, (0, 255, 0), thickness=text_th)
     plt.figure(figsize=(20, 30))
