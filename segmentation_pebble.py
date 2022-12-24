@@ -24,7 +24,7 @@ else:
     print('GPU is being properly used')
 
 
-class PedestrianDataset(torch.utils.data.Dataset):
+class SegmentationDataset(torch.utils.data.Dataset):
     def __init__(self, root, transforms=None):
         self.root = root
         self.transforms = transforms
@@ -35,8 +35,9 @@ class PedestrianDataset(torch.utils.data.Dataset):
 
     def __getitem__(self, idx):
         # load images ad masks
-        img_path = os.path.join(self.root, "PNGImages", self.imgs[idx])
-        mask_path = os.path.join(self.root, "PedMasks", self.masks[idx])
+        img_path = os.path.join(self.root, "SegmentationData", self.imgs[idx])
+        mask_path = os.path.join(
+            self.root, "SegmentationMasks", self.masks[idx])
         img = Image.open(img_path).convert("RGB")
         # note that we haven't converted the mask to RGB,
         # because each color corresponds to a different instance
@@ -125,8 +126,8 @@ def get_transform(train):
 
 
 # use our dataset and defined transformations
-dataset = PedestrianDataset('PennFudanPed', get_transform(train=True))
-dataset_test = PedestrianDataset('PennFudanPed', get_transform(train=False))
+dataset = SegmentationDataset('./', get_transform(train=True))
+dataset_test = SegmentationDataset('./', get_transform(train=False))
 
 # split the dataset in train and test set
 torch.manual_seed(1)
@@ -180,4 +181,4 @@ for epoch in range(num_epochs):
     evaluate(model, data_loader_test, device=device)
 
 
-torch.save(model, 'mask-rcnn-pedestrian.pt')
+torch.save(model, 'mask-rcnn-pebble.pt')
