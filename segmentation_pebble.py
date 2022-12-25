@@ -73,6 +73,7 @@ class SegmentationDataset(torch.utils.data.Dataset):
         boxes = torch.as_tensor(boxes, dtype=torch.float32)
         # there is only one class
         labels = torch.ones((len(valid_masks),), dtype=torch.int64)
+        valid_masks = np.array(valid_masks)
         masks = torch.as_tensor(valid_masks, dtype=torch.uint8)
 
         image_id = torch.tensor([idx])
