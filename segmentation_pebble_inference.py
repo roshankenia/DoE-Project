@@ -74,7 +74,7 @@ def get_prediction(img_path, confidence):
     # print(pred[0]['labels'].numpy().max())
     pred_class = [CLASS_NAMES[i]
                   for i in list(pred[0]['labels'].cpu().numpy())]
-    pred_boxes = [[(i[0], i[1]), (i[2], i[3])]
+    pred_boxes = [[(int(i[0]), int(i[1])), (int(i[2]), int(i[3]))]
                   for i in list(pred[0]['boxes'].detach().cpu().numpy())]
     masks = masks[:pred_t+1]
     pred_boxes = pred_boxes[:pred_t+1]
