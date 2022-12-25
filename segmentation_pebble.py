@@ -50,11 +50,9 @@ class SegmentationDataset(torch.utils.data.Dataset):
         # instances are encoded as different colors
         obj_ids = np.unique(mask)
         # first id is the background, so remove it
-        print('obj_ids before:', obj_ids)
         obj_ids = obj_ids[1:]
 
-        print('obj_ids after:', obj_ids)
-
+        print('mask:', mask)
         # split the color-encoded mask into a set
         # of binary masks
         masks = mask == obj_ids[:, None, None]
