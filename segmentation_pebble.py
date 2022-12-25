@@ -30,14 +30,15 @@ class SegmentationDataset(torch.utils.data.Dataset):
         self.transforms = transforms
         # load all image files, sorting them to
         # ensure that they are aligned
-        self.imgs = list(sorted(os.listdir(os.path.join(root, "PNGImages"))))
-        self.masks = list(sorted(os.listdir(os.path.join(root, "PedMasks"))))
+        self.imgs = list(
+            sorted(os.listdir(os.path.join(root, "SegmentationData"))))
+        self.masks = list(
+            sorted(os.listdir(os.path.join(root, "SegmentationMasks"))))
 
     def __getitem__(self, idx):
         # load images ad masks
-        img_path = os.path.join(self.root, "SegmentationData", self.imgs[idx])
-        mask_path = os.path.join(
-            self.root, "SegmentationMasks", self.masks[idx])
+        img_path = os.path.join(self.root, self.imgs[idx])
+        mask_path = os.path.join(self.root, self.masks[idx])
         img = Image.open(img_path).convert("RGB")
         # note that we haven't converted the mask to RGB,
         # because each color corresponds to a different instance
@@ -126,8 +127,8 @@ def get_transform(train):
 
 
 # use our dataset and defined transformations
-dataset = SegmentationDataset('', get_transform(train=True))
-dataset_test = SegmentationDataset('', get_transform(train=False))
+dataset = SegmentationDataset('./', get_transform(train=True))
+dataset_test = SegmentationDataset('./', get_transform(train=False))
 
 # split the dataset in train and test set
 torch.manual_seed(1)
