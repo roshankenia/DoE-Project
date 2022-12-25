@@ -61,11 +61,12 @@ class SegmentationDataset(torch.utils.data.Dataset):
         boxes = []
         for i in range(num_objs):
             pos = np.where(masks[i])
-            print('pos:', pos)
             xmin = np.min(pos[1])
             xmax = np.max(pos[1])
             ymin = np.min(pos[0])
             ymax = np.max(pos[0])
+            print('pos:', pos, '\nxmin:', xmin, 'xmax:',
+                  xmax, 'ymin:', ymin, 'ymax:', ymax)
             boxes.append([xmin, ymin, xmax, ymax])
 
         boxes = torch.as_tensor(boxes, dtype=torch.float32)
