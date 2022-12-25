@@ -50,7 +50,10 @@ class SegmentationDataset(torch.utils.data.Dataset):
         # instances are encoded as different colors
         obj_ids = np.unique(mask)
         # first id is the background, so remove it
+        print('obj_ids before:', obj_ids)
         obj_ids = obj_ids[1:]
+
+        print('obj_ids after:', obj_ids)
 
         # split the color-encoded mask into a set
         # of binary masks
@@ -59,7 +62,6 @@ class SegmentationDataset(torch.utils.data.Dataset):
         # get bounding box coordinates for each mask
         num_objs = len(obj_ids)
         boxes = []
-        mask_with_boxes = []
         for i in range(num_objs):
             pos = np.where(masks[i])
             xmin = np.min(pos[1])
@@ -70,12 +72,11 @@ class SegmentationDataset(torch.utils.data.Dataset):
                 continue
             else:
                 boxes.append([xmin, ymin, xmax, ymax])
-                mask_with_boxes.append(masks[i])
 
         boxes = torch.as_tensor(boxes, dtype=torch.float32)
         # there is only one class
-        labels = torch.ones((len(mask_with_boxes),), dtype=torch.int64)
-        masks = torch.as_tensor(mask_with_boxes, dtype=torch.uint8)
+        labels = torch.ones((num_objs,), dtype=torch.int64)
+        masks = torch.as_tensor(masks, dtype=torch.uint8)
 
         image_id = torch.tensor([idx])
         area = (boxes[:, 3] - boxes[:, 1]) * (boxes[:, 2] - boxes[:, 0])
