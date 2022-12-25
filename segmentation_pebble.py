@@ -126,8 +126,8 @@ def get_transform(train):
 
 
 # use our dataset and defined transformations
-dataset = SegmentationDataset('./', get_transform(train=True))
-dataset_test = SegmentationDataset('./', get_transform(train=False))
+dataset = SegmentationDataset('', get_transform(train=True))
+dataset_test = SegmentationDataset('', get_transform(train=False))
 
 # split the dataset in train and test set
 torch.manual_seed(1)
