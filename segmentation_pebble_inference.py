@@ -119,4 +119,4 @@ def segment_instance(img_path, confidence=0.5, rect_th=2, text_size=2, text_th=2
     plt.close()
 
 
-segment_instance('./SegmentationData/185.jpg', confidence=0.1)
+segment_instance('./SegmentationData/185.jpg', confidence=0.5)
