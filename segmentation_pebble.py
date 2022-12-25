@@ -61,6 +61,7 @@ class SegmentationDataset(torch.utils.data.Dataset):
         boxes = []
         for i in range(num_objs):
             pos = np.where(masks[i])
+            print('pos:', pos)
             xmin = np.min(pos[1])
             xmax = np.max(pos[1])
             ymin = np.min(pos[0])
