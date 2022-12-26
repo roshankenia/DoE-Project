@@ -227,7 +227,7 @@ lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(
 #                                                gamma=0.1)
 
 # number of epochs
-num_epochs = 200
+num_epochs = 10
 
 for epoch in range(num_epochs):
     # train for one epoch, printing every 10 iterations
