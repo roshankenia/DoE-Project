@@ -74,6 +74,7 @@ def get_prediction(img_path, confidence):
         return None, None, None
     pred_t = pred_t[-1]
     masks = (pred[0]['masks'] > 0.5).detach().cpu().numpy()
+    masks = masks.reshape(-1, *masks.shape[-2:])
     print(masks.shape)
     # print(pred[0]['labels'].numpy().max())
     pred_class = [CLASS_NAMES[i]
