@@ -121,9 +121,9 @@ class SegmentationDataset(torch.utils.data.Dataset):
             rgb_mask = get_coloured_mask(masks[i])
             img_with_annot = cv2.addWeighted(
                 img_with_annot, 1, rgb_mask, 0.5, 0)
-            cv2.rectangle(img_with_annot, boxes[i][0], boxes[i][1],
+            cv2.rectangle(img_with_annot, (int(boxes[i][0]), int(boxes[i][1])), (int(boxes[i][2]), int(boxes[i][3])),
                           color=(0, 255, 0), thickness=rect_th)
-            cv2.putText(img_with_annot, "pebble", boxes[i][0], cv2.FONT_HERSHEY_SIMPLEX,
+            cv2.putText(img_with_annot, "pebble", (boxes[i][0], boxes[i][1]), cv2.FONT_HERSHEY_SIMPLEX,
                         text_size, (0, 255, 0), thickness=text_th)
         plt.figure(figsize=(20, 30))
         plt.imshow(img_with_annot)
