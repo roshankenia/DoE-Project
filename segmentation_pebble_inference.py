@@ -115,7 +115,7 @@ def segment_instance(img_path, ind, confidence=0.5, rect_th=2, text_size=2, text
         cv2.putText(img, pred_cls[i], boxes[i][0], cv2.FONT_HERSHEY_SIMPLEX,
                     text_size, (0, 255, 0), thickness=text_th)
     px = 1/plt.rcParams['figure.dpi']  # pixel in inches
-    plt.figure(figsize=(1080*px, 1920*px))
+    plt.figure(figsize=(1920*px, 1080*px))
     plt.imshow(img)
     plt.xticks([])
     plt.yticks([])
