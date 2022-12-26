@@ -211,7 +211,7 @@ params = [p for p in model.parameters() if p.requires_grad]
 
 # define the optimizer, here we use SGD
 optimizer = torch.optim.SGD(
-    params, lr=0.0003, momentum=0.9, weight_decay=0.0005)
+    params, lr=0.003, momentum=0.9, weight_decay=0.0005)
 
 # define a learning rate scheduler
 lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(
@@ -236,7 +236,7 @@ for epoch in range(num_epochs):
     # update the learning rate
     lr_scheduler.step()
     # evaluate on the test dataset
-    evaluate(model, data_loader_test, device=device)
+    # evaluate(model, data_loader_test, device=device)
 
-
+evaluate(model, data_loader_test, device=device)
 torch.save(model, 'mask-rcnn-pebble.pt')
