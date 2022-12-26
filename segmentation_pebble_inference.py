@@ -129,5 +129,5 @@ imgs = list(sorted(os.listdir(os.path.join("./", "SegmentationData"))))
 ind = 0
 for img in imgs:
     img_path = os.path.join("./", "SegmentationData", img)
-    segment_instance(img_path, ind, confidence=0.7)
+    segment_instance(img_path, ind, confidence=0.5)
     ind += 1
