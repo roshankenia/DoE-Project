@@ -114,7 +114,7 @@ def crop_pebble(img, masks, boxes, ind):
 
     background[yoff:yoff+ch, xoff:xoff+cw] = crop
     # save crop as JPG file
-    cv2.imwrite("./ceramicimages/image"+str(ind) + "_crop.jpg", crop)
+    cv2.imwrite("./ceramicimages/image"+str(ind) + "_crop.jpg", background)
 
 
 vidcap = cv2.VideoCapture('Moving Pebbles - Ceramic Paint.MOV')
