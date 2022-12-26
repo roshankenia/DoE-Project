@@ -45,6 +45,7 @@ def get_coloured_mask(mask):
     g = np.zeros_like(mask).astype(np.uint8)
     b = np.zeros_like(mask).astype(np.uint8)
     r[mask], g[mask], b[mask] = colours[random.randrange(0, 10)]
+    r[0] = [0, 0, 0]
     print(r)
     coloured_mask = np.stack([r, g, b], axis=2)
     return coloured_mask
