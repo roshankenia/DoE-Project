@@ -48,10 +48,9 @@ class SegmentationDataset(torch.utils.data.Dataset):
         mask = Image.open(mask_path)
 
         mask = np.array(mask)
-        print('before', np.unique(mask))
+        # replace all nonzero with white so we have only 1 mask
         nonzero = np.nonzero(mask)
         mask[nonzero] = 255
-        print('after', np.unique(mask))
         # instances are encoded as different colors
         obj_ids = np.unique(mask)
         # first id is the background, so remove it
@@ -60,8 +59,6 @@ class SegmentationDataset(torch.utils.data.Dataset):
         # split the color-encoded mask into a set
         # of binary masks
         masks = mask == obj_ids[:, None, None]
-
-        print("masks:", masks)
 
         # get bounding box coordinates for each mask
         num_objs = len(masks)
