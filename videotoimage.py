@@ -96,9 +96,11 @@ def make_mask_image(img, masks, boxes, pred_cls, ind, rect_th=2, text_size=2, te
     cv2.imwrite("./ceramicimages/image"+str(ind) + "_mask.jpg", img)
 
 
-def crop_pebble(img, masks, ind):
+def crop_pebble(img, masks, boxes, ind):
     mask = np.asarray(masks[0], dtype="uint8")
-    crop = cv2.bitwise_and(img, img, mask=mask)
+    only_mask = cv2.bitwise_and(img, img, mask=mask)
+    bbox = boxes[0]
+    crop = only_mask[bbox[0][1]:bbox[1][1], bbox[0][0]:bbox[1][0]]
     # save crop as JPG file
     cv2.imwrite("./ceramicimages/image"+str(ind) + "_crop.jpg", crop)
 
@@ -107,7 +109,7 @@ vidcap = cv2.VideoCapture('Moving Pebbles - Ceramic Paint.MOV')
 frame_count = int(vidcap.get(cv2.CAP_PROP_FRAME_COUNT))
 print('video has', str(frame_count), 'frames.')
 
-rotations = [0, 45, 90, 135, 180, 225, 270, 315]
+rotations = [0, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180, 195, 210, 225, 240, 255, 270, 285, 300 315]
 sharpen_kernel = np.array([[-1, -1, -1], [-1, 9, -1], [-1, -1, -1]])
 
 count = 0
