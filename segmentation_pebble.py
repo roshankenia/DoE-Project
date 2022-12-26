@@ -32,14 +32,15 @@ class SegmentationDataset(torch.utils.data.Dataset):
         # load all image files, sorting them to
         # ensure that they are aligned
         self.imgs = list(
-            sorted(os.listdir(os.path.join(root, "Data"))))
+            sorted(os.listdir(os.path.join(root, "SegmentationData"))))
         self.masks = list(
-            sorted(os.listdir(os.path.join(root, "Masks"))))
+            sorted(os.listdir(os.path.join(root, "SegmentationMasks"))))
 
     def __getitem__(self, idx):
         # load images ad masks
-        img_path = os.path.join(self.root, "Data", self.imgs[idx])
-        mask_path = os.path.join(self.root, "Masks", self.masks[idx])
+        img_path = os.path.join(self.root, "SegmentationData", self.imgs[idx])
+        mask_path = os.path.join(
+            self.root, "SegmentationMasks", self.masks[idx])
         img = Image.open(img_path).convert("RGB")
         # note that we haven't converted the mask to RGB,
         # because each color corresponds to a different instance
@@ -175,15 +176,14 @@ def get_transform(train):
 
 
 # use our dataset and defined transformations
-dataset = SegmentationDataset('./SegmentationTrain', get_transform(train=True))
-dataset_test = SegmentationDataset(
-    './SegmentationTest', get_transform(train=False))
+dataset = SegmentationDataset('./', get_transform(train=True))
+dataset_test = SegmentationDataset('./', get_transform(train=False))
 
-# # split the dataset in train and test set
-# torch.manual_seed(1)
-# indices = torch.randperm(len(dataset)).tolist()
-# dataset = torch.utils.data.Subset(dataset, indices[:-50])
-# dataset_test = torch.utils.data.Subset(dataset_test, indices[-50:])
+# split the dataset in train and test set
+torch.manual_seed(1)
+indices = torch.randperm(len(dataset)).tolist()
+dataset = torch.utils.data.Subset(dataset, indices[:-50])
+dataset_test = torch.utils.data.Subset(dataset_test, indices[-50:])
 
 # define training and validation data loaders
 data_loader = torch.utils.data.DataLoader(
@@ -227,7 +227,7 @@ lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(
 #                                                gamma=0.1)
 
 # number of epochs
-num_epochs = 10
+num_epochs = 200
 
 for epoch in range(num_epochs):
     # train for one epoch, printing every 10 iterations
@@ -237,8 +237,6 @@ for epoch in range(num_epochs):
     lr_scheduler.step()
     # evaluate on the test dataset
     # evaluate(model, data_loader_test, device=device)
-print('Evaluate on training')
-evaluate(model, data_loader, device=device)
-print('Evaluate on testing')
+
 evaluate(model, data_loader_test, device=device)
 torch.save(model, 'mask-rcnn-pebble.pt')
