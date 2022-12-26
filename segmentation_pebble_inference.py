@@ -48,6 +48,14 @@ def get_coloured_mask(mask):
     return coloured_mask
 
 
+def make_one_color(mask):
+    # replace all nonzero with white so we have only 1 mask
+    nonzero = np.nonzero(mask)
+    mask[nonzero] = 125
+
+    return mask
+
+
 def get_prediction(img_path, confidence):
     """
     get_prediction
@@ -106,7 +114,7 @@ def segment_instance(img_path, ind, confidence=0.5, rect_th=2, text_size=2, text
     img = cv2.imread(img_path)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     for i in range(len(masks)):
-        rgb_mask = get_coloured_mask(masks[i])
+        rgb_mask = make_one_color(masks[i])
         img = cv2.addWeighted(img, 1, rgb_mask, 0.5, 0)
         cv2.rectangle(img, boxes[i][0], boxes[i][1],
                       color=(0, 255, 0), thickness=rect_th)
