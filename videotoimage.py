@@ -84,7 +84,7 @@ def get_prediction(img, confidence):
     return masks, pred_boxes, pred_class
 
 
-def make_mask_image(img, ind, rect_th=2, text_size=2, text_th=2):
+def make_mask_image(img, masks, boxes, pred_cls, ind, rect_th=2, text_size=2, text_th=2):
     for i in range(len(masks)):
         rgb_mask = get_coloured_mask(masks[i])
         img = cv2.addWeighted(img, 1, rgb_mask, 0.5, 0)
@@ -92,19 +92,14 @@ def make_mask_image(img, ind, rect_th=2, text_size=2, text_th=2):
                       color=(0, 255, 0), thickness=rect_th)
         cv2.putText(img, pred_cls[i], boxes[i][0], cv2.FONT_HERSHEY_SIMPLEX,
                     text_size, (0, 255, 0), thickness=text_th)
-    px = 1/plt.rcParams['figure.dpi']  # pixel in inches
-    plt.figure(figsize=(2000*px, 1100*px))
-    plt.imshow(img)
-    plt.xticks([])
-    plt.yticks([])
-    vis_tgt_path = "./ceramicimages/"
-    if not os.path.isdir(vis_tgt_path):
-        os.mkdir(vis_tgt_path)
-    plt.savefig(os.path.join(
-        vis_tgt_path, "image" + str(ind) + "_mask.jpg"))
-    plt.close()
     # save frame as JPG file
-    cv2.imwrite("./ceramicimages/image"+str(count) + "_usingCV.jpg", img)
+    cv2.imwrite("./ceramicimages/image"+str(ind) + "_mask.jpg", img)
+
+
+def crop_pebble(img, masks, ind):
+    crop = cv2.bitwise_and(img, img, mask=masks[0])
+    # save crop as JPG file
+    cv2.imwrite("./ceramicimages/image"+str(ind) + "_crop.jpg", crop)
 
 
 vidcap = cv2.VideoCapture('Moving Pebbles - Ceramic Paint.MOV')
@@ -122,7 +117,10 @@ while (vidcap.isOpened()):
             # check if image has a pebble
             masks, boxes, pred_cls = get_prediction(image, .9)
             if masks is not None:
-                make_mask_image(np.copy(image), count)
+                if len(masks) == 1:
+                    make_mask_image(np.copy(image), masks,
+                                    boxes, pred_cls, count)
+                    crop_pebble(np.copy(image), masks, count)
             # save unmodified image
             # save frame as JPG file
             cv2.imwrite("./ceramicimages/image" +
