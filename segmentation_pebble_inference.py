@@ -118,7 +118,7 @@ def segment_instance(img_path, ind, confidence=0.5, rect_th=2, text_size=2, text
     plt.imshow(img)
     plt.xticks([])
     plt.yticks([])
-    vis_tgt_path = "./visualization_results/pebbleDetection/"
+    vis_tgt_path = "./visualization_results/pebbleDetectionBestCeramic/"
     if not os.path.isdir(vis_tgt_path):
         os.mkdir(vis_tgt_path)
     plt.savefig(os.path.join(
@@ -127,9 +127,9 @@ def segment_instance(img_path, ind, confidence=0.5, rect_th=2, text_size=2, text
 
 
 # iterate through each sample
-imgs = list(sorted(os.listdir(os.path.join("./", "SegmentationData"))))
+imgs = list(sorted(os.listdir(os.path.join("./", "bestceramic"))))
 ind = 0
 for img in imgs:
-    img_path = os.path.join("./", "SegmentationData", img)
+    img_path = os.path.join("./", "bestceramic", img)
     segment_instance(img_path, ind, confidence=0.5)
     ind += 1
