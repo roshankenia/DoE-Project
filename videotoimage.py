@@ -105,7 +105,7 @@ def crop_pebble(img, masks, boxes, ind):
     crop = only_mask[bbox[0][1]:bbox[1][1], bbox[0][0]:bbox[1][0]]
 
     # put pebble on standard 1000x1000 image
-    background = np.zeros((1000, 1000, 1), np.uint8)
+    background = np.zeros((1000, 1000, 3), np.uint8)
     ch, cw = crop.shape[:2]
 
     # compute xoff and yoff for placement of upper left corner of resized image
