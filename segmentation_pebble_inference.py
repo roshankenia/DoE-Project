@@ -101,7 +101,7 @@ def segment_instance(img_path, ind, confidence=0.5, rect_th=2, text_size=2, text
         - final output is displayed
     """
     masks, boxes, pred_cls = get_prediction(img_path, confidence)
-    if masks == None:
+    if masks is None:
         return
     img = cv2.imread(img_path)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
