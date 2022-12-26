@@ -49,7 +49,7 @@ class SegmentationDataset(torch.utils.data.Dataset):
 
         mask = np.array(mask)
         for row in mask:
-            for col in mask:
+            for col in row:
                 print(col)
         exit()
         # instances are encoded as different colors
