@@ -109,7 +109,7 @@ vidcap = cv2.VideoCapture('Moving Pebbles - Ceramic Paint.MOV')
 frame_count = int(vidcap.get(cv2.CAP_PROP_FRAME_COUNT))
 print('video has', str(frame_count), 'frames.')
 
-rotations = [0, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180, 195, 210, 225, 240, 255, 270, 285, 300 315]
+rotations = [0, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180, 195, 210, 225, 240, 255, 270, 285, 300, 315]
 sharpen_kernel = np.array([[-1, -1, -1], [-1, 9, -1], [-1, -1, -1]])
 
 count = 0
