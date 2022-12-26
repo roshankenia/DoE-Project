@@ -97,6 +97,8 @@ def make_mask_image(img, masks, boxes, pred_cls, ind, rect_th=2, text_size=2, te
 
 
 def crop_pebble(img, masks, ind):
+    print(img.shape)
+    print(masks[0].shape)
     crop = cv2.bitwise_and(img, img, mask=masks[0])
     # save crop as JPG file
     cv2.imwrite("./ceramicimages/image"+str(ind) + "_crop.jpg", crop)
