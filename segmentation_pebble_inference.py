@@ -115,8 +115,8 @@ def segment_instance(img_path, confidence=0.5, rect_th=2, text_size=2, text_th=2
     if not os.path.isdir(vis_tgt_path):
         os.mkdir(vis_tgt_path)
     plt.savefig(os.path.join(
-        vis_tgt_path, "sample_" + str(185) + "_vis.png"))
+        vis_tgt_path, "sample_" + str(312) + "_vis.png"))
     plt.close()
 
 
-segment_instance('./SegmentationData/185.jpg', confidence=0.5)
+segment_instance('./SegmentationData/312.jpg', confidence=0.5)
