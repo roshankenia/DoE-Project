@@ -115,29 +115,30 @@ sharpen_kernel = np.array([[-1, -1, -1], [-1, 9, -1], [-1, -1, -1]])
 count = 0
 while (vidcap.isOpened()):
     hasFrames, image = vidcap.read()
-    if hasFrames:
-        # check if image has a pebble
-        masks, boxes, pred_cls = get_prediction(image, .9)
-        if masks is not None:
-            make_mask_image(np.copy(image), count)
-        # save unmodified image
-        # save frame as JPG file
-        cv2.imwrite("./ceramicimages/image" +
-                    str(count) + "_unmodified.jpg", image)
-        for rotation in rotations:
-            image_center = tuple(np.array(image.shape[1::-1]) / 2)
-            rot_mat = cv2.getRotationMatrix2D(image_center, rotation, 1.0)
-            result = cv2.warpAffine(
-                image, rot_mat, image.shape[1::-1], flags=cv2.INTER_LINEAR)
-            sharpened = cv2.filter2D(result, -1, sharpen_kernel)
-
-            deblurred = cv2.fastNlMeansDenoisingColored(
-                sharpened, None, 10, 10, 7, 21)
+    if count >= 1950 and count <= 2050:
+        if hasFrames:
+            # check if image has a pebble
+            masks, boxes, pred_cls = get_prediction(image, .9)
+            if masks is not None:
+                make_mask_image(np.copy(image), count)
+            # save unmodified image
             # save frame as JPG file
-            cv2.imwrite("./ceramicimages/image"+str(count) +
-                        "_"+str(rotation)+".jpg", deblurred)
-    else:
-        break
+            cv2.imwrite("./ceramicimages/image" +
+                        str(count) + "_unmodified.jpg", image)
+            for rotation in rotations:
+                image_center = tuple(np.array(image.shape[1::-1]) / 2)
+                rot_mat = cv2.getRotationMatrix2D(image_center, rotation, 1.0)
+                result = cv2.warpAffine(
+                    image, rot_mat, image.shape[1::-1], flags=cv2.INTER_LINEAR)
+                sharpened = cv2.filter2D(result, -1, sharpen_kernel)
+
+                deblurred = cv2.fastNlMeansDenoisingColored(
+                    sharpened, None, 10, 10, 7, 21)
+                # save frame as JPG file
+                cv2.imwrite("./ceramicimages/image"+str(count) +
+                            "_"+str(rotation)+".jpg", deblurred)
+        else:
+            break
     count += 1
 
 # When everything done, release the capture
