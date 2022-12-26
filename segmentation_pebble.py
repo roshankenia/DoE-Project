@@ -48,7 +48,7 @@ class SegmentationDataset(torch.utils.data.Dataset):
         mask = Image.open(mask_path)
 
         mask = np.array(mask)
-        mask = mask[mask != 0]
+        mask = mask[np.nonzero(mask)]
         # # instances are encoded as different colors
         # obj_ids = np.unique(mask)
         # # first id is the background, so remove it
