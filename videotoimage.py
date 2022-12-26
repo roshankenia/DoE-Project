@@ -98,9 +98,21 @@ def make_mask_image(img, masks, boxes, pred_cls, ind, rect_th=2, text_size=2, te
 
 def crop_pebble(img, masks, boxes, ind):
     mask = np.asarray(masks[0], dtype="uint8")
+    # obtain only the mask pixels from the image
     only_mask = cv2.bitwise_and(img, img, mask=mask)
     bbox = boxes[0]
+    # crop the image to only contain the pebble
     crop = only_mask[bbox[0][1]:bbox[1][1], bbox[0][0]:bbox[1][0]]
+
+    # put pebble on standard 1000x1000 image
+    background = np.zeros((1000, 1000, 1), np.uint8)
+    ch, cw = crop.shape[:2]
+
+    # compute xoff and yoff for placement of upper left corner of resized image
+    yoff = round((1000-ch)/2)
+    xoff = round((1000-cw)/2)
+
+    background[yoff:yoff+ch, xoff:xoff+cw] = crop
     # save crop as JPG file
     cv2.imwrite("./ceramicimages/image"+str(ind) + "_crop.jpg", crop)
 
