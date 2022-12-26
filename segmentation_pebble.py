@@ -143,7 +143,8 @@ class SegmentationDataset(torch.utils.data.Dataset):
 
 def build_model(num_classes):
     # load an instance segmentation model pre-trained on COCO
-    model = torchvision.models.detection.maskrcnn_resnet50_fpn(pretrained=True)
+    model = torchvision.models.detection.maskrcnn_resnet50_fpn(
+        weights=torchvision.models.detection.MaskRCNN_ResNet50_FPN_Weights.DEFAULT)
 
     # get the number of input features for the classifier
     in_features = model.roi_heads.box_predictor.cls_score.in_features
@@ -207,15 +208,23 @@ model.to(device)
 
 # construct an optimizer
 params = [p for p in model.parameters() if p.requires_grad]
-optimizer = torch.optim.SGD(params, lr=0.005,
-                            momentum=0.9, weight_decay=0.0005)
 
-# and a learning rate scheduler which decreases the learning rate by
-# 10x every 3 epochs
-lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer,
-                                               step_size=3,
-                                               gamma=0.1)
+# define the optimizer, here we use SGD
+optimizer = torch.optim.SGD(
+    params, lr=0.0003, momentum=0.9, weight_decay=0.0005)
 
+# define a learning rate scheduler
+lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(
+    optimizer, T_0=1, T_mult=2)
+
+# optimizer = torch.optim.SGD(params, lr=0.005,
+#                             momentum=0.9, weight_decay=0.0005)
+
+# # and a learning rate scheduler which decreases the learning rate by
+# # 10x every 3 epochs
+# lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer,
+#                                                step_size=3,
+#                                                gamma=0.1)
 
 # number of epochs
 num_epochs = 10
