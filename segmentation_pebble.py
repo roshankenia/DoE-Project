@@ -61,24 +61,20 @@ class SegmentationDataset(torch.utils.data.Dataset):
         masks = mask == obj_ids[:, None, None]
 
         # get bounding box coordinates for each mask
-        num_objs = len(masks)
+        num_objs = len(obj_ids)
         boxes = []
-        valid_masks = []
         for i in range(num_objs):
             pos = np.where(masks[i])
             xmin = np.min(pos[1])
             xmax = np.max(pos[1])
             ymin = np.min(pos[0])
             ymax = np.max(pos[0])
-            if xmin != xmax and ymin != ymax:
-                boxes.append([xmin, ymin, xmax, ymax])
-                valid_masks.append(masks[i])
+            boxes.append([xmin, ymin, xmax, ymax])
 
         boxes = torch.as_tensor(boxes, dtype=torch.float32)
         # there is only one class
-        labels = torch.ones((len(valid_masks),), dtype=torch.int64)
-        valid_masks = np.array(valid_masks)
-        masks = torch.as_tensor(valid_masks, dtype=torch.uint8)
+        labels = torch.ones((num_objs,), dtype=torch.int64)
+        masks = torch.as_tensor(masks, dtype=torch.uint8)
 
         image_id = torch.tensor([idx])
         area = (boxes[:, 3] - boxes[:, 1]) * (boxes[:, 2] - boxes[:, 0])
@@ -97,47 +93,47 @@ class SegmentationDataset(torch.utils.data.Dataset):
             img, target = self.transforms(img, target)
 
         # lets try to understand what our box and mask look like
-        def get_coloured_mask(mask):
-            """
-            random_colour_masks
-            parameters:
-                - image - predicted masks
-            method:
-                - the masks of each predicted object is given random colour for visualization
-            """
-            colours = [[0, 255, 0], [0, 0, 255], [255, 0, 0], [0, 255, 255], [255, 255, 0], [
-                255, 0, 255], [80, 70, 180], [250, 80, 190], [245, 145, 50], [70, 150, 250], [50, 190, 190]]
-            r = np.zeros_like(mask).astype(np.uint8)
-            g = np.zeros_like(mask).astype(np.uint8)
-            b = np.zeros_like(mask).astype(np.uint8)
-            r[mask == 1], g[mask == 1], b[mask ==
-                                          1] = colours[random.randrange(0, 10)]
-            coloured_mask = np.stack([r, g, b], axis=2)
-            return coloured_mask
-        confidence = 0.5
-        rect_th = 2
-        text_size = 2
-        text_th = 2
-        img_with_annot = cv2.imread(img_path)
-        img_with_annot = cv2.cvtColor(img_with_annot, cv2.COLOR_BGR2RGB)
-        for i in range(len(masks)):
-            rgb_mask = get_coloured_mask(masks[i])
-            img_with_annot = cv2.addWeighted(
-                img_with_annot, 1, rgb_mask, 0.5, 0)
-            cv2.rectangle(img_with_annot, (int(boxes[i][0]), int(boxes[i][1])), (int(boxes[i][2]), int(boxes[i][3])),
-                          color=(0, 255, 0), thickness=rect_th)
-            cv2.putText(img_with_annot, "pebble", (int(boxes[i][0]), int(boxes[i][1])), cv2.FONT_HERSHEY_SIMPLEX,
-                        text_size, (0, 255, 0), thickness=text_th)
-        plt.figure(figsize=(20, 30))
-        plt.imshow(img_with_annot)
-        plt.xticks([])
-        plt.yticks([])
-        vis_tgt_path = "./visualization_results/pebblesWithAnnotations/"
-        if not os.path.isdir(vis_tgt_path):
-            os.mkdir(vis_tgt_path)
-        plt.savefig(os.path.join(
-            vis_tgt_path, "sample_" + str(idx) + "_withMaskAndBox.png"))
-        plt.close()
+        # def get_coloured_mask(mask):
+        #     """
+        #     random_colour_masks
+        #     parameters:
+        #         - image - predicted masks
+        #     method:
+        #         - the masks of each predicted object is given random colour for visualization
+        #     """
+        #     colours = [[0, 255, 0], [0, 0, 255], [255, 0, 0], [0, 255, 255], [255, 255, 0], [
+        #         255, 0, 255], [80, 70, 180], [250, 80, 190], [245, 145, 50], [70, 150, 250], [50, 190, 190]]
+        #     r = np.zeros_like(mask).astype(np.uint8)
+        #     g = np.zeros_like(mask).astype(np.uint8)
+        #     b = np.zeros_like(mask).astype(np.uint8)
+        #     r[mask == 1], g[mask == 1], b[mask ==
+        #                                   1] = colours[random.randrange(0, 10)]
+        #     coloured_mask = np.stack([r, g, b], axis=2)
+        #     return coloured_mask
+        # confidence = 0.5
+        # rect_th = 2
+        # text_size = 2
+        # text_th = 2
+        # img_with_annot = cv2.imread(img_path)
+        # img_with_annot = cv2.cvtColor(img_with_annot, cv2.COLOR_BGR2RGB)
+        # for i in range(len(masks)):
+        #     rgb_mask = get_coloured_mask(masks[i])
+        #     img_with_annot = cv2.addWeighted(
+        #         img_with_annot, 1, rgb_mask, 0.5, 0)
+        #     cv2.rectangle(img_with_annot, (int(boxes[i][0]), int(boxes[i][1])), (int(boxes[i][2]), int(boxes[i][3])),
+        #                   color=(0, 255, 0), thickness=rect_th)
+        #     cv2.putText(img_with_annot, "pebble", (int(boxes[i][0]), int(boxes[i][1])), cv2.FONT_HERSHEY_SIMPLEX,
+        #                 text_size, (0, 255, 0), thickness=text_th)
+        # plt.figure(figsize=(20, 30))
+        # plt.imshow(img_with_annot)
+        # plt.xticks([])
+        # plt.yticks([])
+        # vis_tgt_path = "./visualization_results/pebblesWithAnnotations/"
+        # if not os.path.isdir(vis_tgt_path):
+        #     os.mkdir(vis_tgt_path)
+        # plt.savefig(os.path.join(
+        #     vis_tgt_path, "sample_" + str(idx) + "_withMaskAndBox.png"))
+        # plt.close()
 
         return img, target
 
@@ -222,12 +218,12 @@ lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer,
 
 
 # number of epochs
-num_epochs = 1
+num_epochs = 10
 
 for epoch in range(num_epochs):
     # train for one epoch, printing every 10 iterations
     train_one_epoch(model, optimizer, data_loader,
-                    device, epoch, print_freq=10)
+                    device, epoch, print_freq=1)
     # update the learning rate
     lr_scheduler.step()
     # evaluate on the test dataset
