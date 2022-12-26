@@ -125,9 +125,17 @@ def segment_instance(img_path, ind, confidence=0.5, rect_th=2, text_size=2, text
 
 
 # iterate through each sample
-imgs = list(sorted(os.listdir(os.path.join("./", "SegmentationData"))))
+imgs = list(sorted(os.listdir(os.path.join("SegmentationTrain", "Data"))))
 ind = 0
 for img in imgs:
-    img_path = os.path.join("./", "SegmentationData", img)
+    img_path = os.path.join("SegmentationTrain", "Data", img)
+    segment_instance(img_path, ind, confidence=0.5)
+    ind += 1
+
+
+imgs = list(sorted(os.listdir(os.path.join("SegmentationTest", "Data"))))
+ind = 1000
+for img in imgs:
+    img_path = os.path.join("SegmentationTest", "Data", img)
     segment_instance(img_path, ind, confidence=0.5)
     ind += 1
