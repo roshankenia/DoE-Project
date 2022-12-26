@@ -49,7 +49,7 @@ class SegmentationDataset(torch.utils.data.Dataset):
 
         mask = np.array(mask)
         print(mask)
-        break
+        exit()
         # instances are encoded as different colors
         obj_ids = np.unique(mask)
         # first id is the background, so remove it
