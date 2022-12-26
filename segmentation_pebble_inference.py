@@ -38,14 +38,13 @@ def get_coloured_mask(mask):
       method:
         - the masks of each predicted object is given random colour for visualization
     """
-    print(mask)
+    print(mask == 1)
     colours = [[0, 255, 0], [0, 0, 255], [255, 0, 0], [0, 255, 255], [255, 255, 0], [
         255, 0, 255], [80, 70, 180], [250, 80, 190], [245, 145, 50], [70, 150, 250], [50, 190, 190]]
     r = np.zeros_like(mask).astype(np.uint8)
     g = np.zeros_like(mask).astype(np.uint8)
     b = np.zeros_like(mask).astype(np.uint8)
-    r[mask == 1], g[mask == 1], b[mask == 1] = [0, 255, 0]
-    r[mask == False], g[mask == False], b[mask == False] = [0, 0, 0]
+    r[mask == 1], g[mask == 1], b[mask == 1] = colours[random.randrange(0, 10)]
     print(r)
     coloured_mask = np.stack([r, g, b], axis=2)
     return coloured_mask
