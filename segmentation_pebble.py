@@ -179,11 +179,11 @@ dataset = SegmentationDataset('./SegmentationTrain', get_transform(train=True))
 dataset_test = SegmentationDataset(
     './SegmentationTest', get_transform(train=False))
 
-# split the dataset in train and test set
-torch.manual_seed(1)
-indices = torch.randperm(len(dataset)).tolist()
-dataset = torch.utils.data.Subset(dataset, indices[:-50])
-dataset_test = torch.utils.data.Subset(dataset_test, indices[-50:])
+# # split the dataset in train and test set
+# torch.manual_seed(1)
+# indices = torch.randperm(len(dataset)).tolist()
+# dataset = torch.utils.data.Subset(dataset, indices[:-50])
+# dataset_test = torch.utils.data.Subset(dataset_test, indices[-50:])
 
 # define training and validation data loaders
 data_loader = torch.utils.data.DataLoader(
