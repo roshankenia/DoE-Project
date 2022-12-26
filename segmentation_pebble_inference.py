@@ -82,7 +82,7 @@ def get_prediction(img_path, confidence):
     return masks, pred_boxes, pred_class
 
 
-def segment_instance(img_path, confidence=0.5, rect_th=2, text_size=2, text_th=2):
+def segment_instance(img_path, ind, confidence=0.5, rect_th=2, text_size=2, text_th=2):
     """
     segment_instance
       parameters:
@@ -115,8 +115,14 @@ def segment_instance(img_path, confidence=0.5, rect_th=2, text_size=2, text_th=2
     if not os.path.isdir(vis_tgt_path):
         os.mkdir(vis_tgt_path)
     plt.savefig(os.path.join(
-        vis_tgt_path, "sample_" + str(185) + "_vis.png"))
+        vis_tgt_path, "sample_" + str(ind) + "_vis.png"))
     plt.close()
 
 
-segment_instance('./SegmentationData/185.jpg', confidence=0.5)
+# iterate through each sample
+imgs = list(sorted(os.listdir(os.path.join("./", "SegmentationData"))))
+ind = 0
+for img in imgs:
+    img_path = os.path.join("./", "SegmentationData", img)
+    segment_instance(img_path, ind, confidence=0.5)
+    ind += 1
