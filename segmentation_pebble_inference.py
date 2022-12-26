@@ -38,7 +38,7 @@ def get_coloured_mask(mask):
       method:
         - the masks of each predicted object is given random colour for visualization
     """
-    print(mask == 1)
+    print(mask == True)
     colours = [[0, 255, 0], [0, 0, 255], [255, 0, 0], [0, 255, 255], [255, 255, 0], [
         255, 0, 255], [80, 70, 180], [250, 80, 190], [245, 145, 50], [70, 150, 250], [50, 190, 190]]
     r = np.zeros_like(mask).astype(np.uint8)
