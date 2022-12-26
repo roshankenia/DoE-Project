@@ -69,7 +69,10 @@ def get_prediction(img_path, confidence):
     img = img.to(device)
     pred = model([img])
     pred_score = list(pred[0]['scores'].detach().cpu().numpy())
-    pred_t = [pred_score.index(x) for x in pred_score if x > confidence][-1]
+    pred_t = [pred_score.index(x) for x in pred_score if x > confidence]
+    if len(pred_t) == 0:
+        return None, None, None
+    pred_t = pred_t[-1]
     masks = (pred[0]['masks'] > 0.5).squeeze().detach().cpu().numpy()
     # print(pred[0]['labels'].numpy().max())
     pred_class = [CLASS_NAMES[i]
@@ -98,6 +101,8 @@ def segment_instance(img_path, ind, confidence=0.5, rect_th=2, text_size=2, text
         - final output is displayed
     """
     masks, boxes, pred_cls = get_prediction(img_path, confidence)
+    if masks == None:
+        return
     img = cv2.imread(img_path)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     for i in range(len(masks)):
@@ -124,5 +129,5 @@ imgs = list(sorted(os.listdir(os.path.join("./", "SegmentationData"))))
 ind = 0
 for img in imgs:
     img_path = os.path.join("./", "SegmentationData", img)
-    segment_instance(img_path, ind, confidence=0.5)
+    segment_instance(img_path, ind, confidence=0.7)
     ind += 1
