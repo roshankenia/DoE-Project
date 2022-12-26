@@ -9,6 +9,7 @@ from xml.dom.minidom import parse
 from engine import train_one_epoch, evaluate
 import utils
 import transforms as T
+import random
 import torchvision
 from torchvision.models.detection.faster_rcnn import FastRCNNPredictor
 from torchvision.models.detection.mask_rcnn import MaskRCNNPredictor
@@ -91,6 +92,49 @@ class SegmentationDataset(torch.utils.data.Dataset):
 
         if self.transforms is not None:
             img, target = self.transforms(img, target)
+
+        # lets try to understand what our box and mask look like
+        def get_coloured_mask(mask):
+            """
+            random_colour_masks
+            parameters:
+                - image - predicted masks
+            method:
+                - the masks of each predicted object is given random colour for visualization
+            """
+            colours = [[0, 255, 0], [0, 0, 255], [255, 0, 0], [0, 255, 255], [255, 255, 0], [
+                255, 0, 255], [80, 70, 180], [250, 80, 190], [245, 145, 50], [70, 150, 250], [50, 190, 190]]
+            r = np.zeros_like(mask).astype(np.uint8)
+            g = np.zeros_like(mask).astype(np.uint8)
+            b = np.zeros_like(mask).astype(np.uint8)
+            r[mask == 1], g[mask == 1], b[mask ==
+                                          1] = colours[random.randrange(0, 10)]
+            coloured_mask = np.stack([r, g, b], axis=2)
+            return coloured_mask
+        confidence = 0.5
+        rect_th = 2
+        text_size = 2
+        text_th = 2
+        img_with_annot = cv2.imread(img_path)
+        img_with_annot = cv2.cvtColor(img_with_annot, cv2.COLOR_BGR2RGB)
+        for i in range(len(masks)):
+            rgb_mask = get_coloured_mask(masks[i])
+            img_with_annot = cv2.addWeighted(
+                img_with_annot, 1, rgb_mask, 0.5, 0)
+            cv2.rectangle(img_with_annot, boxes[i][0], boxes[i][1],
+                          color=(0, 255, 0), thickness=rect_th)
+            cv2.putText(img_with_annot, "pebble", boxes[i][0], cv2.FONT_HERSHEY_SIMPLEX,
+                        text_size, (0, 255, 0), thickness=text_th)
+        plt.figure(figsize=(20, 30))
+        plt.imshow(img_with_annot)
+        plt.xticks([])
+        plt.yticks([])
+        vis_tgt_path = "./visualization_results/pebblesWithAnnotations/"
+        if not os.path.isdir(vis_tgt_path):
+            os.mkdir(vis_tgt_path)
+        plt.savefig(os.path.join(
+            vis_tgt_path, "sample_" + str(idx) + "_withMaskAndBox.png"))
+        plt.close()
 
         return img, target
 
@@ -175,7 +219,7 @@ lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer,
 
 
 # number of epochs
-num_epochs = 10
+num_epochs = 1
 
 for epoch in range(num_epochs):
     # train for one epoch, printing every 10 iterations
