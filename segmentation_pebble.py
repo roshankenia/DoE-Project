@@ -179,15 +179,15 @@ def get_transform(train):
 dataset = SegmentationDataset('./', get_transform(train=True))
 dataset_test = SegmentationDataset('./', get_transform(train=False))
 
-# split the dataset in train and test set
-torch.manual_seed(1)
-indices = torch.randperm(len(dataset)).tolist()
-num_train = int(0.8 * len(indices))
-dataset = torch.utils.data.Subset(dataset, indices[:num_train])
-dataset_test = torch.utils.data.Subset(dataset_test, indices[num_train:])
+# # split the dataset in train and test set
+# torch.manual_seed(1)
+# indices = torch.randperm(len(dataset)).tolist()
+# num_train = int(0.8 * len(indices))
+# dataset = torch.utils.data.Subset(dataset, indices[:num_train])
+# dataset_test = torch.utils.data.Subset(dataset_test, indices[num_train:])
 
-print("Number in train dataset:", len(indices[:num_train]))
-print("Number in test dataset:", len(indices[num_train:]))
+# print("Number in train dataset:", len(indices[:num_train]))
+# print("Number in test dataset:", len(indices[num_train:]))
 
 # define training and validation data loaders
 data_loader = torch.utils.data.DataLoader(
@@ -231,7 +231,7 @@ lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(
 #                                                gamma=0.1)
 
 # number of epochs
-num_epochs = 10
+num_epochs = 20
 
 for epoch in range(num_epochs):
     # train for one epoch, printing every 10 iterations

@@ -93,7 +93,7 @@ def make_mask_image(img, masks, boxes, pred_cls, ind, rect_th=2, text_size=2, te
         cv2.putText(img, pred_cls[i], boxes[i][0], cv2.FONT_HERSHEY_SIMPLEX,
                     text_size, (0, 255, 0), thickness=text_th)
     # save frame as JPG file
-    cv2.imwrite("./ceramicimages/image"+str(ind) + "_mask.jpg", img)
+    # cv2.imwrite("./ceramicimages/image"+str(ind) + "_mask.jpg", img)
 
 
 def crop_pebble(img, masks, boxes, ind):
@@ -131,33 +131,34 @@ count = 0
 while (vidcap.isOpened()):
     hasFrames, image = vidcap.read()
     if hasFrames:
-        if count == 1950 or count == 1952:
-            # make image directory
-            path = "./ceramicimages/image" + str(count) + "/"
-            if not os.path.isdir(path):
-                os.mkdir(path)
-            # save unmodified image
-            # save frame as JPG file
-            # cv2.imwrite(path + "unmodified.jpg", image)
-            # check if image has a pebble
-            masks, boxes, pred_cls = get_prediction(image, .9)
-            if masks is not None:
-                if len(masks) == 1:
-                    make_mask_image(np.copy(image), masks,
-                                    boxes, pred_cls, count)
-                    image = crop_pebble(np.copy(image), masks, boxes, count)
-                    for rotation in rotations:
-                        image_center = tuple(np.array(image.shape[1::-1]) / 2)
-                        rot_mat = cv2.getRotationMatrix2D(
-                            image_center, rotation, 1.0)
-                        result = cv2.warpAffine(
-                            image, rot_mat, image.shape[1::-1], flags=cv2.INTER_LINEAR)
-                        # sharpened = cv2.filter2D(result, -1, sharpen_kernel)
+        # save unmodified image
+        # save frame as JPG file
+        # cv2.imwrite(path + "unmodified.jpg", image)
+        # check if image has a pebble
+        masks, boxes, pred_cls = get_prediction(image, .9)
+        if masks is not None:
+            if len(masks) == 1:
+                # make_mask_image(np.copy(image), masks,
+                #                 boxes, pred_cls, count)
+                image = crop_pebble(np.copy(image), masks, boxes, count)
 
-                        # deblurred = cv2.fastNlMeansDenoisingColored(
-                        #     sharpened, None, 10, 10, 7, 21)
-                        # save frame as JPG file
-                        cv2.imwrite(path + str(rotation)+".jpg", result)
+                # make image directory
+                path = "./ceramicimages/image" + str(count) + "/"
+                if not os.path.isdir(path):
+                    os.mkdir(path)
+
+                for rotation in rotations:
+                    image_center = tuple(np.array(image.shape[1::-1]) / 2)
+                    rot_mat = cv2.getRotationMatrix2D(
+                        image_center, rotation, 1.0)
+                    result = cv2.warpAffine(
+                        image, rot_mat, image.shape[1::-1], flags=cv2.INTER_LINEAR)
+                    # sharpened = cv2.filter2D(result, -1, sharpen_kernel)
+
+                    # deblurred = cv2.fastNlMeansDenoisingColored(
+                    #     sharpened, None, 10, 10, 7, 21)
+                    # save frame as JPG file
+                    cv2.imwrite(path + str(rotation)+".jpg", result)
     else:
         break
     count += 1
