@@ -94,16 +94,21 @@ result = cv2.warpAffine(
     image, rot_mat, image.shape[1::-1], flags=cv2.INTER_LINEAR)
 # rotate points
 rotatedBoxes = []
+h, w = img.shape[:2]
+cx, cy = (int(w / 2), int(h / 2))
 for box in boxes:
-    points = [[box[0], box[1]], [box[2], box[3]]]
-    points = np.array(points)
-    print(rot_mat.shape)
-    print(points.shape)
-    bb_rotated = np.dot(points, rot_mat).T
-    print(bb_rotated)
+    cos, sin = abs(rot_mat[0, 0]), abs(rot_mat[0, 1])
+    newW = int((h * sin) + (w * cos))
+    newH = int((h * cos) + (w * sin))
+    rot_mat[0, 2] += (newW / 2) - cx
+    rot_mat[1, 2] += (newH / 2) - cy
+    v = [box[0], box[1], 1]
+    adjusted_coord = np.dot(M, v)
+    rotatedBoxes.append((adjusted_coord[0], adjusted_coord[1]))
     # xmin, ymin = rotate(image_center, (box[0], box[1]), rotation)
     # xmax, ymax = rotate(image_center, (box[2], box[3]), rotation)
     # rotatedBoxes.append([int(xmin), int(ymin), int(xmax), int(ymax)])
 # create rotation matrix
 # save frame as JPG file
 # make_image(result, rotatedBoxes, labels)
+print(rotatedBoxes)
