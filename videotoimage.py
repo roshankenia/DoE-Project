@@ -116,6 +116,8 @@ def crop_pebble(img, masks, boxes, ind):
     # save crop as JPG file
     cv2.imwrite("./ceramicimages/image"+str(ind) + "_crop.jpg", background)
 
+    return background
+
 
 vidcap = cv2.VideoCapture('Moving Pebbles - Ceramic Paint.MOV')
 frame_count = int(vidcap.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -129,31 +131,31 @@ count = 0
 while (vidcap.isOpened()):
     hasFrames, image = vidcap.read()
     if hasFrames:
-        if count == 1950:
+        if count == 1950 or count == 1952:
+            # save unmodified image
+            # save frame as JPG file
+            cv2.imwrite("./ceramicimages/image" +
+                        str(count) + "_unmodified.jpg", image)
             # check if image has a pebble
             masks, boxes, pred_cls = get_prediction(image, .9)
             if masks is not None:
                 if len(masks) == 1:
                     make_mask_image(np.copy(image), masks,
                                     boxes, pred_cls, count)
-                    crop_pebble(np.copy(image), masks, boxes, count)
-            # save unmodified image
-            # save frame as JPG file
-            cv2.imwrite("./ceramicimages/image" +
-                        str(count) + "_unmodified.jpg", image)
-            for rotation in rotations:
-                image_center = tuple(np.array(image.shape[1::-1]) / 2)
-                rot_mat = cv2.getRotationMatrix2D(
-                    image_center, rotation, 1.0)
-                result = cv2.warpAffine(
-                    image, rot_mat, image.shape[1::-1], flags=cv2.INTER_LINEAR)
-                sharpened = cv2.filter2D(result, -1, sharpen_kernel)
+                    image = crop_pebble(np.copy(image), masks, boxes, count)
+                    for rotation in rotations:
+                        image_center = tuple(np.array(image.shape[1::-1]) / 2)
+                        rot_mat = cv2.getRotationMatrix2D(
+                            image_center, rotation, 1.0)
+                        result = cv2.warpAffine(
+                            image, rot_mat, image.shape[1::-1], flags=cv2.INTER_LINEAR)
+                        # sharpened = cv2.filter2D(result, -1, sharpen_kernel)
 
-                deblurred = cv2.fastNlMeansDenoisingColored(
-                    sharpened, None, 10, 10, 7, 21)
-                # save frame as JPG file
-                cv2.imwrite("./ceramicimages/image"+str(count) +
-                            "_"+str(rotation)+".jpg", deblurred)
+                        # deblurred = cv2.fastNlMeansDenoisingColored(
+                        #     sharpened, None, 10, 10, 7, 21)
+                        # save frame as JPG file
+                        cv2.imwrite("./ceramicimages/image"+str(count) +
+                                    "_"+str(rotation)+".jpg", result)
     else:
         break
     count += 1
