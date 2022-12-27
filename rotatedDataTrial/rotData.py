@@ -42,7 +42,7 @@ def make_image(img, boxes, labels, rect_th=2, text_size=2, text_th=2):
     for i in range(len(boxes)):
         cv2.rectangle(img, (boxes[i][0], boxes[i][1]), (boxes[i][2], boxes[i][3]),
                       color=(0, 255, 0), thickness=rect_th)
-        cv2.putText(img, labels[i], (boxes[i][0], boxes[i][1]), cv2.FONT_HERSHEY_SIMPLEX,
+        cv2.putText(img, str(labels[i]), (boxes[i][0], boxes[i][1]), cv2.FONT_HERSHEY_SIMPLEX,
                     text_size, (0, 255, 0), thickness=text_th)
     # save frame as JPG file
     cv2.imwrite("./rotatedDataTrial/test.jpg", img)
