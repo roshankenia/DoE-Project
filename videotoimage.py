@@ -114,7 +114,7 @@ def crop_pebble(img, masks, boxes, ind):
 
     background[yoff:yoff+ch, xoff:xoff+cw] = crop
     # save crop as JPG file
-    cv2.imwrite("./ceramicimages/image"+str(ind) + "_crop.jpg", background)
+    # cv2.imwrite("./ceramicimages/image" + str(ind) + "/crop.jpg", background)
 
     return background
 
@@ -124,7 +124,7 @@ frame_count = int(vidcap.get(cv2.CAP_PROP_FRAME_COUNT))
 print('video has', str(frame_count), 'frames.')
 
 rotations = [0, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150,
-             165, 180, 195, 210, 225, 240, 255, 270, 285, 300, 315]
+             165, 180, 195, 210, 225, 240, 255, 270, 285, 300, 315, 330, 345]
 sharpen_kernel = np.array([[-1, -1, -1], [-1, 9, -1], [-1, -1, -1]])
 
 count = 0
@@ -132,10 +132,13 @@ while (vidcap.isOpened()):
     hasFrames, image = vidcap.read()
     if hasFrames:
         if count == 1950 or count == 1952:
+            # make image directory
+            path = "./ceramicimages/image" + str(count) + "/"
+            if not os.path.isdir(path):
+                os.mkdir(path)
             # save unmodified image
             # save frame as JPG file
-            cv2.imwrite("./ceramicimages/image" +
-                        str(count) + "_unmodified.jpg", image)
+            # cv2.imwrite(path + "unmodified.jpg", image)
             # check if image has a pebble
             masks, boxes, pred_cls = get_prediction(image, .9)
             if masks is not None:
@@ -154,8 +157,7 @@ while (vidcap.isOpened()):
                         # deblurred = cv2.fastNlMeansDenoisingColored(
                         #     sharpened, None, 10, 10, 7, 21)
                         # save frame as JPG file
-                        cv2.imwrite("./ceramicimages/image"+str(count) +
-                                    "_"+str(rotation)+".jpg", result)
+                        cv2.imwrite(path + str(rotation)+".jpg", result)
     else:
         break
     count += 1
