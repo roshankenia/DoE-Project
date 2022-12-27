@@ -167,7 +167,7 @@ for imageFolder in imageFolders:
             img = Image.open(os.path.join(
                 root, imageFolder, rotation)).convert("RGB")
 
-            print(img)
+            img = T.PILToTensor(img)
 
             output_path = os.path.join(root, imageFolder)
 
