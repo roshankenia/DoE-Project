@@ -69,7 +69,7 @@ root = "./ceramicimages"
 imageFolders = list(sorted(os.listdir(root)))
 
 for imageFolder in imageFolders:
-    if imageFolder == "image183":
+    if imageFolder == "image300":
         # obtain all image rotations
         rotations = list(sorted(os.listdir(os.path.join(root, imageFolder))))
         rotationsWithRoot = []
