@@ -113,5 +113,4 @@ for box in boxes:
     # rotatedBoxes.append([int(xmin), int(ymin), int(xmax), int(ymax)])
 # create rotation matrix
 # save frame as JPG file
-# make_image(result, rotatedBoxes, labels)
-print(rotatedBoxes)
+make_image(result, rotatedBoxes, labels)
