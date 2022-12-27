@@ -167,6 +167,8 @@ for imageFolder in imageFolders:
             img = Image.open(os.path.join(
                 root, imageFolder, rotation)).convert("RGB")
 
+            print(img)
+
             output_path = os.path.join(root, imageFolder)
 
             showbbox(model, img, rot, output_path)
