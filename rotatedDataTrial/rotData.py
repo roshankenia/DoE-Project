@@ -10,6 +10,7 @@ import torch
 import matplotlib.pyplot as plt
 from PIL import Image
 from xml.dom.minidom import parse
+import math
 
 # ensure we are running on the correct gpu
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
@@ -19,6 +20,32 @@ if not torch.cuda.is_available() or torch.cuda.device_count() != 1:
     sys.exit()
 else:
     print('GPU is being properly used')
+
+
+def rotate(origin, point, angle):
+    """
+    Rotate a point counterclockwise by a given angle around a given origin.
+
+    The angle should be given in radians.
+    """
+    ox, oy = origin
+    px, py = point
+
+    qx = ox + math.cos(angle) * (px - ox) - math.sin(angle) * (py - oy)
+    qy = oy + math.sin(angle) * (px - ox) + math.cos(angle) * (py - oy)
+    return qx, qy
+
+# make image using box
+
+
+def make_image(img, boxes, labels, rect_th=2, text_size=2, text_th=2):
+    for i in range(len(boxes)):
+        cv2.rectangle(img, (boxes[i][0], boxes[i][1]), (boxes[i][2], boxes[i][3]),
+                      color=(0, 255, 0), thickness=rect_th)
+        cv2.putText(img, labels[i], (boxes[i][0], boxes[i][1]), cv2.FONT_HERSHEY_SIMPLEX,
+                    text_size, (0, 255, 0), thickness=text_th)
+    # save frame as JPG file
+    cv2.imwrite("./rotatedDataTrial/test.jpg", img)
 
 
 # obtain data
@@ -54,3 +81,23 @@ for object_ in objects:
 
 print('boxes:', boxes)
 print('labels:', labels)
+
+rotation = 90
+# convert to cv2 image
+image = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
+# get center
+image_center = tuple(np.array(image.shape[1::-1]) / 2)
+# rotate points
+rotatedBoxes = []
+for box in boxes:
+    xmin, ymin = rotate(image_center, (box[0], box[1]), rotation)
+    xmax, ymax = rotate(image_center, (box[2], box[3]), rotation)
+    rotatedBoxes.append([xmin, ymin, xmax, ymax])
+# create rotation matrix
+rot_mat = cv2.getRotationMatrix2D(
+    image_center, rotation, 1.0)
+# rotate image
+result = cv2.warpAffine(
+    image, rot_mat, image.shape[1::-1], flags=cv2.INTER_LINEAR)
+# save frame as JPG file
+make_image(result, rotatedBoxes, labels)
