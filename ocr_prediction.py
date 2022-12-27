@@ -19,7 +19,14 @@ if not torch.cuda.is_available() or torch.cuda.device_count() != 1:
 else:
     print('GPU is being properly used')
 
+root = "./ceramicimages"
 # need to iterate through each image folder
-imageFolders = list(sorted(os.listdir("./ceramicimages")))
+imageFolders = list(sorted(os.listdir(root)))
 
 print(imageFolders)
+
+for imageFolder in imageFolders:
+    # obtain all image rotations
+    rotations = list(sorted(os.listdir(os.path.join(root, imageFolder))))
+    print(rotations)
+    break
