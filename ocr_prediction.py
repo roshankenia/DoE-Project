@@ -85,4 +85,5 @@ for imageFolder in imageFolders:
             result = model(rotation_doc)
 
             output = result.export()
+            print(output)
             graphical_coordinates = get_coordinates(output)
