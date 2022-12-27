@@ -95,11 +95,11 @@ result = cv2.warpAffine(
 # rotate points
 rotatedBoxes = []
 for box in boxes:
-    points = [[box[0], box[1], 1], [box[2], box[3], 1]]
+    points = [[box[0], box[1]], [box[2], box[3]]]
     points = np.array(points)
     print(rot_mat.shape)
     print(points.shape)
-    bb_rotated = np.dot(rot_mat, points).T
+    bb_rotated = np.dot(points, rot_mat).T
     print(bb_rotated)
     # xmin, ymin = rotate(image_center, (box[0], box[1]), rotation)
     # xmax, ymax = rotate(image_center, (box[2], box[3]), rotation)
