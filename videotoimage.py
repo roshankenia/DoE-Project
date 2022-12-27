@@ -106,12 +106,13 @@ def crop_pebble(img, masks, boxes, ind):
     crop = only_mask[bbox[0][1]:bbox[1][1], bbox[0][0]:bbox[1][0]]
 
     # put pebble on standard 1000x1000 image
-    background = np.zeros((1100, 1100, 3), np.uint8)
+    imgSize = 1100
+    background = np.zeros((imgSize, imgSize, 3), np.uint8)
     ch, cw = crop.shape[:2]
 
     # compute xoff and yoff for placement of upper left corner of resized image
-    yoff = round((1000-ch)/2)
-    xoff = round((1000-cw)/2)
+    yoff = round((imgSize-ch)/2)
+    xoff = round((imgSize-cw)/2)
 
     background[yoff:yoff+ch, xoff:xoff+cw] = crop
     # save crop as JPG file
