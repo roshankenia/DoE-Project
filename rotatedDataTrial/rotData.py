@@ -103,7 +103,7 @@ for box in boxes:
     rot_mat[0, 2] += (newW / 2) - cx
     rot_mat[1, 2] += (newH / 2) - cy
     v = [box[0], box[1], 1]
-    adjusted_coord = np.dot(M, v)
+    adjusted_coord = np.dot(rot_mat, v)
     rotatedBoxes.append((adjusted_coord[0], adjusted_coord[1]))
     # xmin, ymin = rotate(image_center, (box[0], box[1]), rotation)
     # xmax, ymax = rotate(image_center, (box[2], box[3]), rotation)
