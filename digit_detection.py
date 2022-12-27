@@ -168,7 +168,7 @@ for imageFolder in imageFolders:
             img = Image.open(os.path.join(
                 root, imageFolder, rotation)).convert("RGB")
 
-            img = transform(img)
+            img = transform(img, None)
 
             output_path = os.path.join(root, imageFolder)
 
