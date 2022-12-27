@@ -42,13 +42,13 @@ for object_ in objects:
 
     # extract the bounding box coordinates
     bndbox = object_.getElementsByTagName('bndbox')[0]
-    xmin = np.float(bndbox.getElementsByTagName(
+    xmin = np.float64(bndbox.getElementsByTagName(
         'xmin')[0].childNodes[0].nodeValue)
-    ymin = np.float(bndbox.getElementsByTagName(
+    ymin = np.float64(bndbox.getElementsByTagName(
         'ymin')[0].childNodes[0].nodeValue)
-    xmax = np.float(bndbox.getElementsByTagName(
+    xmax = np.float64(bndbox.getElementsByTagName(
         'xmax')[0].childNodes[0].nodeValue)
-    ymax = np.float(bndbox.getElementsByTagName(
+    ymax = np.float64(bndbox.getElementsByTagName(
         'ymax')[0].childNodes[0].nodeValue)
     boxes.append([xmin, ymin, xmax, ymax])
 
