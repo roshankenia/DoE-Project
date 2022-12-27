@@ -151,6 +151,7 @@ model.to(device)
 root = "./ceramicimages"
 # need to iterate through each image folder
 imageFolders = list(sorted(os.listdir(root)))
+transform = T.Compose([T.PILToTensor()])
 
 for imageFolder in imageFolders:
     if imageFolder == "image300":
@@ -167,7 +168,7 @@ for imageFolder in imageFolders:
             img = Image.open(os.path.join(
                 root, imageFolder, rotation)).convert("RGB")
 
-            img = T.PILToTensor(img)
+            img = transform(img)
 
             output_path = os.path.join(root, imageFolder)
 
