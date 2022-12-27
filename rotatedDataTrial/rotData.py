@@ -87,17 +87,21 @@ rotation = 90
 image = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
 # get center
 image_center = tuple(np.array(image.shape[1::-1]) / 2)
-# rotate points
-rotatedBoxes = []
-for box in boxes:
-    xmin, ymin = rotate(image_center, (box[0], box[1]), rotation)
-    xmax, ymax = rotate(image_center, (box[2], box[3]), rotation)
-    rotatedBoxes.append([int(xmin), int(ymin), int(xmax), int(ymax)])
-# create rotation matrix
 rot_mat = cv2.getRotationMatrix2D(
     image_center, rotation, 1.0)
 # rotate image
 result = cv2.warpAffine(
     image, rot_mat, image.shape[1::-1], flags=cv2.INTER_LINEAR)
+# rotate points
+rotatedBoxes = []
+for box in boxes:
+    points = [[box[0], box[1], 1], [box[2], box[3], 1]]
+    points = np.array(points)
+    bb_rotated = np.dot(rot_mat, points).T
+    print(bb_rotated)
+    # xmin, ymin = rotate(image_center, (box[0], box[1]), rotation)
+    # xmax, ymax = rotate(image_center, (box[2], box[3]), rotation)
+    # rotatedBoxes.append([int(xmin), int(ymin), int(xmax), int(ymax)])
+# create rotation matrix
 # save frame as JPG file
-make_image(result, rotatedBoxes, labels)
+# make_image(result, rotatedBoxes, labels)
