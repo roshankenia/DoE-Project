@@ -92,7 +92,7 @@ rotatedBoxes = []
 for box in boxes:
     xmin, ymin = rotate(image_center, (box[0], box[1]), rotation)
     xmax, ymax = rotate(image_center, (box[2], box[3]), rotation)
-    rotatedBoxes.append([xmin, ymin, xmax, ymax])
+    rotatedBoxes.append([int(xmin), int(ymin), int(xmax), int(ymax)])
 # create rotation matrix
 rot_mat = cv2.getRotationMatrix2D(
     image_center, rotation, 1.0)
