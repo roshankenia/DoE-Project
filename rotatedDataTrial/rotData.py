@@ -85,6 +85,8 @@ print('labels:', labels)
 rotation = 90
 # convert to cv2 image
 image = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
+h, w = image.shape[:2]
+cx, cy = (int(w / 2), int(h / 2))
 # get center
 image_center = tuple(np.array(image.shape[1::-1]) / 2)
 rot_mat = cv2.getRotationMatrix2D(
@@ -94,8 +96,6 @@ result = cv2.warpAffine(
     image, rot_mat, image.shape[1::-1], flags=cv2.INTER_LINEAR)
 # rotate points
 rotatedBoxes = []
-h, w = img.shape[:2]
-cx, cy = (int(w / 2), int(h / 2))
 for box in boxes:
     cos, sin = abs(rot_mat[0, 0]), abs(rot_mat[0, 1])
     newW = int((h * sin) + (w * cos))
