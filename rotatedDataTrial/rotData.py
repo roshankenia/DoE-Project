@@ -291,4 +291,4 @@ for rotation in rotations:
     filename = tree.find('filename')
     filename.text = "img_1053_"+str(rotation)+".jpg"
 
-    dump(tree)
+    tree.write("./img_1053_"+str(rotation)+".xml")
