@@ -219,13 +219,13 @@ def make_image(img, boxes, labels, img_num, rotation, annotationVisPath, rect_th
 root = "./Rotated4Data/"
 if not os.path.isdir(root):
     os.mkdir(root)
-annotationPath = "./RotatedData/Annotations/"
+annotationPath = "./Rotated4Data/Annotations/"
 if not os.path.isdir(annotationPath):
     os.mkdir(annotationPath)
-annotationVisPath = "./RotatedData/AnnotationsVisualization/"
+annotationVisPath = "./Rotated4Data/AnnotationsVisualization/"
 if not os.path.isdir(annotationVisPath):
     os.mkdir(annotationVisPath)
-jpegpath = "./RotatedData/JPEGImages/"
+jpegpath = "./Rotated4Data/JPEGImages/"
 if not os.path.isdir(jpegpath):
     os.mkdir(jpegpath)
 
