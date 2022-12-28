@@ -85,7 +85,7 @@ def get_transform(train):
 # Start to train the model
 ###############################
 # change the root path depending on your own dataset path
-root1 = r'./bestceramic'
+root1 = r'./ceramicimages'
 
 # train on the GPU (specify GPU ID with 'cuda:id'), or on the CPU if a GPU is not available
 device = torch.device(
@@ -207,7 +207,7 @@ def showbbox(model, img, idx):
     plt.figure(figsize=(50, 50))
     plt.imshow(img)
     plt.axis('off')
-    vis_tgt_path = "./visualization_results/videobestcer/"
+    vis_tgt_path = "./visualization_results/videocer/"
     if not os.path.isdir(vis_tgt_path):
         os.mkdir(vis_tgt_path)
     plt.savefig(os.path.join(vis_tgt_path, "sample_" + str(idx) + "_vis.png"))
@@ -218,7 +218,10 @@ def showbbox(model, img, idx):
 model = torch.load(
     r'./saved_model/model_doe_ceramic_paint_fastRCNN_v2_200epoch_rotated_images.pkl')
 model.to(device)
-
+x = 0
 for idx in range(len(dataset_test)):
     img, _ = dataset_test[idx]
     showbbox(model, img, idx)
+    x += 1
+    if x == 50:
+        break
