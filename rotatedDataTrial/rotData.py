@@ -254,6 +254,7 @@ rotations = [0, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165,
 
 img = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
 for rotation in rotations:
+    print('\nRotation:', rotation)
     image = np.copy(img)
     w, h = image.shape[1], image.shape[0]
     cx, cy = w//2, h//2
