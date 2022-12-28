@@ -134,8 +134,8 @@ def get_transform(train):
 # Start to train the model
 ###############################
 # change the root path depending on your own dataset path
-root = r'./RotatedData'
-root1 = r'./RotatedData'
+root = r'./Rotated4Data'
+root1 = r'./Rotated4Data'
 
 # train on the GPU (specify GPU ID with 'cuda:id'), or on the CPU if a GPU is not available
 device = torch.device(
@@ -190,7 +190,7 @@ lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(
     optimizer, T_0=1, T_mult=2)
 
 # let's train it for a defined number of epochs
-num_epochs = 10
+num_epochs = 50
 
 for epoch in range(num_epochs):
     # train for one epoch, printing every 10 iterations
@@ -205,7 +205,7 @@ for epoch in range(num_epochs):
     # if (epoch+1) % 10 == 0:
     #     # save the trained model
     #     torch.save(
-    #         model, r'./saved_model/model_doe_ceramic_paint_fastRCNN_v2_200epoch_rotated_images.pkl')
+    #         model, r'./saved_model/model_doe_ceramic_paint_fastRCNN_v2_50epoch_rotated_images.pkl')
 
     print('')
     print('==================================================')
@@ -215,7 +215,7 @@ print("Training is done!")
 
 # save the trained model
 torch.save(
-    model, r'./saved_model/model_doe_ceramic_paint_fastRCNN_v2_200epoch_rotated_images.pkl')
+    model, r'./saved_model/model_doe_ceramic_paint_fastRCNN_v2_50epoch_rotated_4_images.pkl')
 
 
 def fig_draw(img, prediction, idx):
@@ -316,7 +316,7 @@ def showbbox(model, img, idx):
     plt.figure(figsize=(50, 50))
     plt.imshow(img)
     plt.axis('off')
-    vis_tgt_path = "./visualization_results/ceramic_paint_visual_samples_fastRCNN_v2_200epochs_rotated_images/"
+    vis_tgt_path = "./visualization_results/ceramic_paint_visual_samples_fastRCNN_v2_50epochs_rotated_4_images/"
     if not os.path.isdir(vis_tgt_path):
         os.mkdir(vis_tgt_path)
     plt.savefig(os.path.join(vis_tgt_path, "sample_" + str(idx) + "_vis.png"))
@@ -325,7 +325,7 @@ def showbbox(model, img, idx):
 
 # check the result
 model = torch.load(
-    r'./saved_model/model_doe_ceramic_paint_fastRCNN_v2_200epoch_rotated_images.pkl')
+    r'./saved_model/model_doe_ceramic_paint_fastRCNN_v2_50epoch_rotated_4_images.pkl')
 model.to(device)
 
 for idx in range(len(dataset_test)):
