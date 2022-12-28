@@ -216,7 +216,7 @@ def make_image(img, boxes, labels, img_num, rotation, annotationVisPath, rect_th
 
 
 # make directories
-root = "./RotatedData/"
+root = "./Rotated4Data/"
 if not os.path.isdir(root):
     os.mkdir(root)
 annotationPath = "./RotatedData/Annotations/"
@@ -271,8 +271,9 @@ for imageFile in allJPEGImgs:
 
     print('boxes:', boxes)
     print('labels:', labels)
-    rotations = [0, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165,
-                 180, 195, 210, 225, 240, 255, 270, 285, 300, 315, 330, 345]
+    # rotations = [0, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165,
+    #              180, 195, 210, 225, 240, 255, 270, 285, 300, 315, 330, 345]
+    rotations = [0, 90, 180, 270]
 
     img = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
     for rotation in rotations:
