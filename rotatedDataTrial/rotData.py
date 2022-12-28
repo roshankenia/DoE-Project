@@ -211,7 +211,7 @@ def make_image(img, boxes, labels, img_num, rotation, rect_th=2, text_size=0.5, 
         cv2.putText(img, str(labels[i]), (int(boxes[i][0]), int(boxes[i][1])), cv2.FONT_HERSHEY_SIMPLEX,
                     text_size, (0, 255, 0), thickness=text_th)
     # save frame as JPG file
-    cv2.imwrite("img_"+str(img_num)+"_"+str(rotation)+".jpg", img)
+    cv2.imwrite("img_"+str(img_num)+"_"+str(rotation)+"_annotated.jpg", img)
 
 
 # obtain data
@@ -279,6 +279,8 @@ for rotation in rotations:
 
     bboxes = new_bbox
     print(bboxes)
+    # save frame as JPG file
+    cv2.imwrite("img_"+str(img_num)+"_"+str(rotation)+".jpg", image)
     # bboxes = clip_box(bboxes, [0, 0, w, h], 0.25)
     make_image(image, bboxes, labels, img_num, rotation)
 
@@ -290,6 +292,17 @@ for rotation in rotations:
 
     filename = tree.find('filename')
     filename.text = "img_1053_"+str(rotation)+".jpg"
-    filename.set('updated', 'yes')
+
+    bndboxes = tree.findall('bndbox')
+    for b in range(len(bndboxes)):
+        bndbox = bndboxes[b]
+        bbox = bboxes[b]
+        xmin, ymin, xmax, ymax = list(bndbox)
+        print('Old:', xmin, ymin, xmax, ymax)
+        print('New:', bbox[0], bbox[1], bbox[2], bbox[3])
+        xmin.text = bbox[0]
+        ymin.text = bbox[1]
+        xmax.text = bbox[2]
+        ymax.text = bbox[3]
 
     tree.write("./img_1053_"+str(rotation)+".xml")
