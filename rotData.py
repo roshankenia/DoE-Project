@@ -337,6 +337,6 @@ for imageFile in allJPEGImgs:
 
         tree.write(os.path.join(annotationPath, "img_" +
                    str(img_num) + "_"+str(rotation)+".xml"))
-        x += 1
-        if x == 5:
-            break
+    x += 1
+    if x == 5:
+        break
