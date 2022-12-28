@@ -211,7 +211,8 @@ def make_image(img, boxes, labels, img_num, rotation, rect_th=2, text_size=0.5, 
         cv2.putText(img, str(labels[i]), (int(boxes[i][0]), int(boxes[i][1])), cv2.FONT_HERSHEY_SIMPLEX,
                     text_size, (0, 255, 0), thickness=text_th)
     # save frame as JPG file
-    cv2.imwrite("img_"+str(img_num)+"_"+str(rotation)+"_annotated.jpg", img)
+    cv2.imwrite("./AnnotationsVisualization/img_"+str(img_num) +
+                "_"+str(rotation)+"_annotated.jpg", img)
 
 
 # obtain data
@@ -281,12 +282,14 @@ for rotation in rotations:
     bboxes = new_bbox
     print(bboxes)
     # save frame as JPG file
-    cv2.imwrite("img_"+str(img_num)+"_"+str(rotation)+".jpg", image)
+    cv2.imwrite("./JPEGImages/img_"+str(img_num) +
+                "_"+str(rotation)+".jpg", image)
     # bboxes = clip_box(bboxes, [0, 0, w, h], 0.25)
     make_image(image, bboxes, labels, img_num, rotation)
 
     # create copy xml
-    shutil.copy2("./img_1053_x.xml", "./img_1053_"+str(rotation)+".xml")
+    shutil.copy2("./img_1053_x.xml",
+                 "./Annotations/img_1053_"+str(rotation)+".xml")
 
     tree = ElementTree()
     tree.parse("./img_1053_"+str(rotation)+".xml")
@@ -307,4 +310,4 @@ for rotation in rotations:
         xmax.text = str(bbox[2])
         ymax.text = str(bbox[3])
 
-    tree.write("./img_1053_"+str(rotation)+".xml")
+    tree.write("./Annotations/img_1053_"+str(rotation)+".xml")
