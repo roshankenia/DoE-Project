@@ -40,9 +40,9 @@ def rotate(origin, point, angle):
 
 def make_image(img, boxes, labels, img_num, rotation, rect_th=2, text_size=0.5, text_th=1):
     for i in range(len(boxes)):
-        cv2.rectangle(img, (boxes[i][0], boxes[i][1]), (boxes[i][2], boxes[i][3]),
+        cv2.rectangle(img, (int(boxes[i][0]), int(boxes[i][1])), (int(boxes[i][2]), int(boxes[i][3])),
                       color=(0, 255, 0), thickness=rect_th)
-        cv2.putText(img, str(labels[i]), (boxes[i][0], boxes[i][1]), cv2.FONT_HERSHEY_SIMPLEX,
+        cv2.putText(img, str(labels[i]), (int(boxes[i][0]), int(boxes[i][1])), cv2.FONT_HERSHEY_SIMPLEX,
                     text_size, (0, 255, 0), thickness=text_th)
     # save frame as JPG file
     cv2.imwrite("img_"+str(img_num)+"_"+str(rotation)+".jpg", img)
@@ -322,3 +322,4 @@ for rotation in rotations:
     bboxes = new_bbox
     print(bboxes)
     # bboxes = clip_box(bboxes, [0, 0, w, h], 0.25)
+    make_image(img, bboxes, labels, img_num, rotation)
