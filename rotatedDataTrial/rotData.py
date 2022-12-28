@@ -293,10 +293,11 @@ for rotation in rotations:
     filename = tree.find('filename')
     filename.text = "img_1053_"+str(rotation)+".jpg"
 
-    bndboxes = tree.findall('bndbox')
-    for b in range(len(bndboxes)):
-        bndbox = bndboxes[b]
-        bbox = bboxes[b]
+    objects = tree.findall('object')
+    for o in range(len(objects)):
+        object = objects[o]
+        bbox = bboxes[o]
+        bndbox = object.find('bndbox')
         xmin, ymin, xmax, ymax = list(bndbox)
         print('Old:', xmin, ymin, xmax, ymax)
         print('New:', bbox[0], bbox[1], bbox[2], bbox[3])
