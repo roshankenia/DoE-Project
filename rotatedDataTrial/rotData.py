@@ -38,7 +38,7 @@ def rotate(origin, point, angle):
 # make image using box
 
 
-def make_image(img, boxes, labels, rect_th=2, text_size=2, text_th=2):
+def make_image(img, boxes, labels, rect_th=2, text_size=0.5, text_th=0.5):
     for i in range(len(boxes)):
         cv2.rectangle(img, (boxes[i][0], boxes[i][1]), (boxes[i][2], boxes[i][3]),
                       color=(0, 255, 0), thickness=rect_th)
