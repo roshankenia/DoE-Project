@@ -308,7 +308,7 @@ for imageFile in allJPEGImgs:
         cv2.imwrite(os.path.join(jpegpath, "img_" +
                     str(img_num) + "_"+str(rotation)+".jpg"), image)
         # bboxes = clip_box(bboxes, [0, 0, w, h], 0.25)
-        make_image(image, bboxes, labels, img_num, rotation)
+        make_image(image, bboxes, labels, img_num, rotation, annotationVisPath)
 
         # create copy xml
 
