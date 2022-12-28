@@ -235,7 +235,6 @@ sourceAnnotationPath = os.path.join(sourceRoot, "Annotations")
 
 # obtain all JPEG image file names
 allJPEGImgs = list(sorted(os.listdir(sourceJPEGPath)))
-x = 0
 for imageFile in allJPEGImgs:
     # obtain data
     img = Image.open(os.path.join(
@@ -337,6 +336,3 @@ for imageFile in allJPEGImgs:
 
         tree.write(os.path.join(annotationPath, "img_" +
                    str(img_num) + "_"+str(rotation)+".xml"))
-    x += 1
-    if x == 5:
-        break
