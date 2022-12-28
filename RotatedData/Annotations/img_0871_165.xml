@@ -16,10 +16,10 @@
     <truncated />
     <difficult />
     <bndbox>
-      <xmin>212.63325733722735</xmin>
-      <ymin>258.48841878332354</ymin>
-      <xmax>255.56060210028625</xmax>
-      <ymax>319.1701868135549</ymax>
+      <xmin>260.2631069807663</xmin>
+      <ymin>316.389824590788</ymin>
+      <xmax>312.80617697075036</xmax>
+      <ymax>390.6643086597912</ymax>
     </bndbox>
   </object>
   <object>
@@ -28,10 +28,10 @@
     <truncated />
     <difficult />
     <bndbox>
-      <xmin>181.2043441601373</xmin>
-      <ymin>250.22683934064887</ymin>
-      <xmax>224.35484489695781</xmax>
-      <ymax>310.4489009112891</ymax>
+      <xmin>221.79411725200805</xmin>
+      <ymin>306.2776513529542</ymin>
+      <xmax>274.61033015387636</xmax>
+      <ymax>379.9894547154179</ymax>
     </bndbox>
   </object>
   <object>
@@ -40,10 +40,10 @@
     <truncated />
     <difficult />
     <bndbox>
-      <xmin>150.27173193014997</xmin>
-      <ymin>241.6055314375419</ymin>
-      <xmax>192.92593171986766</xmax>
-      <ymax>302.56044444111444</ymax>
+      <xmin>183.93259988250355</xmin>
+      <ymin>295.7251704795513</ymin>
+      <xmax>236.14134042511802</xmax>
+      <ymax>370.3339839959241</ymax>
     </bndbox>
   </object>
 </annotation>
