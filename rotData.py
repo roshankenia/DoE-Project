@@ -238,7 +238,7 @@ allJPEGImgs = list(sorted(os.listdir(sourceJPEGPath)))
 x = 0
 for imageFile in allJPEGImgs:
     # obtain data
-    imagePIL = Image.open(os.path.join(
+    img = Image.open(os.path.join(
         sourceJPEGPath, imageFile)).convert("RGB")
     img_num = ''.join(filter(lambda i: i.isdigit(), imageFile))
 
