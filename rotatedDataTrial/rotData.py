@@ -292,7 +292,7 @@ for rotation in rotations:
                  "./Annotations/img_1053_"+str(rotation)+".xml")
 
     tree = ElementTree()
-    tree.parse("./img_1053_"+str(rotation)+".xml")
+    tree.parse("./Annotations/img_1053_"+str(rotation)+".xml")
 
     filename = tree.find('filename')
     filename.text = "img_1053_"+str(rotation)+".jpg"
