@@ -216,7 +216,7 @@ def showbbox(model, img, idx):
 
 # check the result
 model = torch.load(
-    r'./saved_model/model_doe_ceramic_paint_fastRCNN_v2_200epoch.pkl')
+    r'./saved_model/model_doe_ceramic_paint_fastRCNN_v2_200epoch_rotated_images.pkl')
 model.to(device)
 
 for idx in range(len(dataset_test)):
