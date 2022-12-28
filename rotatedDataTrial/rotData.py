@@ -301,7 +301,7 @@ for rotation in rotations:
     cx, cy = w//2, h//2
 
     img = rotate_im(img, rotation)
-
+    bboxes = boxes
     corners = get_corners(bboxes)
 
     corners = np.hstack((corners, bboxes[:, 4:]))
