@@ -295,12 +295,13 @@ def get_enclosing_box(corners):
     return final
 
 
+img = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
 for rotation in rotations:
-    img = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
-    w, h = img.shape[1], img.shape[0]
+    image = np.copy(img)
+    w, h = image.shape[1], image.shape[0]
     cx, cy = w//2, h//2
 
-    img = rotate_im(img, rotation)
+    image = rotate_im(image, rotation)
     bboxes = np.array(boxes)
     corners = get_corners(bboxes)
 
@@ -310,11 +311,11 @@ for rotation in rotations:
 
     new_bbox = get_enclosing_box(corners)
 
-    scale_factor_x = img.shape[1] / w
+    scale_factor_x = image.shape[1] / w
 
-    scale_factor_y = img.shape[0] / h
+    scale_factor_y = image.shape[0] / h
 
-    img = cv2.resize(img, (w, h))
+    image = cv2.resize(image, (w, h))
 
     new_bbox[:, :4] /= [scale_factor_x,
                         scale_factor_y, scale_factor_x, scale_factor_y]
@@ -322,4 +323,4 @@ for rotation in rotations:
     bboxes = new_bbox
     print(bboxes)
     # bboxes = clip_box(bboxes, [0, 0, w, h], 0.25)
-    make_image(img, bboxes, labels, img_num, rotation)
+    make_image(image, bboxes, labels, img_num, rotation)
