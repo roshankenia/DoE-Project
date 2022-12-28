@@ -1,0 +1,49 @@
+<annotation>
+  <folder />
+  <filename>img_1053_30.jpg</filename>
+  <database />
+  <annotation />
+  <image />
+  <size>
+    <height>500</height>
+    <width>500</width>
+    <depth>3</depth>
+  </size>
+  <segmented />
+  <object>
+    <name>4</name>
+    <pose />
+    <truncated />
+    <difficult />
+    <bndbox>
+      <xmin>221.33141859543232</xmin>
+      <ymin>287.89470386337723</ymin>
+      <xmax>268.8196845097533</xmax>
+      <ymax>341.22132091949425</ymax>
+    </bndbox>
+  </object>
+  <object>
+    <name>6</name>
+    <pose />
+    <truncated />
+    <difficult />
+    <bndbox>
+      <xmin>247.4560543560351</xmin>
+      <ymin>272.4956364534826</ymin>
+      <xmax>295.3726167875569</xmax>
+      <ymax>326.2069802421602</ymax>
+    </bndbox>
+  </object>
+  <object>
+    <name>1</name>
+    <pose />
+    <truncated />
+    <difficult />
+    <bndbox>
+      <xmin>273.59236460524653</xmin>
+      <ymin>257.28195072663107</ymin>
+      <xmax>320.7542520460458</xmax>
+      <ymax>311.087794627225</ymax>
+    </bndbox>
+  </object>
+</annotation>

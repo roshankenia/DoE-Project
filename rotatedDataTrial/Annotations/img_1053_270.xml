@@ -1,0 +1,49 @@
+<annotation>
+  <folder />
+  <filename>img_1053_270.jpg</filename>
+  <database />
+  <annotation />
+  <image />
+  <size>
+    <height>500</height>
+    <width>500</width>
+    <depth>3</depth>
+  </size>
+  <segmented />
+  <object>
+    <name>4</name>
+    <pose />
+    <truncated />
+    <difficult />
+    <bndbox>
+      <xmin>146.34146341463418</xmin>
+      <ymin>180.3252032520325</ymin>
+      <xmax>207.64227642276427</xmax>
+      <ymax>219.83739837398372</ymax>
+    </bndbox>
+  </object>
+  <object>
+    <name>6</name>
+    <pose />
+    <truncated />
+    <difficult />
+    <bndbox>
+      <xmin>146.1788617886179</xmin>
+      <ymin>221.6260162601626</ymin>
+      <xmax>207.8048780487805</xmax>
+      <ymax>261.6260162601626</ymax>
+    </bndbox>
+  </object>
+  <object>
+    <name>1</name>
+    <pose />
+    <truncated />
+    <difficult />
+    <bndbox>
+      <xmin>145.89999999999998</xmin>
+      <ymin>263.4146341463414</ymin>
+      <xmax>208.78048780487808</xmax>
+      <ymax>301.5</ymax>
+    </bndbox>
+  </object>
+</annotation>
