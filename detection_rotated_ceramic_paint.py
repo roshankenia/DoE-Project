@@ -190,7 +190,7 @@ lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(
     optimizer, T_0=1, T_mult=2)
 
 # let's train it for a defined number of epochs
-num_epochs = 50
+num_epochs = 10
 
 for epoch in range(num_epochs):
     # train for one epoch, printing every 10 iterations
@@ -202,10 +202,10 @@ for epoch in range(num_epochs):
     # evaluate on the test dataset
     evaluate(model, data_loader_test, device=device)
 
-    if (epoch+1) % 10 == 0:
-        # save the trained model
-        torch.save(
-            model, r'./saved_model/model_doe_ceramic_paint_fastRCNN_v2_200epoch_rotated_images.pkl')
+    # if (epoch+1) % 10 == 0:
+    #     # save the trained model
+    #     torch.save(
+    #         model, r'./saved_model/model_doe_ceramic_paint_fastRCNN_v2_200epoch_rotated_images.pkl')
 
     print('')
     print('==================================================')
