@@ -299,11 +299,11 @@ for rotation in rotations:
         bbox = bboxes[o]
         bndbox = object.find('bndbox')
         xmin, ymin, xmax, ymax = list(bndbox)
-        print('Old:', xmin, ymin, xmax, ymax)
+        print('Old:', xmin.text, ymin.text, xmax.text, ymax.text)
         print('New:', bbox[0], bbox[1], bbox[2], bbox[3])
-        xmin.text = bbox[0]
-        ymin.text = bbox[1]
-        xmax.text = bbox[2]
-        ymax.text = bbox[3]
+        xmin.text = str(bbox[0])
+        ymin.text = str(bbox[1])
+        xmax.text = str(bbox[2])
+        ymax.text = str(bbox[3])
 
     tree.write("./img_1053_"+str(rotation)+".xml")
