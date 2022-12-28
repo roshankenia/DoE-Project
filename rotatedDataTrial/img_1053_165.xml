@@ -1,20 +1,20 @@
 <annotation>
-  <folder/>
-  <filename>img_1053.jpg</filename>
-  <database/>
-  <annotation/>
-  <image/>
+  <folder />
+  <filename>img_1053_165.jpg</filename>
+  <database />
+  <annotation />
+  <image />
   <size>
     <height>500</height>
     <width>500</width>
     <depth>3</depth>
   </size>
-  <segmented/>
+  <segmented />
   <object>
     <name>4</name>
-    <pose/>
-    <truncated/>
-    <difficult/>
+    <pose />
+    <truncated />
+    <difficult />
     <bndbox>
       <xmin>180.3252032520325</xmin>
       <ymin>292.35772357723573</ymin>
@@ -24,9 +24,9 @@
   </object>
   <object>
     <name>6</name>
-    <pose/>
-    <truncated/>
-    <difficult/>
+    <pose />
+    <truncated />
+    <difficult />
     <bndbox>
       <xmin>221.6260162601626</xmin>
       <ymin>292.1951219512195</ymin>
@@ -36,9 +36,9 @@
   </object>
   <object>
     <name>1</name>
-    <pose/>
-    <truncated/>
-    <difficult/>
+    <pose />
+    <truncated />
+    <difficult />
     <bndbox>
       <xmin>263.4146341463414</xmin>
       <ymin>291.2195121951219</ymin>
