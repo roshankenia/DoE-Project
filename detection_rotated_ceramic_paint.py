@@ -162,11 +162,11 @@ dataset_test = torch.utils.data.Subset(dataset_test, indices[s_ratio:])
 
 # define training and validation data loaders
 data_loader = torch.utils.data.DataLoader(
-    dataset, batch_size=2, shuffle=True,  # num_workers=4,
+    dataset, batch_size=16, shuffle=True,  # num_workers=4,
     collate_fn=utils.collate_fn)
 
 data_loader_test = torch.utils.data.DataLoader(
-    dataset_test, batch_size=2, shuffle=False,  # num_workers=4,
+    dataset_test, batch_size=16, shuffle=False,  # num_workers=4,
     collate_fn=utils.collate_fn)
 
 # get the model using our helper function
@@ -190,7 +190,7 @@ lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(
     optimizer, T_0=1, T_mult=2)
 
 # let's train it for a defined number of epochs
-num_epochs = 200
+num_epochs = 50
 
 for epoch in range(num_epochs):
     # train for one epoch, printing every 10 iterations
@@ -201,6 +201,11 @@ for epoch in range(num_epochs):
     lr_scheduler.step()
     # evaluate on the test dataset
     evaluate(model, data_loader_test, device=device)
+
+    if (epoch+1) % 10 == 0:
+        # save the trained model
+        torch.save(
+            model, r'./saved_model/model_doe_ceramic_paint_fastRCNN_v2_200epoch_rotated_images.pkl')
 
     print('')
     print('==================================================')
