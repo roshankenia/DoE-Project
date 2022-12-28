@@ -292,14 +292,14 @@ for imageFile in allJPEGImgs:
 
         new_bbox = get_enclosing_box(corners)
 
-        scale_factor_x = image.shape[1] / w
+        # scale_factor_x = image.shape[1] / w
 
-        scale_factor_y = image.shape[0] / h
+        # scale_factor_y = image.shape[0] / h
 
-        image = cv2.resize(image, (w, h))
+        # image = cv2.resize(image, (w, h))
 
-        new_bbox[:, :4] /= [scale_factor_x,
-                            scale_factor_y, scale_factor_x, scale_factor_y]
+        # new_bbox[:, :4] /= [scale_factor_x,
+        #                     scale_factor_y, scale_factor_x, scale_factor_y]
 
         bboxes = new_bbox
         print(bboxes)
