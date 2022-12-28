@@ -38,14 +38,14 @@ def rotate(origin, point, angle):
 # make image using box
 
 
-def make_image(img, boxes, labels, rect_th=2, text_size=0.5, text_th=1):
+def make_image(img, boxes, labels, img_num, rotation, rect_th=2, text_size=0.5, text_th=1):
     for i in range(len(boxes)):
         cv2.rectangle(img, (boxes[i][0], boxes[i][1]), (boxes[i][2], boxes[i][3]),
                       color=(0, 255, 0), thickness=rect_th)
         cv2.putText(img, str(labels[i]), (boxes[i][0], boxes[i][1]), cv2.FONT_HERSHEY_SIMPLEX,
                     text_size, (0, 255, 0), thickness=text_th)
     # save frame as JPG file
-    cv2.imwrite("test.jpg", img)
+    cv2.imwrite("img_"+str(img_num)+"_"+str(rotation)+".jpg", img)
 
 
 # obtain data
@@ -81,36 +81,38 @@ for object_ in objects:
 
 print('boxes:', boxes)
 print('labels:', labels)
-
-rotation = 90
-# convert to cv2 image
-image = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
-h, w = image.shape[:2]
-cx, cy = (int(w / 2), int(h / 2))
-# get center
-image_center = tuple(np.array(image.shape[1::-1]) / 2)
-rot_mat = cv2.getRotationMatrix2D(
-    image_center, rotation, 1.0)
-# rotate image
-result = cv2.warpAffine(
-    image, rot_mat, image.shape[1::-1], flags=cv2.INTER_LINEAR)
-# rotate points
-rotatedBoxes = []
-for box in boxes:
-    cos, sin = abs(rot_mat[0, 0]), abs(rot_mat[0, 1])
-    newW = int((h * sin) + (w * cos))
-    newH = int((h * cos) + (w * sin))
-    rot_mat[0, 2] += (newW / 2) - cx
-    rot_mat[1, 2] += (newH / 2) - cy
-    v = [box[0], box[1], 1]
-    adjusted_coord_min = np.dot(rot_mat, v)
-    v = [box[2], box[3], 1]
-    adjusted_coord_max = np.dot(rot_mat, v)
-    rotatedBoxes.append([int(adjusted_coord_min[0]), int(adjusted_coord_min[1]),
-                        int(adjusted_coord_max[0]), int(adjusted_coord_max[1])])
-    # xmin, ymin = rotate(image_center, (box[0], box[1]), rotation)
-    # xmax, ymax = rotate(image_center, (box[2], box[3]), rotation)
-    # rotatedBoxes.append([int(xmin), int(ymin), int(xmax), int(ymax)])
-# create rotation matrix
-# save frame as JPG file
-make_image(result, rotatedBoxes, labels)
+img_num = rot = ''.join(filter(lambda i: i.isdigit(), "img_1053_og.jpg"))
+rotations = [0, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165,
+             180, 195, 210, 225, 240, 255, 270, 285, 300, 315, 330, 345]
+for rotation in rotations:
+    # convert to cv2 image
+    image = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
+    h, w = image.shape[:2]
+    cx, cy = (int(w / 2), int(h / 2))
+    # get center
+    image_center = tuple(np.array(image.shape[1::-1]) / 2)
+    rot_mat = cv2.getRotationMatrix2D(
+        image_center, rotation, 1.0)
+    # rotate image
+    result = cv2.warpAffine(
+        image, rot_mat, image.shape[1::-1], flags=cv2.INTER_LINEAR)
+    # rotate points
+    rotatedBoxes = []
+    for box in boxes:
+        cos, sin = abs(rot_mat[0, 0]), abs(rot_mat[0, 1])
+        newW = int((h * sin) + (w * cos))
+        newH = int((h * cos) + (w * sin))
+        rot_mat[0, 2] += (newW / 2) - cx
+        rot_mat[1, 2] += (newH / 2) - cy
+        v = [box[0], box[1], 1]
+        adjusted_coord_min = np.dot(rot_mat, v)
+        v = [box[2], box[3], 1]
+        adjusted_coord_max = np.dot(rot_mat, v)
+        rotatedBoxes.append([int(adjusted_coord_min[0]), int(adjusted_coord_min[1]),
+                            int(adjusted_coord_max[0]), int(adjusted_coord_max[1])])
+        # xmin, ymin = rotate(image_center, (box[0], box[1]), rotation)
+        # xmax, ymax = rotate(image_center, (box[2], box[3]), rotation)
+        # rotatedBoxes.append([int(xmin), int(ymin), int(xmax), int(ymax)])
+    # create rotation matrix
+    # save frame as JPG file
+    make_image(result, rotatedBoxes, labels, img_num, rotation)
