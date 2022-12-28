@@ -1,0 +1,49 @@
+<annotation>
+  <folder />
+  <filename>img_0875_255.jpg</filename>
+  <database />
+  <annotation />
+  <image />
+  <size>
+    <height>500</height>
+    <width>500</width>
+    <depth>3</depth>
+  </size>
+  <segmented />
+  <object>
+    <name>5</name>
+    <pose />
+    <truncated />
+    <difficult />
+    <bndbox>
+      <xmin>248.9490995173447</xmin>
+      <ymin>251.57166247781086</ymin>
+      <xmax>312.58931500325315</xmax>
+      <ymax>298.5062505288884</ymax>
+    </bndbox>
+  </object>
+  <object>
+    <name>7</name>
+    <pose />
+    <truncated />
+    <difficult />
+    <bndbox>
+      <xmin>240.06788478758924</xmin>
+      <ymin>285.19272297885493</ymin>
+      <xmax>304.10651416384</xmax>
+      <ymax>330.6500246112923</ymax>
+    </bndbox>
+  </object>
+  <object>
+    <name>10</name>
+    <pose />
+    <truncated />
+    <difficult />
+    <bndbox>
+      <xmin>231.39276505609982</xmin>
+      <ymin>317.16971038232083</ymin>
+      <xmax>296.0642413832207</xmax>
+      <ymax>362.0246416889813</ymax>
+    </bndbox>
+  </object>
+</annotation>

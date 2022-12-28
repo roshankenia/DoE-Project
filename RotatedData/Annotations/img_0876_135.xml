@@ -1,0 +1,49 @@
+<annotation>
+  <folder />
+  <filename>img_0876_135.jpg</filename>
+  <database />
+  <annotation />
+  <image />
+  <size>
+    <height>500</height>
+    <width>500</width>
+    <depth>3</depth>
+  </size>
+  <segmented />
+  <object>
+    <name>5</name>
+    <pose />
+    <truncated />
+    <difficult />
+    <bndbox>
+      <xmin>193.4011950554451</xmin>
+      <ymin>230.3695284116354</ymin>
+      <xmax>247.42081395189373</xmax>
+      <ymax>284.38914730808403</ymax>
+    </bndbox>
+  </object>
+  <object>
+    <name>9</name>
+    <pose />
+    <truncated />
+    <difficult />
+    <bndbox>
+      <xmin>173.0542828981621</xmin>
+      <ymin>209.87932814056873</ymin>
+      <xmax>227.36047802217806</xmax>
+      <ymax>264.1855232645847</ymax>
+    </bndbox>
+  </object>
+  <object>
+    <name>6</name>
+    <pose />
+    <truncated />
+    <difficult />
+    <bndbox>
+      <xmin>152.70737074087904</xmin>
+      <ymin>189.81899221085305</ymin>
+      <xmax>207.01356586489504</xmax>
+      <ymax>244.12518733486903</ymax>
+    </bndbox>
+  </object>
+</annotation>

@@ -1,0 +1,49 @@
+<annotation>
+  <folder />
+  <filename>img_0874_120.jpg</filename>
+  <database />
+  <annotation />
+  <image />
+  <size>
+    <height>500</height>
+    <width>500</width>
+    <depth>3</depth>
+  </size>
+  <segmented />
+  <object>
+    <name>5</name>
+    <pose />
+    <truncated />
+    <difficult />
+    <bndbox>
+      <xmin>185.4252858646863</xmin>
+      <ymin>222.68682768115127</ymin>
+      <xmax>242.03588953321585</xmax>
+      <ymax>271.23577277333294</ymax>
+    </bndbox>
+  </object>
+  <object>
+    <name>7</name>
+    <pose />
+    <truncated />
+    <difficult />
+    <bndbox>
+      <xmin>170.5322847361744</xmin>
+      <ymin>196.4718718908384</ymin>
+      <xmax>227.86952036616205</xmax>
+      <ymax>245.4403381415697</ymax>
+    </bndbox>
+  </object>
+  <object>
+    <name>2</name>
+    <pose />
+    <truncated />
+    <difficult />
+    <bndbox>
+      <xmin>154.8564464683838</xmin>
+      <ymin>169.94980529761702</ymin>
+      <xmax>213.08139952728754</xmax>
+      <ymax>220.0363220794458</ymax>
+    </bndbox>
+  </object>
+</annotation>

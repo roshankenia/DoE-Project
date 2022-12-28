@@ -1,0 +1,49 @@
+<annotation>
+  <folder />
+  <filename>img_0874_210.jpg</filename>
+  <database />
+  <annotation />
+  <image />
+  <size>
+    <height>500</height>
+    <width>500</width>
+    <depth>3</depth>
+  </size>
+  <segmented />
+  <object>
+    <name>5</name>
+    <pose />
+    <truncated />
+    <difficult />
+    <bndbox>
+      <xmin>222.6868276811513</xmin>
+      <ymin>257.9641104667841</ymin>
+      <xmax>271.235772773333</xmax>
+      <ymax>314.5747141353136</ymax>
+    </bndbox>
+  </object>
+  <object>
+    <name>7</name>
+    <pose />
+    <truncated />
+    <difficult />
+    <bndbox>
+      <xmin>196.4718718908384</xmin>
+      <ymin>272.13047963383787</ymin>
+      <xmax>245.44033814156978</xmax>
+      <ymax>329.46771526382554</ymax>
+    </bndbox>
+  </object>
+  <object>
+    <name>2</name>
+    <pose />
+    <truncated />
+    <difficult />
+    <bndbox>
+      <xmin>169.94980529761705</xmin>
+      <ymin>286.9186004727124</ymin>
+      <xmax>220.03632207944588</xmax>
+      <ymax>345.1435535316161</ymax>
+    </bndbox>
+  </object>
+</annotation>

@@ -1,0 +1,49 @@
+<annotation>
+  <folder />
+  <filename>img_0874_150.jpg</filename>
+  <database />
+  <annotation />
+  <image />
+  <size>
+    <height>500</height>
+    <width>500</width>
+    <depth>3</depth>
+  </size>
+  <segmented />
+  <object>
+    <name>5</name>
+    <pose />
+    <truncated />
+    <difficult />
+    <bndbox>
+      <xmin>192.79594513449004</xmin>
+      <ymin>237.19781311857741</ymin>
+      <xmax>241.34489022667174</xmax>
+      <ymax>293.8084167871069</ymax>
+    </bndbox>
+  </object>
+  <object>
+    <name>7</name>
+    <pose />
+    <truncated />
+    <difficult />
+    <bndbox>
+      <xmin>167.0005105027268</xmin>
+      <ymin>221.5781800286074</ymin>
+      <xmax>215.96897675345812</xmax>
+      <ymax>278.915415658595</ymax>
+    </bndbox>
+  </object>
+  <object>
+    <name>2</name>
+    <pose />
+    <truncated />
+    <difficult />
+    <bndbox>
+      <xmin>140.2686833302306</xmin>
+      <ymin>206.26565774154582</ymin>
+      <xmax>190.3552001120594</xmax>
+      <ymax>264.4906108004496</ymax>
+    </bndbox>
+  </object>
+</annotation>

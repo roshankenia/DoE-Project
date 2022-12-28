@@ -1,0 +1,49 @@
+<annotation>
+  <folder />
+  <filename>img_0875_330.jpg</filename>
+  <database />
+  <annotation />
+  <image />
+  <size>
+    <height>500</height>
+    <width>500</width>
+    <depth>3</depth>
+  </size>
+  <segmented />
+  <object>
+    <name>5</name>
+    <pose />
+    <truncated />
+    <difficult />
+    <bndbox>
+      <xmin>253.1171291528936</xmin>
+      <ymin>199.61114363133137</ymin>
+      <xmax>304.49766479747456</xmax>
+      <ymax>258.74021672481155</ymax>
+    </bndbox>
+  </object>
+  <object>
+    <name>7</name>
+    <pose />
+    <truncated />
+    <difficult />
+    <bndbox>
+      <xmin>280.0509284545636</xmin>
+      <ymin>214.80350097852082</ymin>
+      <xmax>330.45734474221484</xmax>
+      <ymax>273.82845700284884</ymax>
+    </bndbox>
+  </object>
+  <object>
+    <name>10</name>
+    <pose />
+    <truncated />
+    <difficult />
+    <bndbox>
+      <xmin>305.66392278462484</xmin>
+      <ymin>229.23329121980495</ymin>
+      <xmax>355.7991042324013</xmax>
+      <ymax>288.55994074011176</ymax>
+    </bndbox>
+  </object>
+</annotation>

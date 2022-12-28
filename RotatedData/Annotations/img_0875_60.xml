@@ -1,0 +1,49 @@
+<annotation>
+  <folder />
+  <filename>img_0875_60.jpg</filename>
+  <database />
+  <annotation />
+  <image />
+  <size>
+    <height>500</height>
+    <width>500</width>
+    <depth>3</depth>
+  </size>
+  <segmented />
+  <object>
+    <name>5</name>
+    <pose />
+    <truncated />
+    <difficult />
+    <bndbox>
+      <xmin>199.61114363133132</xmin>
+      <ymin>195.50233520252542</ymin>
+      <xmax>258.74021672481155</xmax>
+      <ymax>246.88287084710637</ymax>
+    </bndbox>
+  </object>
+  <object>
+    <name>7</name>
+    <pose />
+    <truncated />
+    <difficult />
+    <bndbox>
+      <xmin>214.8035009785208</xmin>
+      <ymin>169.5426552577851</ymin>
+      <xmax>273.82845700284884</xmax>
+      <ymax>219.94907154543637</ymax>
+    </bndbox>
+  </object>
+  <object>
+    <name>10</name>
+    <pose />
+    <truncated />
+    <difficult />
+    <bndbox>
+      <xmin>229.23329121980495</xmin>
+      <ymin>144.20089576759864</ymin>
+      <xmax>288.55994074011176</xmax>
+      <ymax>194.33607721537507</ymax>
+    </bndbox>
+  </object>
+</annotation>

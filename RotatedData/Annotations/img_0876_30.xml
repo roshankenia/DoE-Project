@@ -1,0 +1,49 @@
+<annotation>
+  <folder />
+  <filename>img_0876_30.jpg</filename>
+  <database />
+  <annotation />
+  <image />
+  <size>
+    <height>500</height>
+    <width>500</width>
+    <depth>3</depth>
+  </size>
+  <segmented />
+  <object>
+    <name>5</name>
+    <pose />
+    <truncated />
+    <difficult />
+    <bndbox>
+      <xmin>225.71167404538397</xmin>
+      <ymin>189.2626938603526</ymin>
+      <xmax>275.3861997346669</xmax>
+      <ymax>247.61309973180033</ymax>
+    </bndbox>
+  </object>
+  <object>
+    <name>9</name>
+    <pose />
+    <truncated />
+    <difficult />
+    <bndbox>
+      <xmin>251.32545068678274</xmin>
+      <ymin>174.36969273184076</ymin>
+      <xmax>301.28651465606754</xmax>
+      <ymax>233.00663688329035</ymax>
+    </bndbox>
+  </object>
+  <object>
+    <name>6</name>
+    <pose />
+    <truncated />
+    <difficult />
+    <bndbox>
+      <xmin>276.8343470385441</xmin>
+      <ymin>159.3999139026017</ymin>
+      <xmax>326.7954110078289</xmax>
+      <ymax>218.03685805405132</ymax>
+    </bndbox>
+  </object>
+</annotation>

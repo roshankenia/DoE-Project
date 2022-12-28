@@ -1,0 +1,49 @@
+<annotation>
+  <folder />
+  <filename>img_0874_285.jpg</filename>
+  <database />
+  <annotation />
+  <image />
+  <size>
+    <height>500</height>
+    <width>500</width>
+    <depth>3</depth>
+  </size>
+  <segmented />
+  <object>
+    <name>5</name>
+    <pose />
+    <truncated />
+    <difficult />
+    <bndbox>
+      <xmin>257.5696248747628</xmin>
+      <ymin>241.7917097242067</ymin>
+      <xmax>318.8707723906931</xmax>
+      <ymax>285.71214951671914</ymax>
+    </bndbox>
+  </object>
+  <object>
+    <name>7</name>
+    <pose />
+    <truncated />
+    <difficult />
+    <bndbox>
+      <xmin>265.2686999865204</xmin>
+      <ymin>273.9005986442414</ymin>
+      <xmax>327.47432324667705</xmax>
+      <ymax>318.0633919819928</ymax>
+    </bndbox>
+  </object>
+  <object>
+    <name>2</name>
+    <pose />
+    <truncated />
+    <difficult />
+    <bndbox>
+      <xmin>273.81166245619454</xmin>
+      <ymin>305.66219185560016</ymin>
+      <xmax>336.77246552001304</xmax>
+      <ymax>351.07675664625395</ymax>
+    </bndbox>
+  </object>
+</annotation>
