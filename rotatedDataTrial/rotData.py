@@ -12,6 +12,7 @@ from PIL import Image
 from xml.dom.minidom import parse
 import math
 import shutil
+from xml.etree.ElementTree import ElementTree, dump
 
 
 # ensure we are running on the correct gpu
@@ -283,3 +284,11 @@ for rotation in rotations:
 
     # create copy xml
     shutil.copy2("./img_1053_x.xml", "./img_1053_"+str(rotation)+".xml")
+
+    tree = ElementTree()
+    tree.parse("./img_1053_"+str(rotation)+".xml")
+
+    filename = tree.find('filename')
+    filename.text = "img_1053_"+str(rotation)+".jpg"
+
+    dump(tree)
