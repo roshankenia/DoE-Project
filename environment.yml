@@ -13,3 +13,4 @@ dependencies:
   - pip:
       - opencv-python==4.6.0.66
       - python-doctr[torch]==0.6.0
+      - mat73==0.59
