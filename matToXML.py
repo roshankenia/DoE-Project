@@ -1,5 +1,4 @@
-from scipy.io import loadmat
-
 # open .mat file
-annots = loadmat('../SVHN/test/digitStruct.mat')
-print(annots)
+import mat73
+data_dict = mat73.loadmat('../SVHN/test/digitStruct.mat')
+print(data_dict)
