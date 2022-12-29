@@ -258,9 +258,9 @@ def crop_pebble(img, masks, boxes):
     mask = np.asarray(masks[0], dtype="uint8")
     # obtain only the mask pixels from the image
     only_mask = cv2.bitwise_and(img, img, mask=mask)
-    bbox = boxes[0]
-    # crop the image to only contain the pebble
-    crop = only_mask[bbox[0][1]:bbox[1][1], bbox[0][0]:bbox[1][0]]
+    # bbox = boxes[0]
+    # # crop the image to only contain the pebble
+    # crop = only_mask[bbox[0][1]:bbox[1][1], bbox[0][0]:bbox[1][0]]
 
     # # put pebble on standard 1000x1000 image
     # imgSize = 500
@@ -272,10 +272,10 @@ def crop_pebble(img, masks, boxes):
     # xoff = round((imgSize-cw)/2)
 
     # background[yoff:yoff+ch, xoff:xoff+cw] = crop
-    # # save crop as JPG file
-    # # cv2.imwrite("./ceramicimages/image" + str(ind) + "/crop.jpg", background)
+    # save crop as JPG file
+    # cv2.imwrite("./ceramicimages/image" + str(ind) + "/crop.jpg", background)
 
-    return crop
+    return only_mask
 
 
 # set to evaluation mode
