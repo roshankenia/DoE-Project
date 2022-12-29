@@ -258,23 +258,6 @@ def crop_pebble(img, masks, boxes):
     mask = np.asarray(masks[0], dtype="uint8")
     # obtain only the mask pixels from the image
     only_mask = cv2.bitwise_and(img, img, mask=mask)
-    # bbox = boxes[0]
-    # # crop the image to only contain the pebble
-    # crop = only_mask[bbox[0][1]:bbox[1][1], bbox[0][0]:bbox[1][0]]
-
-    # # put pebble on standard 1000x1000 image
-    # imgSize = 500
-    # background = np.zeros((imgSize, imgSize, 3), np.uint8)
-    # ch, cw = crop.shape[:2]
-
-    # # compute xoff and yoff for placement of upper left corner of resized image
-    # yoff = round((imgSize-ch)/2)
-    # xoff = round((imgSize-cw)/2)
-
-    # background[yoff:yoff+ch, xoff:xoff+cw] = crop
-    # save crop as JPG file
-    # cv2.imwrite("./ceramicimages/image" + str(ind) + "/crop.jpg", background)
-
     return only_mask
 
 
@@ -306,7 +289,6 @@ sourceAnnotationPath = os.path.join(sourceRoot, "Annotations")
 
 # obtain all JPEG image file names
 allJPEGImgs = list(sorted(os.listdir(sourceJPEGPath)))
-x = 0
 for imageFile in allJPEGImgs:
     # obtain data
     img = Image.open(os.path.join(
@@ -418,6 +400,3 @@ for imageFile in allJPEGImgs:
 
         tree.write(os.path.join(annotationPath, "img_" +
                    str(img_num) + "_"+str(rotation)+".xml"))
-    x += 1
-    if x == 5:
-        break
