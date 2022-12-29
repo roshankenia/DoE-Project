@@ -220,8 +220,7 @@ model = torch.load(
 model.to(device)
 x = 0
 for idx in range(len(dataset_test)):
-    img, _ = dataset_test[idx]
-    showbbox(model, img, idx)
+    if x >= 100 and x <= 150:
+        img, _ = dataset_test[idx]
+        showbbox(model, img, idx)
     x += 1
-    if x == 50:
-        break
