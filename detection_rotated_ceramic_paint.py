@@ -134,8 +134,8 @@ def get_transform(train):
 # Start to train the model
 ###############################
 # change the root path depending on your own dataset path
-root = r'./Rotated4Data'
-root1 = r'./Rotated4Data'
+root = r'./Rotated3Data'
+root1 = r'./Rotated3Data'
 
 # train on the GPU (specify GPU ID with 'cuda:id'), or on the CPU if a GPU is not available
 device = torch.device(
@@ -215,7 +215,7 @@ print("Training is done!")
 
 # save the trained model
 torch.save(
-    model, r'./saved_model/model_doe_ceramic_paint_fastRCNN_v2_50epoch_rotated_4_images.pkl')
+    model, r'./saved_model/model_doe_ceramic_paint_fastRCNN_v2_50epoch_rotated_3_images.pkl')
 
 
 def fig_draw(img, prediction, idx):
@@ -316,7 +316,7 @@ def showbbox(model, img, idx):
     plt.figure(figsize=(50, 50))
     plt.imshow(img)
     plt.axis('off')
-    vis_tgt_path = "./visualization_results/ceramic_paint_visual_samples_fastRCNN_v2_50epochs_rotated_4_images/"
+    vis_tgt_path = "./visualization_results/ceramic_paint_visual_samples_fastRCNN_v2_50epochs_rotated_3_images/"
     if not os.path.isdir(vis_tgt_path):
         os.mkdir(vis_tgt_path)
     plt.savefig(os.path.join(vis_tgt_path, "sample_" + str(idx) + "_vis.png"))
@@ -325,7 +325,7 @@ def showbbox(model, img, idx):
 
 # check the result
 model = torch.load(
-    r'./saved_model/model_doe_ceramic_paint_fastRCNN_v2_50epoch_rotated_4_images.pkl')
+    r'./saved_model/model_doe_ceramic_paint_fastRCNN_v2_50epoch_rotated_3_images.pkl')
 model.to(device)
 
 for idx in range(len(dataset_test)):
