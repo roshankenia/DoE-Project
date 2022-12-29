@@ -218,9 +218,6 @@ def showbbox(model, img, idx):
 model = torch.load(
     r'./saved_model/model_doe_ceramic_paint_fastRCNN_v2_50epoch_rotated_3_images.pkl')
 model.to(device)
-x = 0
 for idx in range(len(dataset_test)):
-    if x >= 100 and x <= 150:
-        img, _ = dataset_test[idx]
-        showbbox(model, img, idx)
-    x += 1
+    img, _ = dataset_test[idx]
+    showbbox(model, img, idx)
