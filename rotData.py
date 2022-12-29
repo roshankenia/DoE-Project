@@ -215,17 +215,87 @@ def make_image(img, boxes, labels, img_num, rotation, annotationVisPath, rect_th
                 str(img_num) + "_"+str(rotation)+"_annotated.jpg"), img)
 
 
+def get_prediction(img, confidence, segmentationModel):
+    """
+    get_prediction
+      parameters:
+        - img_path - path of the input image
+        - confidence - threshold to keep the prediction or not
+      method:
+        - Image is obtained from the image path
+        - the image is converted to image tensor using PyTorch's Transforms
+        - image is passed through the model to get the predictions
+        - masks, classes and bounding boxes are obtained from the model and soft masks are made binary(0 or 1) on masks
+          ie: eg. segment of cat is made 1 and rest of the image is made 0
+
+    """
+    transform = T.Compose([T.ToTensor()])
+    img = transform(img)
+
+    img = img.to(device)
+    pred = segmentationModel([img])
+    pred_score = list(pred[0]['scores'].detach().cpu().numpy())
+    print('pred scores:', pred_score)
+    pred_t = [pred_score.index(x) for x in pred_score if x > confidence]
+    if len(pred_t) == 0:
+        return None, None, None
+    pred_t = pred_t[-1]
+    masks = (pred[0]['masks'] > 0.5).detach().cpu().numpy()
+    masks = masks.reshape(-1, *masks.shape[-2:])
+    print(masks.shape)
+    # print(pred[0]['labels'].numpy().max())
+    pred_class = [CLASS_NAMES[i]
+                  for i in list(pred[0]['labels'].cpu().numpy())]
+    pred_boxes = [[(int(i[0]), int(i[1])), (int(i[2]), int(i[3]))]
+                  for i in list(pred[0]['boxes'].detach().cpu().numpy())]
+    masks = masks[:pred_t+1]
+    pred_boxes = pred_boxes[:pred_t+1]
+    pred_class = pred_class[:pred_t+1]
+    return masks, pred_boxes, pred_class
+
+
+def crop_pebble(img, masks, boxes):
+    mask = np.asarray(masks[0], dtype="uint8")
+    # obtain only the mask pixels from the image
+    only_mask = cv2.bitwise_and(img, img, mask=mask)
+    bbox = boxes[0]
+    # crop the image to only contain the pebble
+    crop = only_mask[bbox[0][1]:bbox[1][1], bbox[0][0]:bbox[1][0]]
+
+    # put pebble on standard 1000x1000 image
+    imgSize = 500
+    background = np.zeros((imgSize, imgSize, 3), np.uint8)
+    ch, cw = crop.shape[:2]
+
+    # compute xoff and yoff for placement of upper left corner of resized image
+    yoff = round((imgSize-ch)/2)
+    xoff = round((imgSize-cw)/2)
+
+    background[yoff:yoff+ch, xoff:xoff+cw] = crop
+    # save crop as JPG file
+    # cv2.imwrite("./ceramicimages/image" + str(ind) + "/crop.jpg", background)
+
+    return background
+
+
+# set to evaluation mode
+segmentationModel = torch.load('mask-rcnn-pebble.pt')
+segmentationModel.eval()
+device = torch.device(
+    'cuda') if torch.cuda.is_available() else torch.device('cpu')
+segmentationModel.to(device)
+
 # make directories
-root = "./Rotated4Data/"
+root = "./Rotated3Data/"
 if not os.path.isdir(root):
     os.mkdir(root)
-annotationPath = "./Rotated4Data/Annotations/"
+annotationPath = "./Rotated3Data/Annotations/"
 if not os.path.isdir(annotationPath):
     os.mkdir(annotationPath)
-annotationVisPath = "./Rotated4Data/AnnotationsVisualization/"
+annotationVisPath = "./Rotated3Data/AnnotationsVisualization/"
 if not os.path.isdir(annotationVisPath):
     os.mkdir(annotationVisPath)
-jpegpath = "./Rotated4Data/JPEGImages/"
+jpegpath = "./Rotated3Data/JPEGImages/"
 if not os.path.isdir(jpegpath):
     os.mkdir(jpegpath)
 
@@ -235,11 +305,21 @@ sourceAnnotationPath = os.path.join(sourceRoot, "Annotations")
 
 # obtain all JPEG image file names
 allJPEGImgs = list(sorted(os.listdir(sourceJPEGPath)))
+x = 0
 for imageFile in allJPEGImgs:
     # obtain data
     img = Image.open(os.path.join(
         sourceJPEGPath, imageFile)).convert("RGB")
     img_num = ''.join(filter(lambda i: i.isdigit(), imageFile))
+
+    # crop pebble
+    masks, boxes, pred_cls = get_prediction(img, .9, segmentationModel)
+
+    if masks is not None:
+        if len(masks) == 1:
+            # make_mask_image(np.copy(image), masks,
+            #                 boxes, pred_cls, count)
+            img = crop_pebble(np.copy(img), masks, boxes)
 
     # read the annotation files from the path, which are in xml format
     dom = parse(os.path.join(sourceAnnotationPath, "img_"+str(img_num)+".xml"))
@@ -273,7 +353,7 @@ for imageFile in allJPEGImgs:
     print('labels:', labels)
     # rotations = [0, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165,
     #              180, 195, 210, 225, 240, 255, 270, 285, 300, 315, 330, 345]
-    rotations = [0, 90, 180, 270]
+    rotations = [0, 15, 345]
 
     img = cv2.cvtColor(np.array(img), cv2.COLOR_RGB2BGR)
     for rotation in rotations:
@@ -337,3 +417,6 @@ for imageFile in allJPEGImgs:
 
         tree.write(os.path.join(annotationPath, "img_" +
                    str(img_num) + "_"+str(rotation)+".xml"))
+    x += 1
+    if x == 5:
+        break
