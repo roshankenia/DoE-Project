@@ -281,6 +281,7 @@ def crop_pebble(img, masks, boxes):
 # set to evaluation mode
 segmentationModel = torch.load('mask-rcnn-pebble.pt')
 segmentationModel.eval()
+CLASS_NAMES = ['__background__', 'pebble']
 device = torch.device(
     'cuda') if torch.cuda.is_available() else torch.device('cpu')
 segmentationModel.to(device)
