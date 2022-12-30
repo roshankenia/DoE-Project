@@ -2,10 +2,9 @@
 import mat73
 import numpy as np
 digitStruct = mat73.loadmat('../SVHN/test/digitStruct.mat', use_attrdict=True)
-# Save
-np.save('digitStruct.npy', digitStruct['digitStruct'])
-
-# Load
-digitStruct = np.load('digitStruct.npy', allow_pickle='TRUE').item()
-for keys, value in digitStruct.items():
-    print(keys)
+bboxes = digitStruct['digitStruct']['bbox']
+names = digitStruct['digitStruct']['name']
+for i in range(len(bboxes)):
+    print('Filename:', names[i], 'BBOX:', bboxes[i])
+np.save('SVHNbbox.npy', bboxes)
+np.save('SVHNname.npy', names)
