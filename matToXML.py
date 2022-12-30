@@ -15,8 +15,9 @@ for bbox in bboxes:
     top = np.array(bbox['top'])
     width = np.array(bbox['width'])
     print(type(heights))
+    print(heights.size)
     digitData = []
-    for j in range(len(heights)):
+    for j in range(heights.size):
         xmin = lefts[i]
         ymax = top[i]
 
