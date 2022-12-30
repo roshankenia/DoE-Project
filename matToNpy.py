@@ -38,4 +38,4 @@ for bbox in bboxes:
             print(digitData[j])
 
     bboxesnormal.append(digitData)
-np.save('SVHNbbox.npy', bboxesnormal)
+np.save('SVHNbbox.npy', np.array(bboxesnormal, dtype=object))
