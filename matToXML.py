@@ -14,16 +14,16 @@ for bbox in bboxes:
     lefts = bbox['left']
     top = bbox['top']
     width = bbox['width']
+    print(type(heights))
+    # digitData = []
+    # for j in range(len(heights)):
+    #     xmin = lefts[i]
+    #     ymax = top[i]
 
-    digitData = []
-    for j in range(len(heights)):
-        xmin = lefts[i]
-        ymax = top[i]
+    #     xmax = xmin + width[i]
+    #     ymin = ymax - heights[i]
 
-        xmax = xmin + width[i]
-        ymin = ymax - heights[i]
-
-        digitData.append((xmin, ymin, xmax, ymax, labels[i]))
-        print(digitData[i])
-    bboxesnormal.append(digitData)
+    #     digitData.append((xmin, ymin, xmax, ymax, labels[i]))
+    #     print(digitData[i])
+    # bboxesnormal.append(digitData)
 np.save('SVHNbbox.npy', bboxesnormal)
