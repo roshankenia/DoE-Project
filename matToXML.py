@@ -9,6 +9,7 @@ for i in range(len(bboxes)):
 np.save('SVHNname.npy', names)
 bboxesnormal = []
 for bbox in bboxes:
+    print()
     # obtain bounding box information
     height = np.array(bbox['height'])
     label = np.array(bbox['label'])
@@ -22,9 +23,9 @@ for bbox in bboxes:
         # only one bounding box
         xmin = np.float64(left)
         ymax = np.float64(top)
-        xmax = xmin + np.float64(width[i])
-        ymin = ymax - np.float64(height[i])
-        digitData.append((xmin, ymin, xmax, ymax, np.float64(label[i])))
+        xmax = xmin + np.float64(width)
+        ymin = ymax - np.float64(height)
+        digitData.append((xmin, ymin, xmax, ymax, np.float64(label)))
         print(digitData[0])
     else:
         # multiple bounding boxes found
