@@ -196,9 +196,9 @@ if not os.path.isdir(annotationPath):
 annotationVisPath = "./SVHNData/AnnotationsVisualization/"
 if not os.path.isdir(annotationVisPath):
     os.mkdir(annotationVisPath)
-pngPath = "./SVHNData/PNGImages/"
-if not os.path.isdir(pngPath):
-    os.mkdir(pngPath)
+jpegPath = "./SVHNData/JPEGImages/"
+if not os.path.isdir(jpegPath):
+    os.mkdir(jpegPath)
 # x = 0
 for i in range(len(names)):
     imageName = names[i]
@@ -220,7 +220,7 @@ for i in range(len(names)):
     xoff = round((imgSize-width)/2)
 
     background[yoff:yoff+height, xoff:xoff+width] = img
-    cv2.imwrite(os.path.join(pngPath, str(imgNum) + ".png"), background)
+    cv2.imwrite(os.path.join(jpegPath, str(imgNum) + ".jpg"), background)
     img = Image.fromarray(background)
     img, _ = transform(img, None)
     for b in bbox:
