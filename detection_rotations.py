@@ -103,49 +103,6 @@ def fig_draw(img, prediction, idx):
                     0.5, (0, 0, 100), thickness=2)
 
 
-def showbbox(model, img, idx):
-    # the input images are tensors with values in [0, 1]
-    #print("input image shape...:", type(img))
-    image_array = img.numpy()
-    image_array = np.array(normalize(image_array), dtype=np.float32)
-    img = torch.from_numpy(image_array)
-
-    model.eval()
-    with torch.no_grad():
-        '''
-        prediction is in the following format:
-        [{'boxes': tensor([[1492.6672,  238.4670, 1765.5385,  315.0320],
-        [ 887.1390,  256.8106, 1154.6687,  330.2953]], device='cuda:0'), 
-        'labels': tensor([1, 1], device='cuda:0'), 
-        'scores': tensor([1.0000, 1.0000], device='cuda:0')}]
-        '''
-
-        prediction = model([img.to(device)])
-
-    print(prediction)
-
-    img = img.permute(1, 2, 0)  # C,H,W -> H,W,C
-    img = (img * 255).byte().data.cpu()  # [0, 1] -> [0, 255]
-    img = np.array(img)  # tensor -> ndarray
-
-    # for i in range(prediction[0]['boxes'].cpu().shape[0]): # select all the predicted bounding boxes
-    if len(prediction[0]['labels']) >= 3:
-        for i in range(3):  # select the top-3 predicted bounding boxes
-            fig_draw(img, prediction, i)
-    else:
-        for i in range(len(prediction[0]['labels'])):
-            fig_draw(img, prediction, i)
-
-    plt.figure(figsize=(50, 50))
-    plt.imshow(img)
-    plt.axis('off')
-    vis_tgt_path = "./visualization_results/videocer/"
-    if not os.path.isdir(vis_tgt_path):
-        os.mkdir(vis_tgt_path)
-    plt.savefig(os.path.join(vis_tgt_path, "sample_" + str(idx) + "_vis.png"))
-    plt.close()
-
-
 def showbbox(model, img, rot, id):
     # the input images are tensors with values in [0, 1]
     #print("input image shape...:", type(img))
