@@ -205,6 +205,9 @@ for i in range(len(names)):
     print("IMG:", imgNum)
 
     img = Image.open(os.path.join(imageroot, imageName)).convert("RGB")
+    width, height = img.size
+    if width > 500 or height > 500:
+        print(width, height)
     img, _ = transform(img, None)
     # showbbox(img, bbox, imgNum, annotationVisPath)
     makeXML(imgNum, annotationPath, bbox)
