@@ -138,6 +138,7 @@ names = np.load('SVHNname.npy')
 bboxes = np.load('SVHNbbox.npy', allow_pickle=True)
 
 imageroot = '../SVHN/test/'
+x = 0
 for i in range(len(names)):
     imageName = names[i]
     bbox = bboxes[i]
@@ -148,4 +149,6 @@ for i in range(len(names)):
 
     img, _ = transform(img, None)
     showbbox(img, bbox, imgNum)
-    break
+    x += 1
+    if x == 10:
+        break
