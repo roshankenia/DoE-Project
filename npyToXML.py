@@ -199,7 +199,7 @@ if not os.path.isdir(annotationVisPath):
 pngPath = "./SVHNData/PNGImages/"
 if not os.path.isdir(pngPath):
     os.mkdir(pngPath)
-x = 0
+# x = 0
 for i in range(len(names)):
     imageName = names[i]
     bbox = bboxes[i]
@@ -230,6 +230,6 @@ for i in range(len(names)):
         b[3] += yoff
     showbbox(img, bbox, imgNum, annotationVisPath)
     makeXML(imgNum, annotationPath, bbox)
-    x += 1
-    if x == 10:
-        break
+    # x += 1
+    # if x == 10:
+    #     break
