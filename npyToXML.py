@@ -144,7 +144,7 @@ def makeXML(imgNum, annotationPath, bboxs):
     filename = tree.find('filename')
     filename.text = "img_" + str(imgNum) + ".png"
 
-    annotation = tree.find('annotation')
+    annotation = tree.getroot()
 
     for bbox in bboxs:
         # make bbox object
