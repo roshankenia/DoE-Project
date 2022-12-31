@@ -67,8 +67,8 @@ class SVHNDataset(torch.utils.data.Dataset):
         imgPath = os.path.join(self.imgroot, str(imgNum)+".png")
         img = Image.open(imgPath).convert("RGB")
         # normalization
-        img = np.array(img)
-        print("IMG SIZE:", img.size)
+        imaaag = np.array(img)
+        print("IMG SIZE:", imaaag.size)
         #img = normalize(img)
         #img = Image.fromarray(normalize(img),'RGB')
         # get the objects of the elements
