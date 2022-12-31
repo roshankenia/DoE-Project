@@ -203,9 +203,8 @@ for i in range(len(names)):
     imgNum = ''.join(filter(lambda i: i.isdigit(), imageName))
 
     img = Image.open(os.path.join(imageroot, imageName)).convert("RGB")
-
-    img, _ = transform(img, None)
     cv2.imwrite(os.path.join(jpegpath, "img_" + str(imgNum) + ".jpg"), img)
+    img, _ = transform(img, None)
     showbbox(img, bbox, imgNum, annotationVisPath)
     makeXML(imgNum, annotationPath, bbox)
     x += 1
