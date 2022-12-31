@@ -10,6 +10,11 @@ import cv2
 import os
 import torch
 import numpy as np
+import xml
+from xml.dom.minidom import parse
+import math
+import shutil
+from xml.etree.ElementTree import ElementTree, dump
 
 # ensure we are running on the correct gpu
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
@@ -31,8 +36,8 @@ def normalize(arr):
     http://en.wikipedia.org/wiki/Normalization_%28image_processing%29
     """
     arr = arr.astype('float')
-    #print("...arr shape", arr.shape)
-    #print("arr shape: ", arr.shape)
+    # print("...arr shape", arr.shape)
+    # print("arr shape: ", arr.shape)
     for i in range(3):
         minval = arr[i, :, :].min()
         maxval = arr[i, :, :].max()
@@ -55,57 +60,57 @@ def fig_draw(img, bbox, label):
         cv2.rectangle(img, (xmin, ymin), (xmax, ymax),
                       (255, 0, 0), thickness=1)
         cv2.putText(img, '0', (xmin, ymin), cv2.FONT_HERSHEY_SIMPLEX,
-                    0.5, (255, 0, 0), thickness=2)
+                    0.5, (255, 0, 0), thickness=1)
     elif label == 1:
         cv2.rectangle(img, (xmin, ymin), (xmax, ymax),
                       (0, 255, 0), thickness=1)
         cv2.putText(img, '1', (xmin, ymin), cv2.FONT_HERSHEY_SIMPLEX,
-                    0.5, (0, 255, 0), thickness=2)
+                    0.5, (0, 255, 0), thickness=1)
     elif label == 2:
         cv2.rectangle(img, (xmin, ymin), (xmax, ymax),
                       (0, 0, 255), thickness=1)
         cv2.putText(img, '2', (xmin, ymin), cv2.FONT_HERSHEY_SIMPLEX,
-                    0.5, (0, 0, 255), thickness=2)
+                    0.5, (0, 0, 255), thickness=1)
     elif label == 3:
         cv2.rectangle(img, (xmin, ymin), (xmax, ymax),
                       (0, 100, 255), thickness=1)
         cv2.putText(img, '3', (xmin, ymin), cv2.FONT_HERSHEY_SIMPLEX,
-                    0.5, (0, 100, 255), thickness=2)
+                    0.5, (0, 100, 255), thickness=1)
     elif label == 4:
         cv2.rectangle(img, (xmin, ymin), (xmax, ymax),
                       (255, 100, 100), thickness=1)
         cv2.putText(img, '4', (xmin, ymin), cv2.FONT_HERSHEY_SIMPLEX,
-                    0.5, (255, 100, 100), thickness=2)
+                    0.5, (255, 100, 100), thickness=1)
     elif label == 5:
         cv2.rectangle(img, (xmin, ymin), (xmax, ymax),
                       (255, 0, 255), thickness=1)
         cv2.putText(img, '5', (xmin, ymin), cv2.FONT_HERSHEY_SIMPLEX,
-                    0.5, (255, 0, 255), thickness=2)
+                    0.5, (255, 0, 255), thickness=1)
     elif label == 6:
         cv2.rectangle(img, (xmin, ymin), (xmax, ymax),
                       (0, 255, 255), thickness=1)
         cv2.putText(img, '6', (xmin, ymin), cv2.FONT_HERSHEY_SIMPLEX,
-                    0.5, (0, 255, 255), thickness=2)
+                    0.5, (0, 255, 255), thickness=1)
     elif label == 7:
         cv2.rectangle(img, (xmin, ymin), (xmax, ymax),
                       (255, 255, 0), thickness=1)
         cv2.putText(img, '7', (xmin, ymin), cv2.FONT_HERSHEY_SIMPLEX,
-                    0.5, (255, 255, 0), thickness=2)
+                    0.5, (255, 255, 0), thickness=1)
     elif label == 8:
         cv2.rectangle(img, (xmin, ymin), (xmax, ymax),
                       (100, 0, 0), thickness=1)
         cv2.putText(img, '8', (xmin, ymin), cv2.FONT_HERSHEY_SIMPLEX,
-                    0.5, (100, 0, 0), thickness=2)
+                    0.5, (100, 0, 0), thickness=1)
     elif label == 9:
         cv2.rectangle(img, (xmin, ymin), (xmax, ymax),
                       (0, 0, 100), thickness=1)
         cv2.putText(img, '9', (xmin, ymin), cv2.FONT_HERSHEY_SIMPLEX,
-                    0.5, (0, 0, 100), thickness=2)
+                    0.5, (0, 0, 100), thickness=1)
 
 
 def showbbox(img, bbox, id):
     # the input images are tensors with values in [0, 1]
-    #print("input image shape...:", type(img))
+    # print("input image shape...:", type(img))
     image_array = img.numpy()
     image_array = np.array(normalize(image_array), dtype=np.float32)
     img = torch.from_numpy(image_array)
@@ -123,7 +128,47 @@ def showbbox(img, bbox, id):
     if not os.path.isdir(vis_tgt_path):
         os.mkdir(vis_tgt_path)
     cv2.imwrite(os.path.join(vis_tgt_path, "sample_" +
-                str(id) + "_prediction.jpg"), img)
+                str(id) + "_visualization.jpg"), img)
+
+
+def makeXML(imgNum, annotationPath, bboxs):
+    # create copy xml
+
+    shutil.copy2("./example.xml", os.path.join(annotationPath,
+                 "img_" + str(imgNum) + ".xml"))
+
+    tree = ElementTree()
+    tree.parse(os.path.join(annotationPath, "img_" + str(imgNum) + ".xml"))
+
+    filename = tree.find('filename')
+    filename.text = "img_" + str(imgNum) + ".png"
+
+    annotation = tree.find('annotation')
+
+    for bbox in bboxs:
+        # make bbox object
+        objectElement = xml.Element("object")
+        nameElement = xml.Element("name")
+        nameElement.text = int(bbox[4])
+        objectElement.append(nameElement)
+        bndBoxElement = xml.Element("bndbox")
+        xminElement = xml.Element("xmin")
+        xminElement.text = bbox[0]
+        bndBoxElement.append(xminElement)
+        yminElement = xml.Element("ymin")
+        yminElement.text = bbox[1]
+        bndBoxElement.append(yminElement)
+        xmaxElement = xml.Element("xmax")
+        xmaxElement.text = bbox[2]
+        bndBoxElement.append(xmaxElement)
+        ymaxElement = xml.Element("ymax")
+        ymaxElement.text = bbox[3]
+        bndBoxElement.append(ymaxElement)
+        objectElement.append(bndBoxElement)
+        # append to annotation
+        annotation.append(objectElement)
+
+    tree.write(os.path.join(annotationPath, "img_" + str(imgNum) + ".xml"))
 
 
 # check the result
@@ -138,6 +183,20 @@ names = np.load('SVHNname.npy')
 bboxes = np.load('SVHNbbox.npy', allow_pickle=True)
 
 imageroot = '../SVHN/test/'
+
+# make directories
+root = "./SVHNData/"
+if not os.path.isdir(root):
+    os.mkdir(root)
+annotationPath = "./SVHNData/Annotations/"
+if not os.path.isdir(annotationPath):
+    os.mkdir(annotationPath)
+annotationVisPath = "./SVHNData/AnnotationsVisualization/"
+if not os.path.isdir(annotationVisPath):
+    os.mkdir(annotationVisPath)
+jpegpath = "./SVHNData/JPEGImages/"
+if not os.path.isdir(jpegpath):
+    os.mkdir(jpegpath)
 x = 0
 for i in range(len(names)):
     imageName = names[i]
@@ -149,6 +208,7 @@ for i in range(len(names)):
 
     img, _ = transform(img, None)
     showbbox(img, bbox, imgNum)
+    makeXML(imgNum, annotationPath, bbox)
     x += 1
-    if x == 10:
+    if x == 5:
         break
