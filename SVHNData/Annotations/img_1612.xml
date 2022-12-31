@@ -1,0 +1,8 @@
+<annotation>
+  <folder />
+  <filename>img_1612.png</filename>
+  <database />
+  <annotation />
+  <image />
+  <segmented />
+<object><name>2</name><bndbox><xmin>39.0</xmin><ymin>14.0</ymin><xmax>45.0</xmax><ymax>28.0</ymax></bndbox></object><object><name>9</name><bndbox><xmin>49.0</xmin><ymin>14.0</ymin><xmax>55.0</xmax><ymax>28.0</ymax></bndbox></object></annotation>
