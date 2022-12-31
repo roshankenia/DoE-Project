@@ -66,6 +66,7 @@ class SVHNDataset(torch.utils.data.Dataset):
         imgNum = ''.join(filter(lambda i: i.isdigit(), fileName))
         imgPath = os.path.join(self.imgroot, str(imgNum)+".png")
         img = Image.open(imgPath).convert("RGB")
+        print("IMG SIZE:", img.size)
         # normalization
         #img = np.array(img)
         #img = normalize(img)
