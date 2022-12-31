@@ -196,7 +196,7 @@ if not os.path.isdir(annotationPath):
 annotationVisPath = "./SVHNData/AnnotationsVisualization/"
 if not os.path.isdir(annotationVisPath):
     os.mkdir(annotationVisPath)
-x = 0
+# x = 0
 for i in range(len(names)):
     imageName = names[i]
     bbox = bboxes[i]
@@ -205,8 +205,8 @@ for i in range(len(names)):
 
     img = Image.open(os.path.join(imageroot, imageName)).convert("RGB")
     img, _ = transform(img, None)
-    showbbox(img, bbox, imgNum, annotationVisPath)
+    # showbbox(img, bbox, imgNum, annotationVisPath)
     makeXML(imgNum, annotationPath, bbox)
-    x += 1
-    if x == 10:
-        break
+    # x += 1
+    # if x == 10:
+    #     break
