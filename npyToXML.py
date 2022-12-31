@@ -116,7 +116,7 @@ def showbbox(img, bbox, id):
 
     for j in range(len(bbox)):
         digitBox = bbox[j][0:4]
-        label = bbox[4]
+        label = bbox[j][4]
         fig_draw(img, digitBox, label)
     # save frame as JPG file
     vis_tgt_path = "./visualization_results/SVHNdata/"
