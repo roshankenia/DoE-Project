@@ -150,20 +150,20 @@ def makeXML(imgNum, annotationPath, bboxs):
         # make bbox object
         objectElement = ET.Element("object")
         nameElement = ET.Element("name")
-        nameElement.text = int(bbox[4])
+        nameElement.text = str(int(bbox[4]))
         objectElement.append(nameElement)
         bndBoxElement = ET.Element("bndbox")
         xminElement = ET.Element("xmin")
-        xminElement.text = bbox[0]
+        xminElement.text = str(bbox[0])
         bndBoxElement.append(xminElement)
         yminElement = ET.Element("ymin")
-        yminElement.text = bbox[1]
+        yminElement.text = str(bbox[1])
         bndBoxElement.append(yminElement)
         xmaxElement = ET.Element("xmax")
-        xmaxElement.text = bbox[2]
+        xmaxElement.text = str(bbox[2])
         bndBoxElement.append(xmaxElement)
         ymaxElement = ET.Element("ymax")
-        ymaxElement.text = bbox[3]
+        ymaxElement.text = str(bbox[3])
         bndBoxElement.append(ymaxElement)
         objectElement.append(bndBoxElement)
         # append to annotation
