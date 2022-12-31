@@ -217,7 +217,7 @@ for i in range(len(names)):
     xoff = round((imgSize-width)/2)
 
     background[yoff:yoff+height, xoff:xoff+width] = img
-    img = background
+    img = Image.fromarray(background)
     img, _ = transform(img, None)
     showbbox(img, bbox, imgNum, annotationVisPath)
     makeXML(imgNum, annotationPath, bbox)
