@@ -219,10 +219,11 @@ for i in range(len(names)):
     background[yoff:yoff+height, xoff:xoff+width] = img
     img = Image.fromarray(background)
     img, _ = transform(img, None)
-    bbox[0] += xoff
-    bbox[1] += yoff
-    bbox[2] += xoff
-    bbox[3] += yoff
+    for b in bbox:
+        b[0] += xoff
+        b[1] += yoff
+        b[2] += xoff
+        b[3] += yoff
     showbbox(img, bbox, imgNum, annotationVisPath)
     makeXML(imgNum, annotationPath, bbox)
     x += 1
