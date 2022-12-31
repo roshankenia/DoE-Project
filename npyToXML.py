@@ -109,7 +109,7 @@ def fig_draw(img, bbox, label):
                     0.5, (0, 0, 100), thickness=1)
 
 
-def showbbox(img, bbox, id):
+def showbbox(img, bbox, id, annotationVisPath):
     # the input images are tensors with values in [0, 1]
     # print("input image shape...:", type(img))
     image_array = img.numpy()
@@ -125,11 +125,8 @@ def showbbox(img, bbox, id):
         label = bbox[j][4]
         fig_draw(img, digitBox, label)
     # save frame as JPG file
-    vis_tgt_path = "./visualization_results/SVHNdata/"
-    if not os.path.isdir(vis_tgt_path):
-        os.mkdir(vis_tgt_path)
-    cv2.imwrite(os.path.join(vis_tgt_path, "sample_" +
-                str(id) + "_visualization.jpg"), img)
+    cv2.imwrite(os.path.join(annotationVisPath,
+                "img_" + str(id) + ".jpg"), img)
 
 
 def makeXML(imgNum, annotationPath, bboxs):
@@ -208,7 +205,8 @@ for i in range(len(names)):
     img = Image.open(os.path.join(imageroot, imageName)).convert("RGB")
 
     img, _ = transform(img, None)
-    showbbox(img, bbox, imgNum)
+    cv2.imwrite(os.path.join(jpegpath, "img_" + str(imgNum) + ".jpg"), img)
+    showbbox(img, bbox, imgNum, annotationVisPath)
     makeXML(imgNum, annotationPath, bbox)
     x += 1
     if x == 5:
