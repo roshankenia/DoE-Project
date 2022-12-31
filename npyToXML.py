@@ -147,21 +147,21 @@ def makeXML(imgNum, annotationPath, bboxs):
 
     for bbox in bboxs:
         # make bbox object
-        objectElement = xml.Element("object")
-        nameElement = xml.Element("name")
+        objectElement = ElementTree.Element("object")
+        nameElement = ElementTree.Element("name")
         nameElement.text = int(bbox[4])
         objectElement.append(nameElement)
-        bndBoxElement = xml.Element("bndbox")
-        xminElement = xml.Element("xmin")
+        bndBoxElement = ElementTree.Element("bndbox")
+        xminElement = ElementTree.Element("xmin")
         xminElement.text = bbox[0]
         bndBoxElement.append(xminElement)
-        yminElement = xml.Element("ymin")
+        yminElement = ElementTree.Element("ymin")
         yminElement.text = bbox[1]
         bndBoxElement.append(yminElement)
-        xmaxElement = xml.Element("xmax")
+        xmaxElement = ElementTree.Element("xmax")
         xmaxElement.text = bbox[2]
         bndBoxElement.append(xmaxElement)
-        ymaxElement = xml.Element("ymax")
+        ymaxElement = ElementTree.Element("ymax")
         ymaxElement.text = bbox[3]
         bndBoxElement.append(ymaxElement)
         objectElement.append(bndBoxElement)
