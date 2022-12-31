@@ -147,7 +147,11 @@ def makeXML(imgNum, annotationPath, bboxs):
         # make bbox object
         objectElement = ET.Element("object")
         nameElement = ET.Element("name")
-        nameElement.text = str(int(bbox[4]))
+        label = int(bbox[4])
+        if label == 10:
+            # convert 10 to 0
+            label = 0
+        nameElement.text = str(label)
         objectElement.append(nameElement)
         bndBoxElement = ET.Element("bndbox")
         xminElement = ET.Element("xmin")
@@ -192,9 +196,6 @@ if not os.path.isdir(annotationPath):
 annotationVisPath = "./SVHNData/AnnotationsVisualization/"
 if not os.path.isdir(annotationVisPath):
     os.mkdir(annotationVisPath)
-jpegpath = "./SVHNData/JPEGImages/"
-if not os.path.isdir(jpegpath):
-    os.mkdir(jpegpath)
 x = 0
 for i in range(len(names)):
     imageName = names[i]
@@ -207,5 +208,5 @@ for i in range(len(names)):
     showbbox(img, bbox, imgNum, annotationVisPath)
     makeXML(imgNum, annotationPath, bbox)
     x += 1
-    if x == 5:
+    if x == 10:
         break
