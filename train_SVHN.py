@@ -118,7 +118,7 @@ class SVHNDataset(torch.utils.data.Dataset):
         return img, target
 
     def __len__(self):
-        return len(self.imgs)
+        return len(self.xmls)
 
 
 def get_transform(train):
