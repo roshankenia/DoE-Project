@@ -196,7 +196,7 @@ if not os.path.isdir(annotationPath):
 annotationVisPath = "./SVHNData/AnnotationsVisualization/"
 if not os.path.isdir(annotationVisPath):
     os.mkdir(annotationVisPath)
-# x = 0
+x = 0
 for i in range(len(names)):
     imageName = names[i]
     bbox = bboxes[i]
@@ -208,9 +208,19 @@ for i in range(len(names)):
     width, height = img.size
     if width > 500 or height > 500:
         print(width, height)
+    # put image on standard 1100x1100 image
+    imgSize = 1100
+    background = np.zeros((imgSize, imgSize, 3), np.uint8)
+
+    # compute xoff and yoff for placement of upper left corner of resized image
+    yoff = round((imgSize-height)/2)
+    xoff = round((imgSize-width)/2)
+
+    background[yoff:yoff+height, xoff:xoff+width] = img
+    img = background
     img, _ = transform(img, None)
-    # showbbox(img, bbox, imgNum, annotationVisPath)
+    showbbox(img, bbox, imgNum, annotationVisPath)
     makeXML(imgNum, annotationPath, bbox)
-    # x += 1
-    # if x == 10:
-    #     break
+    x += 1
+    if x == 10:
+        break
