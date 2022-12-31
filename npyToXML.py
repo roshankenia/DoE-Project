@@ -202,6 +202,7 @@ for i in range(len(names)):
     bbox = bboxes[i]
 
     imgNum = ''.join(filter(lambda i: i.isdigit(), imageName))
+    print("IMG:", imgNum)
 
     img = Image.open(os.path.join(imageroot, imageName)).convert("RGB")
     img, _ = transform(img, None)
