@@ -14,6 +14,7 @@ import xml
 from xml.dom.minidom import parse
 import math
 import shutil
+import xml.etree.ElementTree as ET
 from xml.etree.ElementTree import ElementTree, dump
 
 # ensure we are running on the correct gpu
@@ -147,21 +148,21 @@ def makeXML(imgNum, annotationPath, bboxs):
 
     for bbox in bboxs:
         # make bbox object
-        objectElement = ElementTree.Element("object")
-        nameElement = ElementTree.Element("name")
+        objectElement = ET.Element("object")
+        nameElement = ET.Element("name")
         nameElement.text = int(bbox[4])
         objectElement.append(nameElement)
-        bndBoxElement = ElementTree.Element("bndbox")
-        xminElement = ElementTree.Element("xmin")
+        bndBoxElement = ET.Element("bndbox")
+        xminElement = ET.Element("xmin")
         xminElement.text = bbox[0]
         bndBoxElement.append(xminElement)
-        yminElement = ElementTree.Element("ymin")
+        yminElement = ET.Element("ymin")
         yminElement.text = bbox[1]
         bndBoxElement.append(yminElement)
-        xmaxElement = ElementTree.Element("xmax")
+        xmaxElement = ET.Element("xmax")
         xmaxElement.text = bbox[2]
         bndBoxElement.append(xmaxElement)
-        ymaxElement = ElementTree.Element("ymax")
+        ymaxElement = ET.Element("ymax")
         ymaxElement.text = bbox[3]
         bndBoxElement.append(ymaxElement)
         objectElement.append(bndBoxElement)
