@@ -220,7 +220,7 @@ for i in range(len(names)):
     xoff = round((imgSize-width)/2)
 
     background[yoff:yoff+height, xoff:xoff+width] = img
-    cv2.imwrite(os.path.join(jpegPath, str(imgNum) + ".png"), background)
+    cv2.imwrite(os.path.join(pngPath, str(imgNum) + ".png"), background)
     img = Image.fromarray(background)
     img, _ = transform(img, None)
     for b in bbox:
