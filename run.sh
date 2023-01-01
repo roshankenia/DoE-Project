@@ -1,1 +1,0 @@
-python detection_20220901_600.py
