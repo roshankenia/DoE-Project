@@ -53,7 +53,7 @@ class SVHNDataset(torch.utils.data.Dataset):
     def __getitem__(self, idx):
         # load images and their corresponding bbox annotations
         # obtain XML first
-        xml_path = os.path.join(self.xmlroot, "Annotations", self.xmls[idx])
+        xml_path = os.path.join(self.root, "Annotations", self.xmls[idx])
         # read the annotation files from the path, which are in xml format
         dom = parse(xml_path)
         # get the element of the annotation files
