@@ -134,20 +134,21 @@ count = 0
 while (vidcap.isOpened()):
     hasFrames, image = vidcap.read()
     if hasFrames:
-        # save unmodified image
-        # save frame as JPG file
-        # cv2.imwrite(path + "unmodified.jpg", image)
-        # check if image has a pebble
-        masks, boxes, pred_cls = get_prediction(image, .9)
-        if masks is not None:
-            if len(masks) == 1:
-                if count >= 300 and count <= 305:
+        if count >= 300 and count <= 305:
+            # save unmodified image
+            # save frame as JPG file
+            # cv2.imwrite(path + "unmodified.jpg", image)
+            # check if image has a pebble
+            masks, boxes, pred_cls = get_prediction(image, .9)
+            if masks is not None:
+                if len(masks) == 1:
+
                     # make_mask_image(np.copy(image), masks,
                     #                 boxes, pred_cls, count)
                     image = crop_pebble(np.copy(image), masks, boxes, count)
 
                     # resize image
-                    image = cv2.resize(image, (100, 100))
+                    # image = cv2.resize(image, (100, 100))
 
                     # make image directory
                     path = "./ceramicimages/image" + str(count) + "/"
