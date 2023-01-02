@@ -20,7 +20,7 @@ else:
     print('GPU is being properly used')
 
 # set to evaluation mode
-model = torch.load('mask-rcnn-pebble.pt')
+model = torch.load('../../DoE-Project/mask-rcnn-pebble.pt')
 model.eval()
 CLASS_NAMES = ['__background__', 'pebble']
 device = torch.device(
@@ -121,7 +121,8 @@ def crop_pebble(img, masks, boxes, ind):
     return background
 
 
-vidcap = cv2.VideoCapture('Moving Pebbles - Ceramic Paint.MOV')
+vidcap = cv2.VideoCapture(
+    '../../DoE-Project/Moving Pebbles - Ceramic Paint.MOV')
 frame_count = int(vidcap.get(cv2.CAP_PROP_FRAME_COUNT))
 print('video has', str(frame_count), 'frames.')
 
@@ -140,27 +141,31 @@ while (vidcap.isOpened()):
         masks, boxes, pred_cls = get_prediction(image, .9)
         if masks is not None:
             if len(masks) == 1:
-                # make_mask_image(np.copy(image), masks,
-                #                 boxes, pred_cls, count)
-                image = crop_pebble(np.copy(image), masks, boxes, count)
+                if count >= 300 and count <= 305:
+                    # make_mask_image(np.copy(image), masks,
+                    #                 boxes, pred_cls, count)
+                    image = crop_pebble(np.copy(image), masks, boxes, count)
 
-                # make image directory
-                path = "./ceramicimages/image" + str(count) + "/"
-                if not os.path.isdir(path):
-                    os.mkdir(path)
+                    # resize image
+                    image = cv2.resize(image, (100, 100))
 
-                for rotation in rotations:
-                    image_center = tuple(np.array(image.shape[1::-1]) / 2)
-                    rot_mat = cv2.getRotationMatrix2D(
-                        image_center, rotation, 1.0)
-                    result = cv2.warpAffine(
-                        image, rot_mat, image.shape[1::-1], flags=cv2.INTER_LINEAR)
-                    # sharpened = cv2.filter2D(result, -1, sharpen_kernel)
+                    # make image directory
+                    path = "./ceramicimages/image" + str(count) + "/"
+                    if not os.path.isdir(path):
+                        os.mkdir(path)
 
-                    # deblurred = cv2.fastNlMeansDenoisingColored(
-                    #     sharpened, None, 10, 10, 7, 21)
-                    # save frame as JPG file
-                    cv2.imwrite(path + str(rotation)+".jpg", result)
+                    for rotation in rotations:
+                        image_center = tuple(np.array(image.shape[1::-1]) / 2)
+                        rot_mat = cv2.getRotationMatrix2D(
+                            image_center, rotation, 1.0)
+                        result = cv2.warpAffine(
+                            image, rot_mat, image.shape[1::-1], flags=cv2.INTER_LINEAR)
+                        # sharpened = cv2.filter2D(result, -1, sharpen_kernel)
+
+                        # deblurred = cv2.fastNlMeansDenoisingColored(
+                        #     sharpened, None, 10, 10, 7, 21)
+                        # save frame as JPG file
+                        cv2.imwrite(path + str(rotation)+".jpg", result)
     else:
         break
     count += 1
