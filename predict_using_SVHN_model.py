@@ -144,7 +144,7 @@ def showbbox(model, img, imgNum, output_path):
 
 
 # check the result
-model = torch.load(r'./saved_model/SVHN_model_500_10epoch.pkl')
+model = torch.load(r'./saved_model/SVHN_model_2500_100epoch.pkl')
 model.to(device)
 
 # root = "./bestceramic"
