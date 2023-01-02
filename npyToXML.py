@@ -187,16 +187,16 @@ bboxes = np.load('SVHNbbox.npy', allow_pickle=True)
 imageroot = '../../SVHN/test/'
 
 # make directories
-root = "./SVHNData/"
+root = "./SVHNBigData/"
 if not os.path.isdir(root):
     os.mkdir(root)
-annotationPath = "./SVHNData/Annotations/"
+annotationPath = "./SVHNBigData/Annotations/"
 if not os.path.isdir(annotationPath):
     os.mkdir(annotationPath)
-annotationVisPath = "./SVHNData/AnnotationsVisualization/"
+annotationVisPath = "./SVHNBigData/AnnotationsVisualization/"
 if not os.path.isdir(annotationVisPath):
     os.mkdir(annotationVisPath)
-pngPath = "./SVHNData/PNGImages/"
+pngPath = "./SVHNBigData/PNGImages/"
 if not os.path.isdir(pngPath):
     os.mkdir(pngPath)
 # x = 0
@@ -211,30 +211,8 @@ for i in range(len(names)):
     width, height = img.size
     if width > 500 or height > 500:
         print(width, height)
-        # skip
-        # # put image on standard 1100x1100 image
-        # imgSize = 1100
-        # background = np.zeros((imgSize, imgSize, 3), np.uint8)
-
-        # # compute xoff and yoff for placement of upper left corner of resized image
-        # yoff = round((imgSize-height)/2)
-        # xoff = round((imgSize-width)/2)
-
-        # background[yoff:yoff+height, xoff:xoff+width] = img
-        # cv2.imwrite(os.path.join(pngPath, str(imgNum) + ".png"), background)
-        # img = Image.fromarray(background)
-        # img, _ = transform(img, None)
-        # for b in bbox:
-        #     b[0] += xoff
-        #     b[1] += yoff
-        #     b[2] += xoff
-        #     b[3] += yoff
-        # showbbox(img, bbox, imgNum, annotationVisPath)
-        # makeXML(imgNum, annotationPath, bbox)
-    else:
-        # print(width, height)
         # put image on standard 1100x1100 image
-        imgSize = 500
+        imgSize = 1100
         background = np.zeros((imgSize, imgSize, 3), np.uint8)
 
         # compute xoff and yoff for placement of upper left corner of resized image
@@ -252,6 +230,28 @@ for i in range(len(names)):
             b[3] += yoff
         showbbox(img, bbox, imgNum, annotationVisPath)
         makeXML(imgNum, annotationPath, bbox)
+    # else:
+        # skip
+        # print(width, height)
+        # put image on standard 1100x1100 image
+        # imgSize = 500
+        # background = np.zeros((imgSize, imgSize, 3), np.uint8)
+
+        # # compute xoff and yoff for placement of upper left corner of resized image
+        # yoff = round((imgSize-height)/2)
+        # xoff = round((imgSize-width)/2)
+
+        # background[yoff:yoff+height, xoff:xoff+width] = img
+        # cv2.imwrite(os.path.join(pngPath, str(imgNum) + ".png"), background)
+        # img = Image.fromarray(background)
+        # img, _ = transform(img, None)
+        # for b in bbox:
+        #     b[0] += xoff
+        #     b[1] += yoff
+        #     b[2] += xoff
+        #     b[3] += yoff
+        # showbbox(img, bbox, imgNum, annotationVisPath)
+        # makeXML(imgNum, annotationPath, bbox)
     # x += 1
     # if x == 20:
     #     break
