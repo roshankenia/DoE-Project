@@ -7,8 +7,8 @@ pytesseract.pytesseract.tesseract_cmd = r'../../anaconda3/envs/tesseract2/bin/te
 tessdata_dir_config = r'../../anaconda3/envs/tesseract2/share/tessdata'
 os.environ["TESSDATA_PREFIX"] = tessdata_dir_config
 
-filename = './ceramicimages/image301/0.jpg'
-# filename = './416.png'
+# filename = './ceramicimages/image301/0.jpg'
+filename = './416.png'
 # img = np.array(Image.open(filename))
 # norm_img = np.zeros((img.shape[0], img.shape[1]))
 # img = cv2.normalize(img, norm_img, 0, 255, cv2.NORM_MINMAX)
@@ -18,7 +18,7 @@ filename = './ceramicimages/image301/0.jpg'
 
 img1 = cv2.imread(filename)
 new_img1 = cv2.cvtColor(img1, cv2.COLOR_BGR2RGB)
-config = r'--oem 3 --psm 9'
+config = r'--oem 3 --psm 7'
 text1 = pytesseract.image_to_string(new_img1, config=config)
 print('Result 1:', text1)
 new_img2 = cv2.resize(new_img1, None, fx=2.5, fy=2.5,
