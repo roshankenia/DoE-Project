@@ -184,7 +184,7 @@ transform = T.Compose([T.PILToTensor()])
 names = np.load('SVHNname.npy')
 bboxes = np.load('SVHNbbox.npy', allow_pickle=True)
 
-imageroot = '../SVHN/test/'
+imageroot = '../../SVHN/test/'
 
 # make directories
 root = "./SVHNData/"
