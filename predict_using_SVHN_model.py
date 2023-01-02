@@ -163,6 +163,4 @@ for fileName in fileNames:
 
     imgNum = ''.join(filter(lambda i: i.isdigit(), fileName))
 
-    output_path = os.path.join(root, vis_tgt_path)
-
-    showbbox(model, img, imgNum, output_path)
+    showbbox(model, img, imgNum, vis_tgt_path)
