@@ -147,7 +147,9 @@ def showbbox(model, img, imgNum, output_path):
 model = torch.load(r'./saved_model/SVHN_model_10epoch.pkl')
 model.to(device)
 
-root = "./bestceramic"
+# root = "./bestceramic"
+
+root = "./SVHNData/PNGImages"
 
 vis_tgt_path = "./visualization_results/SVHNbestcer/"
 if not os.path.isdir(vis_tgt_path):
@@ -155,7 +157,7 @@ if not os.path.isdir(vis_tgt_path):
 # need to iterate through each image folder
 fileNames = list(sorted(os.listdir(root)))
 transform = T.Compose([T.PILToTensor()])
-
+x = 0
 for fileName in fileNames:
     img = Image.open(os.path.join(root, fileName)).convert("RGB")
 
@@ -164,3 +166,6 @@ for fileName in fileNames:
     imgNum = ''.join(filter(lambda i: i.isdigit(), fileName))
 
     showbbox(model, img, imgNum, vis_tgt_path)
+    x += 1
+    if x == 20:
+        break
