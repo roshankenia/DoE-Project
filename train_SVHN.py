@@ -151,8 +151,6 @@ num_classes = 10
 # while images in 'dataset_test' are not flipped
 dataset = SVHNDataset(root, get_transform(train=True))
 dataset_test = SVHNDataset(root, get_transform(train=False))
-print("number of images in the training set:", len(dataset))
-print("number of images in the testing set:", len(dataset_test))
 
 
 # split the dataset (399 images in total) into
@@ -161,7 +159,8 @@ s_ratio = 1000
 indices = torch.randperm(len(dataset)).tolist()
 dataset = torch.utils.data.Subset(dataset, indices[:s_ratio])
 # dataset_test = torch.utils.data.Subset(dataset_test, indices[s_ratio:])
-
+print("number of images in the training set:", len(dataset))
+print("number of images in the testing set:", len(dataset_test))
 
 # define training and validation data loaders
 data_loader = torch.utils.data.DataLoader(
