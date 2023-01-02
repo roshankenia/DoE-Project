@@ -64,26 +64,32 @@ device = torch.device(
     'cuda') if torch.cuda.is_available() else torch.device('cpu')
 model.to(device)
 
-root = "./ceramicimages"
-# need to iterate through each image folder
-imageFolders = list(sorted(os.listdir(root)))
+rotation_doc = DocumentFile.from_images("./416.jpg")
 
-for imageFolder in imageFolders:
-    if imageFolder == "image300":
-        # obtain all image rotations
-        rotations = list(sorted(os.listdir(os.path.join(root, imageFolder))))
-        rotationsWithRoot = []
-        for rotation in rotations:
-            print('Rotation:', rotation)
-            # rotationsWithRoot.append(os.path.join(root, imageFolder, rotation))
-            # # create document image
-            # all_rotations_doc = DocumentFile.from_images(rotationsWithRoot)
-            # result = model(all_rotations_doc)
-            rotation_doc = DocumentFile.from_images(
-                os.path.join(root, imageFolder, rotation))
+result = model(rotation_doc)
 
-            result = model(rotation_doc)
+output = result.export()
+print(output)
+# root = "./ceramicimages"
+# # need to iterate through each image folder
+# imageFolders = list(sorted(os.listdir(root)))
 
-            output = result.export()
-            print(output)
-            graphical_coordinates = get_coordinates(output)
+# for imageFolder in imageFolders:
+#     if imageFolder == "image300":
+#         # obtain all image rotations
+#         rotations = list(sorted(os.listdir(os.path.join(root, imageFolder))))
+#         rotationsWithRoot = []
+#         for rotation in rotations:
+#             print('Rotation:', rotation)
+#             # rotationsWithRoot.append(os.path.join(root, imageFolder, rotation))
+#             # # create document image
+#             # all_rotations_doc = DocumentFile.from_images(rotationsWithRoot)
+#             # result = model(all_rotations_doc)
+#             rotation_doc = DocumentFile.from_images(
+#                 os.path.join(root, imageFolder, rotation))
+
+#             result = model(rotation_doc)
+
+#             output = result.export()
+#             print(output)
+#             graphical_coordinates = get_coordinates(output)
