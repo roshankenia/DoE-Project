@@ -155,10 +155,11 @@ dataset_test = SVHNDataset(root, get_transform(train=False))
 
 # split the dataset (399 images in total) into
 # training set (300 images) and test set (99 images)
-s_ratio = 1000
+s_ratio = 500
 indices = torch.randperm(len(dataset)).tolist()
 dataset = torch.utils.data.Subset(dataset, indices[:s_ratio])
-# dataset_test = torch.utils.data.Subset(dataset_test, indices[s_ratio:])
+dataset_test = torch.utils.data.Subset(
+    dataset_test, indices[s_ratio:s_ratio+500])
 print("number of images in the training set:", len(dataset))
 print("number of images in the testing set:", len(dataset_test))
 
@@ -190,7 +191,7 @@ lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(
     optimizer, T_0=1, T_mult=2)
 
 # let's train it for a defined number of epochs
-num_epochs = 10
+num_epochs = 25
 
 for epoch in range(num_epochs):
     # train for one epoch, printing every 10 iterations
@@ -208,4 +209,4 @@ print("Training is done!")
 # evaluate on the test dataset
 evaluate(model, data_loader_test, device=device)
 # save the trained model
-torch.save(model, r'./saved_model/SVHN_model_10epoch.pkl')
+torch.save(model, r'./saved_model/SVHN_model_500_10epoch.pkl')
