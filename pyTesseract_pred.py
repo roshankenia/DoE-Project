@@ -18,7 +18,7 @@ filename = './ceramicimages/image301/0.jpg'
 
 img1 = cv2.imread(filename)
 new_img1 = cv2.cvtColor(img1, cv2.COLOR_BGR2RGB)
-config = r'--oem 3 --psm 7'
+config = r'--oem 3 --psm 9'
 text1 = pytesseract.image_to_string(new_img1, config=config)
 print('Result 1:', text1)
 new_img2 = cv2.resize(new_img1, None, fx=2.5, fy=2.5,
