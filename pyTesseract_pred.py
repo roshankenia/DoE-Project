@@ -10,4 +10,4 @@ filename = './ceramicimages/image301/0.jpg'
 img1 = np.array(Image.open(filename))
 text = pytesseract.image_to_string(img1, config=tessdata_dir_config)
 
-print(text)
+print('Result:', text)
