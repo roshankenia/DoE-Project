@@ -155,11 +155,11 @@ dataset_test = SVHNDataset(root, get_transform(train=False))
 
 # split the dataset (399 images in total) into
 # training set (300 images) and test set (99 images)
-s_ratio = 500
+s_ratio = 1000
 indices = torch.randperm(len(dataset)).tolist()
 dataset = torch.utils.data.Subset(dataset, indices[:s_ratio])
 dataset_test = torch.utils.data.Subset(
-    dataset_test, indices[s_ratio:s_ratio+500])
+    dataset_test, indices[s_ratio:s_ratio+250])
 print("number of images in the training set:", len(dataset))
 print("number of images in the testing set:", len(dataset_test))
 
@@ -201,6 +201,9 @@ for epoch in range(num_epochs):
     # update the learning rate
     lr_scheduler.step()
 
+    if epoch % 5 == 0:
+        evaluate(model, data_loader_test, device=device)
+
     print('')
     print('==================================================')
     print('')
@@ -209,4 +212,4 @@ print("Training is done!")
 # evaluate on the test dataset
 evaluate(model, data_loader_test, device=device)
 # save the trained model
-torch.save(model, r'./saved_model/SVHN_model_500_10epoch.pkl')
+torch.save(model, r'./saved_model/SVHN_model_1000_25epoch.pkl')
