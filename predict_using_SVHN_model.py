@@ -147,9 +147,9 @@ def showbbox(model, img, imgNum, output_path):
 model = torch.load(r'./saved_model/SVHN_model_2500_100epoch.pkl')
 model.to(device)
 
-# root = "./bestceramic"
+root = "./bestceramic"
 
-root = "./SVHNData/PNGImages"
+# root = "./SVHNData/PNGImages"
 
 vis_tgt_path = "./visualization_results/SVHNbestcer/"
 if not os.path.isdir(vis_tgt_path):
