@@ -8,7 +8,7 @@ tessdata_dir_config = r'../../anaconda3/envs/tesseract2/share/tessdata'
 os.environ["TESSDATA_PREFIX"] = tessdata_dir_config
 
 # filename = './ceramicimages/image301/0.jpg'
-filename = './516.png'
+filename = './432.png'
 # img = np.array(Image.open(filename))
 # norm_img = np.zeros((img.shape[0], img.shape[1]))
 # img = cv2.normalize(img, norm_img, 0, 255, cv2.NORM_MINMAX)
