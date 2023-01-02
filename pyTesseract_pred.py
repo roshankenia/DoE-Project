@@ -7,7 +7,7 @@ pytesseract.pytesseract.tesseract_cmd = r'../../anaconda3/envs/tesseract2/bin/te
 tessdata_dir_config = r'../../anaconda3/envs/tesseract2/share/tessdata'
 os.environ["TESSDATA_PREFIX"] = tessdata_dir_config
 
-# filename = './ceramicimages/image301/0.jpg'
+filename = './ceramicimages/image301/0.jpg'
 # filename = './416.png'
 # img = np.array(Image.open(filename))
 # norm_img = np.zeros((img.shape[0], img.shape[1]))
@@ -16,7 +16,7 @@ os.environ["TESSDATA_PREFIX"] = tessdata_dir_config
 # img = cv2.GaussianBlur(img, (1, 1), 0)
 # text = pytesseract.image_to_string(img, config=tessdata_dir_config)
 
-img1 = cv2.imread('./416.png')
+img1 = cv2.imread(filename)
 new_img1 = cv2.cvtColor(img1, cv2.COLOR_BGR2RGB)
 config = r'--oem 3 --psm 7'
 text1 = pytesseract.image_to_string(new_img1, config=config)
