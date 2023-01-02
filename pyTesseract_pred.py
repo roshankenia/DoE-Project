@@ -4,7 +4,7 @@ import pytesseract
 import numpy as np
 pytesseract.pytesseract.tesseract_cmd = r'../../anaconda3/envs/tesseract2/bin/tesseract'
 tessdata_dir_config = r'../../anaconda3/envs/tesseract2/share/tessdata'
-os.putenv("TESSDATA_PREFIX", tessdata_dir_config)
+os.environ["TESSDATA_PREFIX"] = tessdata_dir_config
 
 filename = './ceramicimages/image301/0.jpg'
 img1 = np.array(Image.open(filename))
