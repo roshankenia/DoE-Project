@@ -126,7 +126,7 @@ def showbbox(model, img, imgNum, output_path):
 
         prediction = model([img.to(device)])
 
-    # print(prediction)
+    print(prediction)
 
     img = img.permute(1, 2, 0)  # C,H,W -> H,W,C
     img = (img * 255).byte().data.cpu()  # [0, 1] -> [0, 255]
