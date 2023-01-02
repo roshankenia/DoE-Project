@@ -64,7 +64,7 @@ device = torch.device(
     'cuda') if torch.cuda.is_available() else torch.device('cpu')
 model.to(device)
 
-rotation_doc = DocumentFile.from_images("./416.jpg")
+rotation_doc = DocumentFile.from_images("./416.png")
 
 result = model(rotation_doc)
 
