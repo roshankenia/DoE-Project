@@ -201,7 +201,7 @@ for epoch in range(num_epochs):
     # update the learning rate
     lr_scheduler.step()
 
-    if epoch % 10 == 0:
+    if epoch % 25 == 0:
         evaluate(model, data_loader_test, device=device)
 
     print('')
@@ -212,4 +212,4 @@ print("Training is done!")
 # evaluate on the test dataset
 evaluate(model, data_loader_test, device=device)
 # save the trained model
-torch.save(model, r'./saved_model/SVHN_model_big_2500_100epoch.pkl')
+torch.save(model, r'./saved_model/SVHN_model_big_100epoch.pkl')
