@@ -32,7 +32,7 @@ for imgName in imgNames:
     print('Result 2:', text2)
     new_img1_ = cv2.cvtColor(new_img1, cv2.COLOR_BGR2GRAY)
     _, th1 = cv2.threshold(
-        new_img1_, 240, 255, cv2.THRESH_BINARY+cv2.THRESH_OTSU)
+        new_img1_, 250, 255, cv2.THRESH_BINARY+cv2.THRESH_OTSU)
     new_img3 = cv2.resize(th1, None, fx=2.5, fy=2.5,
                           interpolation=cv2.INTER_CUBIC)
     cv2.imwrite(os.path.join("./trytess", "bin_"+imgName), new_img3)
