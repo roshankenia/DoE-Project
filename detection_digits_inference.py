@@ -95,7 +95,7 @@ def showbbox(model, img, idx):
     plt.figure(figsize=(50, 50))
     plt.imshow(img)
     plt.axis('off')
-    vis_tgt_path = "./visualization_results/cropCerDigitDetection/"
+    vis_tgt_path = "./cropCerDigitDetection/"
     if not os.path.isdir(vis_tgt_path):
         os.mkdir(vis_tgt_path)
     plt.savefig(os.path.join(vis_tgt_path, str(idx) + "_vis.jpg"))
