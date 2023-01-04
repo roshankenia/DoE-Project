@@ -106,8 +106,8 @@ def showbbox(model, img, idx):
 model = torch.load(
     r'./saved_model/digits_detector.pkl')
 model.to(device)
-imgNames = list(sorted(os.listdir("./bestceramic")))
+imgNames = list(sorted(os.listdir("./bestceramiccrop")))
 for imgName in imgNames:
-    image = cv2.imread(os.path.join("./bestceramic", imgName))
+    image = cv2.imread(os.path.join("./bestceramiccrop", imgName))
     num = ''.join(filter(lambda i: i.isdigit(), imgName))
     showbbox(model, image, num)
