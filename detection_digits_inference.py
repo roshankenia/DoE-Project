@@ -62,7 +62,7 @@ def fig_draw(img, prediction, idx):
 def showbbox(model, img, idx):
     # the input images are tensors with values in [0, 1]
     #print("input image shape...:", type(img))
-    image_array = img.numpy()
+    # image_array = img.numpy()
     image_array = np.array(normalize(image_array), dtype=np.float32)
     img = torch.from_numpy(image_array)
 
