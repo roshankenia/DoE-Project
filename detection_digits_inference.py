@@ -180,7 +180,7 @@ def showbbox(model, img, idx):
 
         prediction = model([img.to(device)])
 
-    print(prediction)
+    # print(prediction)
 
     img = img.permute(1, 2, 0)  # C,H,W -> H,W,C
     img = (img * 255).byte().data.cpu()  # [0, 1] -> [0, 255]
@@ -188,6 +188,7 @@ def showbbox(model, img, idx):
 
     bboxes = prediction[0]['boxes'].detach().cpu().numpy()
     scores = prediction[0]['scores'].detach().cpu().numpy()
+    print(bboxes)
     goodBBoxes = []
     for i in range(len(scores)):
         if scores[i] >= 0.4:
