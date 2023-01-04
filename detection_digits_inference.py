@@ -185,8 +185,8 @@ def showbbox(model, img, idx):
     img = (img * 255).byte().data.cpu()  # [0, 1] -> [0, 255]
     img = np.array(img)  # tensor -> ndarray
 
-    bboxes = prediction[0]['boxes'].numpy()
-    scores = prediction[0]['scores'].numpy()
+    bboxes = prediction[0]['boxes'].detach().cpu().numpy()
+    scores = prediction[0]['scores'].detach().cpu().numpy()
     goodBBoxes = []
     for i in range(len(scores)):
         if scores[i] >= 0.4:
