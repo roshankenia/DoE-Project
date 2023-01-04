@@ -62,7 +62,7 @@ def fig_draw(img, prediction, idx):
 def showbbox(model, img, idx):
     # the input images are tensors with values in [0, 1]
     #print("input image shape...:", type(img))
-    # image_array = img.numpy()
+    image_array = img.numpy()
     image_array = np.array(normalize(img), dtype=np.float32)
     img = torch.from_numpy(image_array)
 
@@ -108,6 +108,6 @@ model = torch.load(
 model.to(device)
 imgNames = list(sorted(os.listdir("./bestceramiccrop")))
 for imgName in imgNames:
-    image = cv2.imread(os.path.join("./bestceramiccrop", imgName))
+    image = Image.open(os.path.join("./bestceramiccrop/", imgName))
     num = ''.join(filter(lambda i: i.isdigit(), imgName))
     showbbox(model, image, num)
