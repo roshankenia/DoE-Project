@@ -77,49 +77,27 @@ def create_overlap_box(bbox1, bbox2):
     ymin1 = bbox1[1]
     xmax1 = bbox1[2]
     ymax1 = bbox1[3]
-    # obtain corner points
-    upperLeftX1 = xmin1
-    upperRightX1 = xmax1
-    lowerLeftX1 = upperLeftX1
-    lowerRightX1 = upperRightX1
-    upperLeftY1 = ymin1
-    upperRightY1 = upperLeftY1
-    lowerLeftY1 = ymax1
-    lowerRightY1 = lowerLeftY1
 
     xmin2 = bbox2[0]
     ymin2 = bbox2[1]
     xmax2 = bbox2[2]
     ymax2 = bbox2[3]
-    # obtain corner points
-    upperLeftX2 = xmin2
-    upperRightX2 = xmax2
-    lowerLeftX2 = upperLeftX2
-    lowerRightX2 = upperRightX2
-    upperLeftY2 = ymin2
-    upperRightY2 = upperLeftY2
-    lowerLeftY2 = ymax2
-    lowerRightY2 = lowerLeftY2
+    print(xmin1, ymin1, xmax1, ymax1)
+    print(xmin2, ymin2, xmax2, ymax2)
 
     overlaps = True
-    # CHECK if any point overlaps with another
-    # if lowerLeftX1 < upperLeftX2 < upperRightX1 and lowerLeftY1 < upperLeftY2 < upperRightY1:
-    #     overlaps = True
-    # if lowerLeftX1 < upperRightX2 < upperRightX1 and lowerLeftY1 < upperRightY2 < upperRightY1:
-    #     overlaps = True
-    # if lowerLeftX1 < lowerRightX2 < upperRightX1 and lowerLeftY1 < lowerRightY2 < upperRightY1:
-    #     overlaps = True
-    # if lowerLeftX1 < lowerLeftX2 < upperRightX1 and lowerLeftY1 < lowerLeftY2 < upperRightY1:
-    #     overlaps = True
     # if rectangle has area 0, no overlap
     if xmin1 == xmax1 or ymin1 == ymax1 or xmin2 == xmax2 or ymin2 == ymax2:
         overlaps = False
+        print('Zero Area')
     # If one rectangle is on left side of other
     if xmin1 > xmax2 or xmin2 > xmax1:
         overlaps = False
+        print('X Bad')
     # If one rectangle is above other
     if ymax1 > ymin2 or ymax2 > ymin1:
         overlaps = False
+        print('Y Bad')
     if overlaps:
         print('\n\nFOUND OVERLAPPING')
         # create new bounding box
