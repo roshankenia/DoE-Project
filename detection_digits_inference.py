@@ -189,18 +189,18 @@ def showbbox(model, img, idx):
     scores = prediction[0]['scores']
     goodBBoxes = []
     for i in range(len(scores)):
-        if scores[i] >= 0.5:
+        if scores[i] >= 0.4:
             goodBBoxes.append(bboxes[i])
         else:
             # scores already sorted
             break
 
     # for i in range(prediction[0]['boxes'].cpu().shape[0]): # select all the predicted bounding boxes
-    if len(prediction[0]['labels']) >= 3:
+    if len(goodBBoxes) >= 3:
         # combine those that overlap
         newBBoxes = create_new_bboxes(goodBBoxes)
         draw_bboxes(img, newBBoxes)
-    elif len(prediction[0]['labels']) == 2:
+    elif len(goodBBoxes) == 2:
         # check if two overlap
         combined = create_overlap_box(goodBBoxes[0], goodBBoxes[1])
         if combined != None:
