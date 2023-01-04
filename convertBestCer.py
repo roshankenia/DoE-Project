@@ -121,7 +121,7 @@ def crop_pebble(img, masks, boxes):
     return background
 
 
-path = "./bestceramiccrop"
+path = "./bestceramiccrop/"
 if not os.path.isdir(path):
     os.mkdir(path)
 imgNames = list(sorted(os.listdir("./bestceramic")))
