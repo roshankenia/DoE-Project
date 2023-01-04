@@ -61,10 +61,10 @@ def fig_draw(img, prediction, idx):
 
 def draw_bboxes(img, bboxes):
     for bbox in bboxes:
-        xmin = round(bbox[0].item())
-        ymin = round(bbox[1].item())
-        xmax = round(bbox[2].item())
-        ymax = round(bbox[3].item())
+        xmin = round(bbox[0])
+        ymin = round(bbox[1])
+        xmax = round(bbox[2])
+        ymax = round(bbox[3])
         cv2.rectangle(img, (xmin, ymin), (xmax, ymax),
                       (0, 255, 0), thickness=1)
         cv2.putText(img, 'digits', (xmin, ymin), cv2.FONT_HERSHEY_SIMPLEX,
@@ -185,8 +185,8 @@ def showbbox(model, img, idx):
     img = (img * 255).byte().data.cpu()  # [0, 1] -> [0, 255]
     img = np.array(img)  # tensor -> ndarray
 
-    bboxes = prediction[0]['boxes']
-    scores = prediction[0]['scores']
+    bboxes = prediction[0]['boxes'].numpy()
+    scores = prediction[0]['scores'].numpy()
     goodBBoxes = []
     for i in range(len(scores)):
         if scores[i] >= 0.4:
