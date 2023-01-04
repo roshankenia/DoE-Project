@@ -61,10 +61,10 @@ def fig_draw(img, prediction, idx):
 
 def draw_bboxes(img, bboxes):
     for bbox in bboxes:
-        xmin = round(bbox[0])
-        ymin = round(bbox[1])
-        xmax = round(bbox[2])
-        ymax = round(bbox[3])
+        xmin = round(bbox[0].item())
+        ymin = round(bbox[1].item())
+        xmax = round(bbox[2].item())
+        ymax = round(bbox[3].item())
         cv2.rectangle(img, (xmin, ymin), (xmax, ymax),
                       (0, 255, 0), thickness=1)
         cv2.putText(img, 'digits', (xmin, ymin), cv2.FONT_HERSHEY_SIMPLEX,
