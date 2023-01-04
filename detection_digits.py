@@ -180,9 +180,9 @@ data_loader_test = torch.utils.data.DataLoader(
     collate_fn=utils.collate_fn)
 
 # get the model using our helper function
-# model = models.detection.fasterrcnn_resnet50_fpn_v2(
-#     pretrained=False, progress=True, num_classes=num_classes, pretrained_backbone=True)  # or get_object_detection_model(num_classes)
-model = build_model(num_classes)
+model = models.detection.fasterrcnn_resnet50_fpn_v2(
+    pretrained=False, progress=True, num_classes=num_classes, pretrained_backbone=True)  # or get_object_detection_model(num_classes)
+# model = build_model(num_classes)
 
 # move model to the right device
 model.to(device)
