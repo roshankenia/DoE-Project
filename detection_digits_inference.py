@@ -95,7 +95,7 @@ def create_overlap_box(bbox1, bbox2):
         overlaps = False
         print('X Bad')
     # If one rectangle is above other
-    if ymax1 > ymin2 or ymax2 > ymin1:
+    if ymax1 < ymin2 or ymax2 < ymin1:
         overlaps = False
         print('Y Bad')
     if overlaps:
