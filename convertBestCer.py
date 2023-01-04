@@ -126,7 +126,7 @@ if not os.path.isdir(path):
     os.mkdir(path)
 imgNames = list(sorted(os.listdir("./bestceramic")))
 for imgName in imgNames:
-    img = cv2.imread(os.path.join("./bestceramic", imgName))
+    image = cv2.imread(os.path.join("./bestceramic", imgName))
     num = ''.join(filter(lambda i: i.isdigit(), imgName))
     # check if image has a pebble
     masks, boxes, pred_cls = get_prediction(image, .9)
