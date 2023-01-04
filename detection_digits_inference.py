@@ -115,10 +115,10 @@ def create_overlap_box(bbox1, bbox2):
     if xmin1 == xmax1 or ymin1 == ymax1 or xmin2 == xmax2 or ymin2 == ymax2:
         overlaps = False
     # If one rectangle is on left side of other
-    if xmin1 > xmax2 or xmin2 > xmax1:
+    if xmin1 < xmax2 or xmin2 < xmax1:
         overlaps = False
     # If one rectangle is above other
-    if ymax1 > ymin2 or ymax2 > ymin1:
+    if ymax1 < ymin2 or ymax2 < ymin1:
         overlaps = False
     if overlaps:
         print('\n\nFOUND OVERLAPPING')
