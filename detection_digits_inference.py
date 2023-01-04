@@ -112,6 +112,7 @@ def create_overlap_box(bbox1, bbox2):
     if lowerLeftX1 < lowerLeftX2 < upperRightX1 and lowerLeftY1 < lowerLeftY2 < upperRightY1:
         overlaps = True
     if overlaps:
+        print('\n\nFOUND OVERLAPPING')
         # create new bounding box
         newXMin = min(xmin1, xmin2)
         newYMin = min(ymin1, ymin2)
