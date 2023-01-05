@@ -5,6 +5,7 @@ import numpy as np
 import cv2
 import transforms as T
 import json
+import random
 
 pytesseract.pytesseract.tesseract_cmd = r'../../anaconda3/envs/tesseract2/bin/tesseract'
 tessdata_dir_config = r'../../anaconda3/envs/tesseract2/share/tessdata'
@@ -50,6 +51,7 @@ if not os.path.isdir(pred_root):
     os.mkdir(pred_root)
 # need to iterate through each image folder
 imageFolders = list(sorted(os.listdir(root)))
+random.shuffle(imageFolders)
 config = r'--oem 3 --psm 13 digits'
 clahe = cv2.createCLAHE(clipLimit=5, tileGridSize=(16, 16))
 for imageFolder in imageFolders:
