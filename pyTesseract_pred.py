@@ -39,3 +39,7 @@ for imgName in imgNames:
     # cv2.imwrite(os.path.join("./trytess", "bin_"+imgName), new_img3)
     text3 = pytesseract.image_to_string(new_img3, config=config)
     print('Result 3:', text3)
+
+    gblur = cv2.GaussianBlur(new_img3, (5, 5), 0)
+    text4 = pytesseract.image_to_string(gblur, config=config)
+    print('Result 4:', text4)
