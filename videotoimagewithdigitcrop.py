@@ -356,6 +356,7 @@ while (vidcap.isOpened()):
                 # make_mask_image(np.copy(image), masks,
                 #                 boxes, pred_cls, count)
                 image = crop_pebble(np.copy(image), masks, boxes, count)
+                image = Image.fromarray(image)
                 image, _ = transform(image, None)
                 # now try to obtain digit crop
                 digits_crop = create_digit_crops(digits_model, image)
