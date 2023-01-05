@@ -5,11 +5,10 @@ import random
 import cv2
 import numpy as np
 import torchvision
-import torchvision.transforms as T
 import torch
 import matplotlib.pyplot as plt
 from PIL import Image
-
+import transforms as T
 # ensure we are running on the correct gpu
 os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
 os.environ["CUDA_VISIBLE_DEVICES"] = "6"  # (xxxx is your specific GPU ID)
@@ -273,8 +272,8 @@ def create_new_bboxes(bboxes):
 def create_digit_crops(model, img):
     # the input images are tensors with values in [0, 1]
     # print("input image shape...:", type(img))
-    # image_array = img.numpy()
-    image_array = np.array(normalize(img), dtype=np.float32)
+    image_array = img.numpy()
+    image_array = np.array(normalize(image_array), dtype=np.float32)
     img = torch.from_numpy(image_array)
 
     model.eval()
@@ -338,6 +337,7 @@ rotations = [0, 15, 30, 45, 60, 75, 90, 105, 120, 135, 150,
 sharpen_kernel = np.array([[-1, -1, -1], [-1, 9, -1], [-1, -1, -1]])
 
 count = 0
+transform = T.Compose([T.PILToTensor()])
 while (vidcap.isOpened()):
     hasFrames, image = vidcap.read()
     if hasFrames:
@@ -355,7 +355,7 @@ while (vidcap.isOpened()):
                 # make_mask_image(np.copy(image), masks,
                 #                 boxes, pred_cls, count)
                 image = crop_pebble(np.copy(image), masks, boxes, count)
-
+                image, _ = transform(image, None)
                 # now try to obtain digit crop
                 digits_crop = create_digit_crops(digits_model, image)
                 for c in range(len(digits_crop)):
