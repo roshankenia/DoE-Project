@@ -22,7 +22,7 @@ for imgName in imgNames:
     print("File:", imgName)
     new_img1 = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     # cv2.imwrite(os.path.join("./trytess", "og_"+imgName), new_img1)
-    config = r'--oem 3 --psm 8 digits'
+    config = r'--oem 3 --psm 13 digits'
     text1 = pytesseract.image_to_string(new_img1, config=config)
     print('Result 1:', text1)
     new_img2 = cv2.resize(new_img1, None, fx=2.5, fy=2.5,
