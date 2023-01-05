@@ -154,24 +154,8 @@ model.to(device)
 transform = T.Compose([T.PILToTensor()])
 imgNames = list(sorted(os.listdir("./cropsOnly/")))
 for imgName in imgNames:
-    image = cv2.imread(os.path.join("./cropsOnly/", imgName))
-    # image = Image.open(os.path.join(
-    #     "./cropsOnly/", imgName)).convert("RGB")
-    # put pebble on standard 1100x1100 image
-    imgSize = 1100
-    background = np.zeros((imgSize, imgSize, 3), np.uint8)
-    ch, cw = image.shape[:2]
-
-    # compute xoff and yoff for placement of upper left corner of resized image
-    yoff = round((imgSize-ch)/2)
-    xoff = round((imgSize-cw)/2)
-
-    background[yoff:yoff+ch, xoff:xoff+cw] = image
-
-    image = background
-
-    cv2.imwrite(os.path.join("./cropsOnly/", imgName), image)
-
-    # img, _ = transform(image, None)
-    # num = ''.join(filter(lambda i: i.isdigit(), imgName))
-    # showbbox(model, img, num)
+    image = Image.open(os.path.join(
+        "./cropsOnly/", imgName)).convert("RGB")
+    img, _ = transform(image, None)
+    num = ''.join(filter(lambda i: i.isdigit(), imgName))
+    showbbox(model, img, num)
