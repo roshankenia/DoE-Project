@@ -273,8 +273,8 @@ def create_new_bboxes(bboxes):
 def create_digit_crops(model, img):
     # the input images are tensors with values in [0, 1]
     # print("input image shape...:", type(img))
-    image_array = img.numpy()
-    image_array = np.array(normalize(image_array), dtype=np.float32)
+    # image_array = img.numpy()
+    image_array = np.array(normalize(img), dtype=np.float32)
     img = torch.from_numpy(image_array)
 
     model.eval()
