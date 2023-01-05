@@ -53,14 +53,14 @@ imageFolders = list(sorted(os.listdir(root)))
 config = r'--oem 3 --psm 7 digits'
 for imageFolder in imageFolders:
     foldNum = ''.join(filter(lambda i: i.isdigit(), imageFolder))
-    if foldNum == 300:
+    if foldNum == '300':
         # create dictionary which keeps predictions
         predDict = {}
         # obtain all image rotations
         rotations = list(sorted(os.listdir(os.path.join(root, imageFolder))))
         for rotation in rotations:
             rot = ''.join(filter(lambda i: i.isdigit(), rotation))
-            # print('Rotation:', rot)
+            print('Rotation:', rot)
             img = cv2.imread(os.path.join(root, imageFolder, rotation))
             new_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             # obtain prediction from tesseract
