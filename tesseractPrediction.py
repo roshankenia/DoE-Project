@@ -65,6 +65,7 @@ for imageFolder in imageFolders:
             new_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             # obtain prediction from tesseract
             text = pytesseract.image_to_string(new_img, config=config)
+            print('Result:', text)
             # increase in dictionary
             if text in predDict:
                 predDict[text] += 1
