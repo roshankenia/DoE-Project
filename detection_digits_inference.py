@@ -59,6 +59,17 @@ def fig_draw(img, prediction, idx):
                     0.5, (0, 255, 0), thickness=2)
 
 
+def create_digit_crops(img, bboxes, idx):
+    for i in range(len(bboxes)):
+        bbox = bboxes[i]
+        digits_crop = img[bbox[0]:bbox[2], bbox[1]:bbox[3]]
+        vis_tgt_path = "./cropCerDigitDetection/"
+        if not os.path.isdir(vis_tgt_path):
+            os.mkdir(vis_tgt_path)
+        cv2.imwrite(os.path.join(vis_tgt_path, str(
+            idx) + "_digit_crop_"+str(i)+".jpg"), digits_crop)
+
+
 def draw_bboxes(img, bboxes):
     for bbox in bboxes:
         xmin = round(bbox[0])
@@ -186,24 +197,24 @@ def showbbox(model, img, idx):
             break
 
     # for i in range(prediction[0]['boxes'].cpu().shape[0]): # select all the predicted bounding boxes
+    newBBoxes = goodBBoxes
     if len(goodBBoxes) >= 3:
         # combine those that overlap
         newBBoxes = create_new_bboxes(goodBBoxes)
-        draw_bboxes(img, newBBoxes)
     elif len(goodBBoxes) == 2:
         # check if two overlap
         combined = create_overlap_box(goodBBoxes[0], goodBBoxes[1])
         if combined != None:
-            draw_bboxes(img, [combined])
-        else:
-            draw_bboxes(img, goodBBoxes)
-    else:
-        draw_bboxes(img, goodBBoxes)
-
-    vis_tgt_path = "./cropCerDigitDetection/"
-    if not os.path.isdir(vis_tgt_path):
-        os.mkdir(vis_tgt_path)
-    cv2.imwrite(os.path.join(vis_tgt_path, str(idx) + "_vis.jpg"), img)
+            newBBoxes = [combined]
+    # draw boxes if they exist
+    if(len(newBBoxes) != 0):
+        # create digit crops
+        create_digit_crops(img, newBBoxes, idx)
+        draw_bboxes(img, newBBoxes)
+        vis_tgt_path = "./cropCerDigitDetection/"
+        if not os.path.isdir(vis_tgt_path):
+            os.mkdir(vis_tgt_path)
+        cv2.imwrite(os.path.join(vis_tgt_path, str(idx) + "_vis.jpg"), img)
 
 
 # check the result
