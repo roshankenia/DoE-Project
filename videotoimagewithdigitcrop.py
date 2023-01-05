@@ -117,7 +117,7 @@ def get_prediction(img, confidence):
     img = transform(img)
 
     img = img.to(device)
-    pred = model([img])
+    pred = pebble_model([img])
     pred_score = list(pred[0]['scores'].detach().cpu().numpy())
     print('pred scores:', pred_score)
     pred_t = [pred_score.index(x) for x in pred_score if x > confidence]
