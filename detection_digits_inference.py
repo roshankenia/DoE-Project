@@ -62,8 +62,8 @@ def fig_draw(img, prediction, idx):
 def create_digit_crops(img, bboxes, idx):
     for i in range(len(bboxes)):
         bbox = bboxes[i]
-        digits_crop = img[round(bbox[0]):round(
-            bbox[2]), round(bbox[1]):round(bbox[3])]
+        digits_crop = img[round(bbox[1]):round(
+            bbox[3]), round(bbox[0]):round(bbox[2])]
         vis_tgt_path = "./cropCerDigitDetection/"
         if not os.path.isdir(vis_tgt_path):
             os.mkdir(vis_tgt_path)
