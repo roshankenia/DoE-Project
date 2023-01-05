@@ -50,7 +50,7 @@ if not os.path.isdir(pred_root):
     os.mkdir(pred_root)
 # need to iterate through each image folder
 imageFolders = list(sorted(os.listdir(root)))
-config = r'--oem 3 --psm 7 digits'
+config = r'--oem 3 --psm 13 digits'
 clahe = cv2.createCLAHE(clipLimit=5, tileGridSize=(16, 16))
 for imageFolder in imageFolders:
     foldNum = ''.join(filter(lambda i: i.isdigit(), imageFolder))
