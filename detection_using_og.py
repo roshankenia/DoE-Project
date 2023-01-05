@@ -148,7 +148,7 @@ def showbbox(model, img, idx):
 device = torch.device(
     'cuda:0') if torch.cuda.is_available() else torch.device('cpu')
 model = torch.load(
-    r'../../Doe-Project/saved_model/model_doe_ceramic_paint_fastRCNN_v2_200epoch.pkl')
+    r'../../DoE-Project/saved_model/model_doe_ceramic_paint_fastRCNN_v2_200epoch.pkl')
 model.to(device)
 
 transform = T.Compose([T.PILToTensor()])
