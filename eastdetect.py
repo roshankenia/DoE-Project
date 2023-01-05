@@ -100,8 +100,8 @@ def east_detect(image):
     return orig
 
 
-image = cv2.imread("./cropCerDigitDetection/19090_digit_crop_0.jpg")
+image = cv2.imread("./bestceramiccrop/3360.jpg")
 
 out_image = east_detect(image)
 
-cv2.imwrite("./cropCerDigitDetection/sample_output.jpg", out_image)
+cv2.imwrite("./bestceramiccrop/3360_sample.jpg", out_image)
