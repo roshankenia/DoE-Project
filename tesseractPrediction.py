@@ -70,7 +70,7 @@ for imageFolder in imageFolders:
             print('Result:', text)
             # increase in dictionary
             if text in predDict:
-                predDict[text] += 1
+                predDict[text] = predDict[text] + 1
             else:
                 predDict[text] = 1
 
@@ -80,7 +80,7 @@ for imageFolder in imageFolders:
             text2 = pytesseract.image_to_string(new_img2, config=config)
             print('Result 2:', text2)
             if text2 in predDict:
-                predDict[text2] += 1
+                predDict[text2] = predDict[text2] + 1
             else:
                 predDict[text2] = 1
 
@@ -102,7 +102,7 @@ for imageFolder in imageFolders:
             text4 = pytesseract.image_to_string(new_img4, config=config)
             print('Result 4:', text4)
             if text4 in predDict:
-                predDict[text4] += 1
+                predDict[text4] = predDict[text4] + 1
             else:
                 predDict[text4] = 1
         # write dictionary to file
