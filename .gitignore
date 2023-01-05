@@ -16,3 +16,5 @@ mask-rcnn-pebble.pt.filepart
 bestceramic/
 SVHNBigData/
 SegmentationData/
+cropsOnly/
+cropCerDigitDetection/
