@@ -85,18 +85,18 @@ for imageFolder in imageFolders:
                 predDict[text2] = 1
 
             new_img1_ = cv2.cvtColor(new_img, cv2.COLOR_BGR2GRAY)
-            # apply CLAHE
-            img_clahe = clahe.apply(new_img1_)
-            text3 = pytesseract.image_to_string(img_clahe, config=config)
-            print('Result 3:', text3)
-            if text3 in predDict:
-                predDict[text3] += 1
-            else:
-                predDict[text3] = 1
+            # # apply CLAHE
+            # img_clahe = clahe.apply(new_img1_)
+            # text3 = pytesseract.image_to_string(img_clahe, config=config)
+            # print('Result 3:', text3)
+            # if text3 in predDict:
+            #     predDict[text3] += 1
+            # else:
+            #     predDict[text3] = 1
 
             # binarized image
             _, th1 = cv2.threshold(
-                img_clahe, img_clahe.max()-40, 255, cv2.THRESH_BINARY)
+                new_img1_, new_img1_.max()-40, 255, cv2.THRESH_BINARY)
             new_img4 = cv2.resize(th1, None, fx=2.5, fy=2.5,
                                   interpolation=cv2.INTER_CUBIC)
             text4 = pytesseract.image_to_string(new_img4, config=config)
