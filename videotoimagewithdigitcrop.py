@@ -5,6 +5,7 @@ import random
 import cv2
 import numpy as np
 import torchvision
+import torchvision.transforms as VT
 import torch
 import matplotlib.pyplot as plt
 from PIL import Image
@@ -112,7 +113,7 @@ def get_prediction(img, confidence):
           ie: eg. segment of cat is made 1 and rest of the image is made 0
 
     """
-    transform = T.Compose([T.ToTensor()])
+    transform = VT.Compose([VT.ToTensor()])
     img = transform(img)
 
     img = img.to(device)
