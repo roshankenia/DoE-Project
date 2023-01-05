@@ -368,10 +368,7 @@ while (vidcap.isOpened()):
                             # add white border
                             digit_crop = cv2.copyMakeBorder(
                                 digit_crop,
-                                5,
-                                5,
-                                5,
-                                5,
+                                5, 5, 5, 5,
                                 cv2.BORDER_CONSTANT,
                                 value=[255, 255, 255]
                             )
