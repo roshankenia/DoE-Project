@@ -371,6 +371,7 @@ while (vidcap.isOpened()):
                                 # save frame as JPG file
                                 cv2.imwrite(path + "digit_crop_" + str(c) +
                                             "_rot"+str(rotation)+".jpg", rotImg)
+            break
     else:
         break
     count += 1
