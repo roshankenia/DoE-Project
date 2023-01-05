@@ -154,8 +154,9 @@ model.to(device)
 transform = T.Compose([T.PILToTensor()])
 imgNames = list(sorted(os.listdir("./cropsOnly/")))
 for imgName in imgNames:
-    image = Image.open(os.path.join(
-        "./cropsOnly/", imgName)).convert("RGB")
+    image = cv2.imread(os.path.join("./cropsOnly/", imgName))
+    # image = Image.open(os.path.join(
+    #     "./cropsOnly/", imgName)).convert("RGB")
     # put pebble on standard 1100x1100 image
     imgSize = 1100
     background = np.zeros((imgSize, imgSize, 3), np.uint8)
@@ -169,6 +170,8 @@ for imgName in imgNames:
 
     image = background
 
-    img, _ = transform(image, None)
-    num = ''.join(filter(lambda i: i.isdigit(), imgName))
-    showbbox(model, img, num)
+    cv2.imwrite(os.path.join("./cropsOnly/", imgName), image)
+
+    # img, _ = transform(image, None)
+    # num = ''.join(filter(lambda i: i.isdigit(), imgName))
+    # showbbox(model, img, num)
