@@ -326,6 +326,7 @@ def create_digit_crops(model, img):
                 bbox[3]), round(bbox[0]):round(bbox[2])]
             digitCrops.append(digits_crop)
         return digitCrops
+    return None
 
 
 vidcap = cv2.VideoCapture(
@@ -360,9 +361,11 @@ while (vidcap.isOpened()):
                 image, _ = transform(image, None)
                 # now try to obtain digit crop
                 digits_crop = create_digit_crops(digits_model, image)
-                for c in range(len(digits_crop)):
-                    digit_crop = digits_crop[c]
-                    cv2.imwrite(path + "digit_crop_"+str(c)+".jpg", digit_crop)
+                if digits_crop != None:
+                    for c in range(len(digits_crop)):
+                        digit_crop = digits_crop[c]
+                        cv2.imwrite(path + "digit_crop_" +
+                                    str(c)+".jpg", digit_crop)
                 # resize image
                 # image = cv2.resize(image, (100, 100))
 
