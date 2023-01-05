@@ -345,42 +345,32 @@ while (vidcap.isOpened()):
     if hasFrames:
         # check if image has a pebble
         masks, boxes, pred_cls = get_prediction(image, .9)
-        if masks is not None:
-            if len(masks) == 1:
-                # make image directory
-                path = "./ceramicimages/image" + str(count) + "/"
-                if not os.path.isdir(path):
-                    os.mkdir(path)
-                    # save unmodified image
-                # save frame as JPG file
-                cv2.imwrite(path + "unmodified.jpg", image)
-                # make_mask_image(np.copy(image), masks,
-                #                 boxes, pred_cls, count)
-                image = crop_pebble(np.copy(image), masks, boxes, count)
-                image = Image.fromarray(image)
-                image, _ = transform(image, None)
-                # now try to obtain digit crop
-                digits_crop = create_digit_crops(digits_model, image)
-                if digits_crop != None:
-                    for c in range(len(digits_crop)):
-                        digit_crop = digits_crop[c]
-                        cv2.imwrite(path + "digit_crop_" +
-                                    str(c)+".jpg", digit_crop)
-                # resize image
-                # image = cv2.resize(image, (100, 100))
-
-                # for rotation in rotations:
-                #     image_center = tuple(np.array(image.shape[1::-1]) / 2)
-                #     rot_mat = cv2.getRotationMatrix2D(
-                #         image_center, rotation, 1.0)
-                #     result = cv2.warpAffine(
-                #         image, rot_mat, image.shape[1::-1], flags=cv2.INTER_LINEAR)
-                #     # sharpened = cv2.filter2D(result, -1, sharpen_kernel)
-
-                #     # deblurred = cv2.fastNlMeansDenoisingColored(
-                #     #     sharpened, None, 10, 10, 7, 21)
-                #     # save frame as JPG file
-                #     cv2.imwrite(path + str(rotation)+".jpg", result)
+        if count == 300:
+            if masks is not None:
+                if len(masks) == 1:
+                    # make image directory
+                    path = "./ceramicimages/image" + str(count) + "/"
+                    if not os.path.isdir(path):
+                        os.mkdir(path)
+                        # save unmodified image
+                    # save frame as JPG file
+                    cv2.imwrite(path + "unmodified.jpg", image)
+                    # make_mask_image(np.copy(image), masks,
+                    #                 boxes, pred_cls, count)
+                    image = crop_pebble(np.copy(image), masks, boxes, count)
+                    image = Image.fromarray(image)
+                    image, _ = transform(image, None)
+                    # now try to obtain digit crop
+                    digits_crop = create_digit_crops(digits_model, image)
+                    if digits_crop != None:
+                        for c in range(len(digits_crop)):
+                            digit_crop = digits_crop[c]
+                            for rotation in rotations:
+                                # rotate image
+                                rotImg = rotate_im(digit_crop, rotation)
+                                # save frame as JPG file
+                                cv2.imwrite(path + "digit_crop_" + str(c) +
+                                            "_rot"+str(rotation)+".jpg", digit_crop)
     else:
         break
     count += 1
