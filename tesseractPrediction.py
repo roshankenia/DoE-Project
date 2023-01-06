@@ -101,7 +101,7 @@ for imageFolder in imageFolders:
 
             # binarized image
             _, th1 = cv2.threshold(
-                new_img1_, new_img1_.max()-75, 255, cv2.THRESH_BINARY)
+                new_img1_, new_img1_.max()-100, 255, cv2.THRESH_BINARY)
             new_img4 = cv2.resize(th1, None, fx=2.5, fy=2.5,
                                 interpolation=cv2.INTER_CUBIC)
             cv2.imwrite(os.path.join("./ceramicimagesPredsWhite",
