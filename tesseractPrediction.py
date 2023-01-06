@@ -79,6 +79,8 @@ for imageFolder in imageFolders:
         # resize image
         new_img2 = cv2.resize(new_img, None, fx=2.5, fy=2.5,
                               interpolation=cv2.INTER_CUBIC)
+        cv2.imwrite(os.path.join("./ceramicimagesPredsWhite",
+                    "res_"+rotation), new_img4)
         text2 = pytesseract.image_to_string(new_img2, config=config)
         # print('Result 2:', text2)
         if text2 in predDict:
@@ -101,6 +103,8 @@ for imageFolder in imageFolders:
             new_img1_, new_img1_.max()-40, 255, cv2.THRESH_BINARY)
         new_img4 = cv2.resize(th1, None, fx=2.5, fy=2.5,
                               interpolation=cv2.INTER_CUBIC)
+        cv2.imwrite(os.path.join("./ceramicimagesPredsWhite",
+                    "bin_"+rotation), new_img4)
         text4 = pytesseract.image_to_string(new_img4, config=config)
         # print('Result 4:', text4)
         if text4 in predDict:
