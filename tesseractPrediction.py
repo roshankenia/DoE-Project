@@ -56,7 +56,7 @@ config = r'--oem 3 --psm 13 digits'
 clahe = cv2.createCLAHE(clipLimit=5, tileGridSize=(16, 16))
 for imageFolder in imageFolders:
     foldNum = ''.join(filter(lambda i: i.isdigit(), imageFolder))
-    if foldNum == '414':
+    if foldNum == '172':
         print('Image:', foldNum)
         # create dictionary which keeps predictions
         predDict = {}
