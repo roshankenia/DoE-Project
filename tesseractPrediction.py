@@ -56,61 +56,62 @@ config = r'--oem 3 --psm 13 digits'
 clahe = cv2.createCLAHE(clipLimit=5, tileGridSize=(16, 16))
 for imageFolder in imageFolders:
     foldNum = ''.join(filter(lambda i: i.isdigit(), imageFolder))
-    print('Image:', foldNum)
-    # create dictionary which keeps predictions
-    predDict = {}
-    # obtain all image rotations
-    rotations = list(sorted(os.listdir(os.path.join(root, imageFolder))))
-    for rotation in rotations:
-        rot = ''.join(filter(lambda i: i.isdigit(), rotation))
-        # print('Rotation:', rot)
-        img = cv2.imread(os.path.join(root, imageFolder, rotation))
-        # original image
-        new_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        # obtain prediction from tesseract
-        text = pytesseract.image_to_string(new_img, config=config)
-        # print('Result:', text)
-        # increase in dictionary
-        if text in predDict:
-            predDict[text] += 1
-        else:
-            predDict[text] = 1
+    if foldNum == '300':
+        print('Image:', foldNum)
+        # create dictionary which keeps predictions
+        predDict = {}
+        # obtain all image rotations
+        rotations = list(sorted(os.listdir(os.path.join(root, imageFolder))))
+        for rotation in rotations:
+            rot = ''.join(filter(lambda i: i.isdigit(), rotation))
+            # print('Rotation:', rot)
+            img = cv2.imread(os.path.join(root, imageFolder, rotation))
+            # original image
+            new_img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+            # obtain prediction from tesseract
+            text = pytesseract.image_to_string(new_img, config=config)
+            # print('Result:', text)
+            # increase in dictionary
+            if text in predDict:
+                predDict[text] += 1
+            else:
+                predDict[text] = 1
 
-        # resize image
-        new_img2 = cv2.resize(new_img, None, fx=2.5, fy=2.5,
-                              interpolation=cv2.INTER_CUBIC)
-        cv2.imwrite(os.path.join("./ceramicimagesPredsWhite",
-                    "res_"+rotation), new_img4)
-        text2 = pytesseract.image_to_string(new_img2, config=config)
-        # print('Result 2:', text2)
-        if text2 in predDict:
-            predDict[text2] += 1
-        else:
-            predDict[text2] = 1
+            # resize image
+            new_img2 = cv2.resize(new_img, None, fx=2.5, fy=2.5,
+                                interpolation=cv2.INTER_CUBIC)
+            cv2.imwrite(os.path.join("./ceramicimagesPredsWhite",
+                        "res_"+rotation), new_img4)
+            text2 = pytesseract.image_to_string(new_img2, config=config)
+            # print('Result 2:', text2)
+            if text2 in predDict:
+                predDict[text2] += 1
+            else:
+                predDict[text2] = 1
 
-        new_img1_ = cv2.cvtColor(new_img, cv2.COLOR_BGR2GRAY)
-        # # apply CLAHE
-        # img_clahe = clahe.apply(new_img1_)
-        # text3 = pytesseract.image_to_string(img_clahe, config=config)
-        # print('Result 3:', text3)
-        # if text3 in predDict:
-        #     predDict[text3] += 1
-        # else:
-        #     predDict[text3] = 1
+            new_img1_ = cv2.cvtColor(new_img, cv2.COLOR_BGR2GRAY)
+            # # apply CLAHE
+            # img_clahe = clahe.apply(new_img1_)
+            # text3 = pytesseract.image_to_string(img_clahe, config=config)
+            # print('Result 3:', text3)
+            # if text3 in predDict:
+            #     predDict[text3] += 1
+            # else:
+            #     predDict[text3] = 1
 
-        # binarized image
-        _, th1 = cv2.threshold(
-            new_img1_, new_img1_.max()-40, 255, cv2.THRESH_BINARY)
-        new_img4 = cv2.resize(th1, None, fx=2.5, fy=2.5,
-                              interpolation=cv2.INTER_CUBIC)
-        cv2.imwrite(os.path.join("./ceramicimagesPredsWhite",
-                    "bin_"+rotation), new_img4)
-        text4 = pytesseract.image_to_string(new_img4, config=config)
-        # print('Result 4:', text4)
-        if text4 in predDict:
-            predDict[text4] += 1
-        else:
-            predDict[text4] = 1
-    # write dictionary to file
-    with open(os.path.join(pred_root, "preds_"+str(foldNum)+".txt"), 'w') as file:
-        file.write(json.dumps(predDict))
+            # binarized image
+            _, th1 = cv2.threshold(
+                new_img1_, new_img1_.max()-40, 255, cv2.THRESH_BINARY)
+            new_img4 = cv2.resize(th1, None, fx=2.5, fy=2.5,
+                                interpolation=cv2.INTER_CUBIC)
+            cv2.imwrite(os.path.join("./ceramicimagesPredsWhite",
+                        "bin_"+rotation), new_img4)
+            text4 = pytesseract.image_to_string(new_img4, config=config)
+            # print('Result 4:', text4)
+            if text4 in predDict:
+                predDict[text4] += 1
+            else:
+                predDict[text4] = 1
+        # write dictionary to file
+        with open(os.path.join(pred_root, "preds_"+str(foldNum)+".txt"), 'w') as file:
+            file.write(json.dumps(predDict))
