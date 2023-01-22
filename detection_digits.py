@@ -145,7 +145,7 @@ def build_model(num_classes):
 # Start to train the model
 ###############################
 # change the root path depending on your own dataset path
-root = r'./DigitMaskDataset/'
+root = r'./NewDigitMaskDataset/'
 
 # train on the GPU (specify GPU ID with 'cuda:id'), or on the CPU if a GPU is not available
 device = torch.device(
@@ -199,7 +199,7 @@ lr_scheduler = torch.optim.lr_scheduler.CosineAnnealingWarmRestarts(
     optimizer, T_0=1, T_mult=2)
 
 # let's train it for a defined number of epochs
-num_epochs = 50
+num_epochs = 100
 
 for epoch in range(num_epochs):
     # train for one epoch, printing every 10 iterations
@@ -220,4 +220,4 @@ print("Training is done!")
 
 
 # save the trained model
-torch.save(model, r'./saved_model/digits_detector.pkl')
+torch.save(model, r'./saved_model/digits_detector_both.pkl')
